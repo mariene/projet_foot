@@ -25,6 +25,7 @@ action.acceleration
 action.acceleration.norm
 
 
+
 class RandomStrategy(SoccerStrategy):
     def __init__(self):
         self.name="Random"
@@ -53,18 +54,91 @@ class FonceurStrategy(SoccerStrategy):
         p = player.position
         pos = b-p
         shoot=Vector2D()
-        if (p.distance(b)<(PLAYER_RADIUS+BALL_RADIUS)):
-           shoot=state.get_goal_center(teamid) - p
+        if ((p.distance(b)<(PLAYER_RADIUS+BALL_RADIUS))):
+           shoot = state.get_goal_center(self.get(teamid)) - p
         return SoccerAction(pos,shoot)
     def copy(self):
         return FonceurStrategy()
     def create_strategy(self):
         return FonceurStrategy()
-    def get(self,teamed):
-        if(teamed == 1):
+    def get(self,teamid):
+        if(teamid == 1):
             return 2
         else:
             return 1
+
+#goal qui ressort le ballon, a mettre avec CStratégie pour contrer 2 joueurs fonceurs
+class PStrategy(SoccerStrategy):
+    def __init__(self):
+        self.name="P"
+    def start_battle(self,state):
+        pass
+    def finish_battle(self,won):
+        pass
+    def compute_strategy(self,state,player,teamid):
+        b = state.ball.position 
+        p = player.position
+        g = state.get_goal_center(teamid)
+        dist_gp = g - p
+        #dist_pp= p - state.team.player.position
+        #shoot = state.get_goal_center(self.get(teamid)) - p
+        shoot=Vector2D()        
+        if (state.is_y_inside_goal(p.y)):
+            if (b-p < 10):
+                shoot = b + g - 2*p
+            if (p.distance(b)< PLAYER_RADIUS + BALL_RADIUS):
+                shoot = state.get_goal_center(self.get(teamid)) - p
+            #if (dist_pp < 5):
+                #shoot = dist_pp - p
+        else:
+           shoot = state.get_goal_center(self.get(teamid)) - p
+        return SoccerAction(dist_gp,shoot)
+    def copy(self):
+        return PStrategy()
+    def create_strategy(self):
+        return PStrategy()
+    def get(self,teamid):
+        if(teamid == 1):
+            return 2
+        else:
+            return 1 
+
+#essaye de reprendre le ballon quand le goal le ressort 
+class CStrategy(SoccerStrategy):
+    def __init__(self):
+        self.name="C"
+    def start_battle(self,state):
+        pass
+    def finish_battle(self,won):
+        pass
+    def compute_strategy(self,state,player,teamid):
+        b = state.ball.position 
+        p = player.position
+        dist_bp = b - p
+        dist_pp= p - state.SoccerTeam.player.position
+        if (p.distance(b)<(PLAYER_RADIUS+BALL_RADIUS)) :
+            shoot = state.get_goal_center(self.get(teamid)) - p   
+        return SoccerAction(dist_bp,shoot)
+    def copy(self):
+        return CStrategy()
+    def create_strategy(self):
+        return CStrategy()
+    def get(self,teamid):
+        if(teamid == 1):
+            return 2
+        else:
+            return 1
+            
+team1=SoccerTeam("team1")
+team2=SoccerTeam("team2")
+team1.add_player(SoccerPlayer("t1j1",FonceurStrategy()))
+team2.add_player(SoccerPlayer("t2j1",FonceurStrategy()))
+team1.add_player(SoccerPlayer("t1j2",FonceurStrategy()))
+team2.add_player(SoccerPlayer("t2j2",PStrategy()))
+battle=SoccerBattle(team1,team2)
+obs=PygletObserver()
+obs.set_soccer_battle(battle)
+pyglet.app.run() 
 
 team1=SoccerTeam("team1")
 team2=SoccerTeam("team2")
@@ -77,13 +151,3 @@ obs=PygletObserver()
 obs.set_soccer_battle(battle)
 pyglet.app.run()   
 
-team1=SoccerTeam("team1")
-team2=SoccerTeam("team2")
-team1.add_player(SoccerPlayer("t1j1",FonceurStrategy()))
-team2.add_player(SoccerPlayer("t2j1",FonceurStrategy()))
-team1.add_player(SoccerPlayer("t1j2",FonceurStrategy()))
-team2.add_player(SoccerPlayer("t2j2",FonceurStrategy()))
-battle=SoccerBattle(team1,team2)
-obs=PygletObserver()
-obs.set_soccer_battle(battle)
-pyglet.app.run() 

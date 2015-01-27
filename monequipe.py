@@ -4,10 +4,9 @@ from soccersimulator import pyglet
 from strats import RandomStrategy
 
 team1=SoccerTeam("team1")
-team1.add_player(SoccerPlayer("t1j1",RandomStrategy()))
-team1.add_player(SoccerPlayer("t1j2",RandomStrategy()))
+team1.add_player(SoccerPlayer("t1j1",FonceurStrategy()))
+team1.add_player(SoccerPlayer("t1j2",PStrategy()))
 
-teams =[team1]
 
 
 
