@@ -5,10 +5,10 @@
 Ce script temporaire est sauvegardé ici :
 /users/Etu2/3202002/.spyder2/.temp.py
 """
-PLAYER_RADIUS=1.
-BALL_RADIUS=0.65   
+#PLAYER_RADIUS=1.
+#BALL_RADIUS=0.65   
 from soccersimulator import Vector2D,SoccerState,SoccerAction,SoccerStrategy,SoccerBattle,SoccerPlayer,SoccerTeam
-from soccersimulator import PygletObserver,ConsoleListener,LogListener, pyglet
+from soccersimulator import PygletObserver,ConsoleListener,LogListener, pyglet, PLAYER_RADIUS, BALL_RADIUS
 v = Vector2D()
 v1 = Vector2D(1,2)
 v2 = Vector2D(2,3)
@@ -115,7 +115,7 @@ class CStrategy(SoccerStrategy):
         b = state.ball.position 
         p = player.position
         dist_bp = b - p
-        dist_pp= p - state.SoccerTeam.player.position
+        #dist_pp= p - state.SoccerTeam.player.position
         if (p.distance(b)<(PLAYER_RADIUS+BALL_RADIUS)) :
             shoot = state.get_goal_center(self.get(teamid)) - p   
         return SoccerAction(dist_bp,shoot)
