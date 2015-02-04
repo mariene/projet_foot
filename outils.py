@@ -45,24 +45,36 @@ class AllerVersBalleBis (AllerVers):
         self.point= state.ball.position        
         return AllerVers.compute_strategy(self,state,player,teamid)
     def copy(self):
-        return AllerVersBalleBis()
-       
+        return AllerVersBalleBis()       
+
        
 class Tirer (SoccerStrategy):
     def __init__(self):
-        self.point=Vector2D()
+        self.point
     def compute_strategy(self,state,player,teamid):
-        shoot= self.point - player.position
+        shoot = self.point - player.position
         dist = Vector2D()
         return SoccerAction(dist,shoot)
     def copy(self):
-        s= Tirer()
+        s = Tirer()
         s.point = self.point.copy()
         return s
     def start_battle(self,state):
         pass        
     def finish_battle(self,won):
         pass        
-  
 
- 
+
+class TirerVersBut (Tirer):
+    def __init__(self):
+        Tirer.__init__(self)
+    def compute_strategy(self,state,player,teamid):
+        self.point= state.get_goal_center(self.get(teamid)) - player.position        
+        return Tirer.compute_strategy(self,state,player,teamid)
+    def copy(self):
+        return TirerVersBut() 
+    def get(self,teamid):
+        if(teamid == 1):
+            return 2
+        else:
+            return 1
