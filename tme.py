@@ -5,11 +5,8 @@ Ce script temporaire est sauvegardé ici :
 /users/Etu2/3202002/.spyder2/.temp.py
 """
 #PLAYER_RADIUS=1.
-<<<<<<< HEAD
-#BALL_RADIUS=0.65
-=======
 #BALL_RADIUS=0.65   
->>>>>>> a077c6464215286f46009034f593a12f19d9caea
+
 from soccersimulator import Vector2D,SoccerState,SoccerAction,SoccerStrategy,SoccerBattle,SoccerPlayer,SoccerTeam
 from soccersimulator import PygletObserver,ConsoleListener,LogListener, pyglet, PLAYER_RADIUS, BALL_RADIUS
 v = Vector2D()

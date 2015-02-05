@@ -45,12 +45,31 @@ class AllerVersBalleBis (AllerVers):
         self.point= state.ball.position        
         return AllerVers.compute_strategy(self,state,player,teamid)
     def copy(self):
-        return AllerVersBalleBis()       
+        return AllerVersBalleBis()   
+
+
+class AllerVersBut (SoccerStrategy):
+    def __init__(self):
+        self.strat= AllerVers()
+    def compute_strategy(self,state,player,teamid):
+        self.strat.point= state.get_goal_center(self.get(teamid))
+        return self.strat.compute_strategy(state,player,teamid)
+    def copy(self):
+        return AllerVersBut()
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass  
+    def get(self,teamid):
+        if(teamid == 1):
+            return 2
+        else:
+            return 1
 
        
 class Tirer (SoccerStrategy):
     def __init__(self):
-        self.point
+        self.point = Vector2D()
     def compute_strategy(self,state,player,teamid):
         shoot = self.point - player.position
         dist = Vector2D()
@@ -65,11 +84,22 @@ class Tirer (SoccerStrategy):
         pass        
 
 
-class TirerVersBut (Tirer):
+
+class TirerVersP(Tirer):
     def __init__(self):
         Tirer.__init__(self)
     def compute_strategy(self,state,player,teamid):
-        self.point= state.get_goal_center(self.get(teamid)) - player.position        
+        self.point= state.get_player(self.teamid)    
+        return Tirer.compute_strategy(self,state,player,teamid)
+    def copy(self):
+        return TirerVersP()  
+
+        
+class TirerVersBut(Tirer):
+    def __init__(self):
+        Tirer.__init__(self)
+    def compute_strategy(self,state,player,teamid):
+        self.p = state.get_goal_center(self.get(teamid)) - player.position        
         return Tirer.compute_strategy(self,state,player,teamid)
     def copy(self):
         return TirerVersBut() 
@@ -78,3 +108,18 @@ class TirerVersBut (Tirer):
             return 2
         else:
             return 1
+
+class PasBouger(SoccerStrategy):
+    def __init__(self):
+        pass
+    def compute_strategy(self,state,player,teamid):
+        shoot = Vector2D()
+        dist = Vector2D()
+        return SoccerAction(dist,shoot)
+    def copy(self):
+        return PasBouger()
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass  
+
