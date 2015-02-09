@@ -6,6 +6,7 @@ Created on Mon Feb  2 16:58:05 2015
 """
 from soccersimulator import Vector2D,SoccerState,SoccerAction,SoccerStrategy,SoccerBattle,SoccerPlayer,SoccerTeam
 from soccersimulator import PLAYER_RADIUS,BALL_RADIUS
+import random
 
 class RandomStrategy(SoccerStrategy):
     def __init__(self):
@@ -166,6 +167,23 @@ class PasBouger(SoccerStrategy):
     def finish_battle(self,won):
         pass  
 
+class Mix(SoccerStrategy):
+    def __init__(self,des):
+        self.att=ComposeStrategy(AllerVersBalle(),TirerVersBut())
+        self.defe=ComposeStrategy(AllerVersBut(),Defenseur())
+    def compute_strategy(self,state,player,teamid):
+        b = state.ball.position
+        p = player.position
+        if(b-p < 3):
+            return self.att.compute_strategy(self,state,player,teamid)
+        else:
+            return self..descompute_strategy(state,player,teamid)
+        #return SoccerAction(dep,tir)
+    #def copy(self):
+     #   return Mix()
+    #def create_strategy(self):
+    # "   return Mix()
+    
 # mastrat = ComposeStrategy(PasBouger(),TirVersBut())
 
 class ComposeStrategy(SoccerStrategy):
@@ -181,16 +199,17 @@ class ComposeStrategy(SoccerStrategy):
     def create_strategy(self):
         return ComposeStrategy()
 
-
+        
 
 class D(SoccerStrategy):
     def __init__(self):
         pass
     def compute_strategy(self,state,player,teamid):
         direc = state.get_goal_center(self.get(teamid)) - player.position
-        d = Vector2D.create_random(-1,1).norm
-        tir = Vector2D.create_polar(0,d)
-        return SoccerAction(dep,tir)
+        #d = Vector2D(direc.x + random.random(), direc.y + random.random())
+        tir=create_polar(direc.angle+random.random(),direc.norm)
+        #direc = Vector2D(direc.x + random.random(), direc.y + random.random())        
+        return SoccerAction(direc,tir)
     def copy(self):
         return D()
     def create_strategy(self):
@@ -201,4 +220,22 @@ class D(SoccerStrategy):
         else:
             return 1
 
-        
+class Defenseur(SoccerStrategy):
+    def __init__(self):
+        pass
+    def compute_strategy(self,state,player,teamid):
+        direc = state.get_goal_center(self.get(teamid)) - player.position
+        #d = Vector2D(direc.x + random.random(), direc.y + random.random())
+        tir=create_polar(direc.angle+random.random(),direc.norm)
+        #direc = Vector2D(direc.x + random.random(), direc.y + random.random())        
+        return SoccerAction(direc,tir)
+    def copy(self):
+        return D()
+    def create_strategy(self):
+        return D()
+    def get(self,teamid):
+        if(teamid == 1):
+            return 2
+        else:
+            return 1
+       
