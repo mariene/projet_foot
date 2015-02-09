@@ -181,7 +181,24 @@ class ComposeStrategy(SoccerStrategy):
     def create_strategy(self):
         return ComposeStrategy()
 
-class D(Soccer)
 
+
+class D(SoccerStrategy):
+    def __init__(self):
+        pass
+    def compute_strategy(self,state,player,teamid):
+        direc = state.get_goal_center(self.get(teamid)) - player.position
+        d = Vector2D.create_random(-1,1).norm
+        tir = Vector2D.create_polar(0,d)
+        return SoccerAction(dep,tir)
+    def copy(self):
+        return D()
+    def create_strategy(self):
+        return D()
+    def get(self,teamid):
+        if(teamid == 1):
+            return 2
+        else:
+            return 1
 
         
