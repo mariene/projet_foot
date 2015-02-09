@@ -1,7 +1,7 @@
 from soccersimulator import SoccerBattle, SoccerPlayer, SoccerTeam
 from soccersimulator import PygletObserver,ConsoleListener,LogListener
 from soccersimulator import pyglet
-from strats import RandomStrategy
+from strats import RandomStrategy,PStrategy,FonceurStrategy
 
 team1=SoccerTeam("team1")
 team1.add_player(SoccerPlayer("t1j1",FonceurStrategy()))
