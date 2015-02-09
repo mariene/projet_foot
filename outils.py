@@ -168,7 +168,7 @@ class ComposeStrategy(SoccerStrategy):
     def compute_strategy(self,state,player,teamid):
         dep= self.dep.compute_strategy(state,player,teamid)
         tir=self.tir.compute_strategy(state,player,teamid)
-        return SoccerAction(dep,tir)
+        return SoccerAction(dep.acceleration,tir.shoot)
  
         
 
