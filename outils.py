@@ -200,7 +200,7 @@ class Defenseur(SoccerStrategy):
         #p = Vector2D(player.position.x*2,player.position.y*2) quand on veut modifier des coordonnées
         #shoot = g + b - p
         #shoot = Vector2D.create_polar(player.angle + 3.25, 100)
-        shoot = Vector2D.create_polar(gb.angle + 3.25, 100)
+        shoot = Vector2D.create_polar(gb.angle + 3.25, 150)
         dist = b + g
         d = Vector2D((dist.x)/2,(dist.y)/2) 
         dirt = d - player.position
