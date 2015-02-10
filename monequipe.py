@@ -18,7 +18,7 @@ team3.add_player(SoccerPlayer("t3j2",Defenseur()))
 team3.add_player(SoccerPlayer("t3j3",Defenseur()))
 team3.add_player(SoccerPlayer("t3j4",FonceurStrategy()))
 
-team2=SoccerTeam("team4")
+team4=SoccerTeam("team4")
 team4.add_player(SoccerPlayer("t4j2",FonceurStrategy()))
 team4.add_player(SoccerPlayer("t4j1",FonceurStrategy()))
 team4.add_player(SoccerPlayer("t4j3",Defenseur()))
