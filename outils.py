@@ -172,37 +172,39 @@ class ComposeStrategy(SoccerStrategy):
  
         
 
-#class Dribbler(SoccerStrategy):
-  #  def __init__(self):
-      #  pass
-   # def compute_strategy(self,state,player,teamid):
-      #  direc = state.get_goal_center(self.get(teamid)) - player.position
-      #  d = Vector2D(direc.x + random.random(), direc.y + random.random())
-      #  tir=d.create_polar(direc.angle+random.random(),direc.norm)
-       #direc = Vector2D(direc.x + random.random(), direc.y + random.random())        
-      # return SoccerAction(direc,tir)
-       #def copy(self):
-         #  return Dribbler()
-        #def create_strategy(self):
-      #  return Dribbler()
-   # def get(self,teamid):
-     #  if(teamid == 1):
-       #     return 2
-      #  else:
-      #     return 1
-
+class TirerRd(SoccerStrategy):
+    def __init__(self):
+        pass
+    def compute_strategy(self,state,player,teamid):
+        gb = state.get_goal_center(self.get(teamid)) - player.position
+        #de=Vector2D.create_polar(player.angle, g.norm)
+        dr= Vector2D.create_polar(g.angle+random.random(),g.norm*10.0)
+        direc = Vector2D()     
+        return SoccerAction(direc,dr)
+    def create_strategy(self):
+        return TirerRd()
+    def get(self,teamid):
+        if(teamid == 1):
+            return 2
+        else:
+            return 1 
+     
+        
 class Defenseur(SoccerStrategy):
     def __init__(self):
         pass
     def compute_strategy(self,state,player,teamid):
-        g=state.get_goal_center(self.get(teamid))
+        g = state.get_goal_center(self.get(teamid))
         b = state.ball.position
-        #p=Vector2D(player.position.x*2,player.position.y*2)
-        shoot = g + b - player.position
+        gb = state.get_goal_center(self.get(teamid)) - player.position
+        #p = Vector2D(player.position.x*2,player.position.y*2) quand on veut modifier des coordonnées
+        #shoot = g + b - p
+        #shoot = Vector2D.create_polar(player.angle + 3.25, 100)
+        shoot = Vector2D.create_polar(gb.angle + 3.25, 100)
         dist = b + g
-        d=Vector2D(dist.x/2.0,dist.y/2.0)
+        d = Vector2D((dist.x)/2,(dist.y)/2) 
         dirt = d - player.position
-        return SoccerAction(dirt,shoot)       
+        return SoccerAction(dirt,shoot)
     def create_strategy(self):
         return Defenseur()
     def get(self,teamid):
