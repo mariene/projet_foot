@@ -12,6 +12,9 @@ team2=SoccerTeam("Patates")
 team2.add_player(SoccerPlayer("t2j1",FonceurStrategy()))
 team2.add_player(SoccerPlayer("t2j2",Defenseur()))
 
+team6=SoccerTeam("Patates")
+team6.add_player(SoccerPlayer("t6j1",Defenseur()))
+team6.add_player(SoccerPlayer("t6j2",Aleatoire()))
 
 team3=SoccerTeam("Aubergines")
 team3.add_player(SoccerPlayer("t3j1",FonceurStrategy()))

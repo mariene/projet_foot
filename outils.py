@@ -219,6 +219,7 @@ class Aleatoire(SoccerStrategy):
             return 2
         else:
             return 1 
+
             
             
 class Mix(SoccerStrategy):

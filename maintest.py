@@ -15,8 +15,8 @@ team2=SoccerTeam("team2")
 
 #team1.add_player(SoccerPlayer("t1j1",FonceurStrategy()))
 team1.add_player(SoccerPlayer("t1j2",Defenseur()))
-#team1.add_player(SoccerPlayer("t1j3",Aleatoire()))
-team1.add_player(SoccerPlayer("t1j4",Mix()))
+team1.add_player(SoccerPlayer("t1j3",Aleatoire()))
+#team1.add_player(SoccerPlayer("t1j4",Mix()))
 
 comp=ComposeStrategy(Defenseur(),Defenseur())
 compo=ComposeStrategy(AllerVersBalle(),TirerRd())
