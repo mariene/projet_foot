@@ -25,11 +25,11 @@ team4.add_player(SoccerPlayer("t4j1",FonceurStrategy()))
 team4.add_player(SoccerPlayer("t4j3",Defenseur()))
 team4.add_player(SoccerPlayer("t4j4",FonceurStrategy()))
 
-team4=SoccerTeam("Tomates")
-team4.add_player(SoccerPlayer("t4j2",FonceurStrategy()))
-team4.add_player(SoccerPlayer("t4j1",Mix()))
-team4.add_player(SoccerPlayer("t4j3",Defenseur()))
-team4.add_player(SoccerPlayer("t4j4",FonceurStrategy()))
+team5=SoccerTeam("Tomates")
+team5.add_player(SoccerPlayer("t5j2",FonceurStrategy()))
+team5.add_player(SoccerPlayer("t5j1",Mix()))
+team5.add_player(SoccerPlayer("t5j3",Defenseur()))
+team5.add_player(SoccerPlayer("t5j4",FonceurStrategy()))
 
 teams = [team1, team2, team3, team4,team5]
 #if __name__== "__main__":
