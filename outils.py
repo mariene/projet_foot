@@ -117,12 +117,13 @@ class TirerVersP(Tirer):
     def compute_strategy(self,state,player,teamid):
         self.point= state.get_player(self.teamid)    
         return Tirer.compute_strategy(self,state,player,teamid)
+    
          
 class TirerVersBut(Tirer):
     def __init__(self):
         Tirer.__init__(self)
     def compute_strategy(self,state,player,teamid):
-        self.p = state.get_goal_center(self.get(teamid)) - player.position        
+        self.p = state.get_goal_center(self.get(teamid))        
         return Tirer.compute_strategy(self,state,player,teamid) 
     def get(self,teamid):
         if(teamid == 1):
@@ -174,6 +175,7 @@ class TirerRd(SoccerStrategy):
             return 2
         else:
             return 1 
+
      
 # defenseur a ameliorer car qd distance bg trop proche, plus le temps de choper balle
 # enfin, de le rattrapper         
@@ -238,7 +240,7 @@ class Attaquant(SoccerStrategy):
         b = state.ball.position
         dist= b - player.position
         gb = g - b 
-        if (gb.norm < GAME_WIDTH/5):
+        if (gb.norm < GAME_WIDTH/5 ):
             return self.fonce.compute_strategy(state,player,teamid)
         return self.bal.compute_strategy(state,player,teamid)
     def start_battle(self,state):
