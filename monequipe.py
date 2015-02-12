@@ -13,8 +13,8 @@ team2.add_player(SoccerPlayer("t2j1",FonceurStrategy()))
 team2.add_player(SoccerPlayer("t2j2",Defenseur()))
 
 team6=SoccerTeam("Artichauts")
-team6.add_player(SoccerPlayer("t6j1",Defenseur()))
-team6.add_player(SoccerPlayer("t6j2",Attaquant()))
+team6.add_player(SoccerPlayer("t6j1",Mix()))
+team6.add_player(SoccerPlayer("t6j2",FonceurStrategy()))
 
 team3=SoccerTeam("Aubergines")
 team3.add_player(SoccerPlayer("t3j1",FonceurStrategy()))
