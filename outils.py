@@ -236,16 +236,16 @@ class Mix(SoccerStrategy):
         #bpd = Vector2D(bp.x - 1, bp.y)
         #shoot = Vector2D.create_polar(player.angle+random.random(),10)
         shoot = Vector2D.create_polar(player.angle + 2.5, 150)
-        if b.x==150.0/2.0 and b.y==90.0/2.0 : 
+        if b.x==GAME_WIDTH/2.0 and b.y==GAME_HEIGHT/2.0 : 
             return SoccerAction(bp,shoot)
-        elif b.x < 150/2: 
+        elif b.x < GAME_WIDTH/3: 
             if((p.distance(b)<(PLAYER_RADIUS+BALL_RADIUS))):
                 
                 dist = Vector2D()
                 return SoccerAction(dist,shoot)
             else :
                 return self.defe.compute_strategy(state,player,teamid)
-        if gb < ((1/10) * 150 ) : 
+        if gb < ((1/10) * GAME_WIDTH ) : 
             return self.compo.compute_strategy(state,player,teamid)
         return self.att.compute_strategy(state,player,teamid)
     def create_strategy(self):
