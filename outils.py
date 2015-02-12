@@ -180,8 +180,8 @@ class Defenseur(SoccerStrategy):
         b = state.ball.position
         p = player.position
         gb = state.get_goal_center(self.get(teamid)) - p
-        #p = Vector2D(player.position.x*2,player.position.y*2) quand on veut modifier des coordonnées
-        #shoot = g + b - p
+        pm = Vector2D(p.x*2,p.y*2) quand on veut modifier des coordonnées
+        shoot1 = g + b - pm
         #shoot = Vector2D.create_polar(player.angle + 3.25, 100)
         #shoot = Vector2D.create_polar(gb.angle + 2.25, 150)
         dist = b + g
@@ -189,7 +189,7 @@ class Defenseur(SoccerStrategy):
         dirt = d - p
         shoot = Vector2D.create_polar(gb.angle + 2.5, 150)
         if ((p.distance(b)<(PLAYER_RADIUS+BALL_RADIUS))):
-            return SoccerAction(dirt,shoot)
+            return SoccerAction(dirt,shoot1)
         #shoot = Vector2D.create_polar(gb.angle + 2.5, 150)
         return SoccerAction(dirt,shoot)
     def create_strategy(self):
