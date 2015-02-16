@@ -54,6 +54,7 @@ class AllerVers (SoccerStrategy):
     def compute_strategy(self,state,player,teamid):
         shoot=Vector2D()
         dist = self.point - player.position
+        dist.product(10)
         return SoccerAction(dist,shoot)
     def start_battle(self,state):
         pass        
@@ -123,14 +124,25 @@ class TirerVersBut(Tirer):
     def __init__(self):
         Tirer.__init__(self)
     def compute_strategy(self,state,player,teamid):
-        self.p = state.get_goal_center(self.get(teamid))        
+        self.point = state.get_goal_center(self.get(teamid))       
         return Tirer.compute_strategy(self,state,player,teamid) 
     def get(self,teamid):
         if(teamid == 1):
             return 2
         else:
             return 1
-            
+
+class TirerVersButBis(SoccerStrategy):
+    def __init__(self):
+        self.strat = Tirer()
+    def compute_strategy(self,state,player,teamid):
+        self.strat.point = state.get_goal_center(self.get(teamid))
+        return self.strat.compute_strategy(state,player,teamid)
+    def get(self,teamid):
+     if(teamid == 1):
+            return 2
+     else:
+            return 1
             
 class PasBouger(SoccerStrategy):
     def __init__(self):
@@ -195,7 +207,7 @@ class Defenseur(SoccerStrategy):
         dist = b + g
         d = Vector2D((dist.x)/2,(dist.y)/2)   
         dirt = d - p
-        shoot = Vector2D.create_polar(gp.angle + 2.5, 100)
+        shoot = Vector2D.create_polar(gp.angle + 2.5, 2.0)
         if (gb.norm < 15):
             dirt1 = dist- p - p
             return SoccerAction(dirt1,shoot)
@@ -258,7 +270,7 @@ class Mix(SoccerStrategy):
     def __init__(self):
         self.att= ComposeStrategy(AllerVersBalle(),FonceurStrategy())
         self.defe=Defenseur()
-        self.compo = ComposeStrategy(AllerVersBalle(),TirerRd())
+        self.compo = Aleatoire()#ComposeStrategy(AllerVersBalle(),TirerRd())
     def compute_strategy(self,state,player,teamid):
         b = state.ball.position
         p = player.position
@@ -267,18 +279,20 @@ class Mix(SoccerStrategy):
         gb= g - b
         #bpd = Vector2D(bp.x - 1, bp.y)
         #shoot = Vector2D.create_polar(player.angle+random.random(),10)
-        shoot = Vector2D.create_polar(player.angle + 2.5, 150)
-        if b.x==GAME_WIDTH/2.0 and b.y==GAME_HEIGHT/2.0 : 
-            return SoccerAction(bp,shoot)
-        elif b.x < GAME_WIDTH/3: 
-            if((p.distance(b)<(PLAYER_RADIUS+BALL_RADIUS))):
-                dist = Vector2D()
-                return SoccerAction(dist,shoot)
-            else :
-                return self.defe.compute_strategy(state,player,teamid)
-        if gb < ((1/10) * GAME_WIDTH ) : 
-            return self.compo.compute_strategy(state,player,teamid)
-        return self.att.compute_strategy(state,player,teamid)
+        shoot = Vector2D(1,1)
+        #if b.x==GAME_WIDTH/2.0 and b.y==GAME_HEIGHT/2.0 : 
+            #return SoccerAction(bp,shoot)
+            
+        if gb.norm <(0.25 * GAME_WIDTH) :
+            if gb.norm < (0.8 * GAME_WIDTH ) : 
+                return self.compo.compute_strategy(state,player,teamid)
+            #elif((p.distance(b)<(PLAYER_RADIUS+BALL_RADIUS))):
+               # dist = Vector2D()
+              # return SoccerAction(dist,shoot)
+            return self.defe.compute_strategy(state,player,teamid)
+        else:
+            return self.att.compute_strategy(state,player,teamid)                        
+            
     def create_strategy(self):
         return Mix()
     def get(self,teamid):
@@ -286,3 +300,42 @@ class Mix(SoccerStrategy):
             return 2
         else:
             return 1
+
+class Goal(SoccerStrategy):
+    def __init__(self):
+        self.name="Goal"
+    def start_battle(self,state):
+        pass
+    def finish_battle(self,won):
+        pass
+    def compute_strategy(self,state,player,teamid):
+        if(teamid==1):
+            a=(state.ball.position+state.get_goal_center(1))
+            a.x=a.x/2.02
+            a.y=a.y/2
+            a=a-player.position
+            if(state.ball.position.y<(GAME_HEIGHT*0.5)):
+                shoot=Vector2D(10,10)
+            else:
+                shoot=Vector2D(10,-10)   
+            return SoccerAction(a,shoot)  
+        else:
+            a= (state.ball.position+state.get_goal_center(2))
+            a.x=a.x/2.02
+            a.y=a.y/2
+            a=a-player.position
+            if(state.ball.position.y<(GAME_HEIGHT*0.5)):
+                shoot=Vector2D(-10,10)
+            else:
+                shoot=Vector2D(-10,-10) 
+            return SoccerAction(a,shoot) 
+             
+#class SelectorStrat(SoccerStrategy):
+     #def __init__(self):
+      #   self.liststrat=[]
+     #def selector(self,state,player,teamid):
+       #  if() return 
+      #    ....
+    #def compute_strategy(self,state,player,teamid):
+      #  idx=selector()
+     #   return self.liststrat[idx].(computestratstate,player,teamid)
