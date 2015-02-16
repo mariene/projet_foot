@@ -33,7 +33,7 @@ team5.add_player(SoccerPlayer("t5j1",Mix()))
 team5.add_player(SoccerPlayer("t5j3",Defenseur()))
 team5.add_player(SoccerPlayer("t5j4",FonceurStrategy()))
 
-teams = [team1, team2, team3, team4,team5]
+teams = [team1, team2, team3,team5]
 #if __name__== "__main__":
 #	battle=SoccerBattle(team1,team1.copy())
 	#obs=PygletObserver()

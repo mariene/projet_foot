@@ -7,6 +7,7 @@ Created on Mon Feb  2 16:58:05 2015
 from soccersimulator import Vector2D,SoccerState,SoccerAction,SoccerStrategy,SoccerBattle,SoccerPlayer,SoccerTeam
 from soccersimulator import PLAYER_RADIUS,BALL_RADIUS,GAME_WIDTH,GAME_HEIGHT
 import random
+import need *
 
 #joueur random
 class RandomStrategy(SoccerStrategy):
@@ -37,15 +38,11 @@ class FonceurStrategy(SoccerStrategy):
         pos = b-p
         shoot=Vector2D()
         if ((p.distance(b)<(PLAYER_RADIUS+BALL_RADIUS))):
-            shoot = state.get_goal_center(self.get(teamid)) - p
+            shoot = state.get_goal_center(self.need.get(teamid)) - p
         return SoccerAction(pos,shoot)
     def create_strategy(self):
         return FonceurStrategy()
-    def get(self,teamid):
-        if(teamid == 1):
-            return 2
-        else:
-            return 1
+    
 
 # Aller vers un point
 class AllerVers (SoccerStrategy):
@@ -86,17 +83,12 @@ class AllerVersBut (SoccerStrategy):
     def __init__(self):
         self.strat= AllerVers()
     def compute_strategy(self,state,player,teamid):
-        self.strat.point= state.get_goal_center(self.get(teamid))
+        self.strat.point= state.get_goal_center(self.need.get(teamid))
         return self.strat.compute_strategy(state,player,teamid)
     def start_battle(self,state):
         pass        
     def finish_battle(self,won):
         pass  
-    def get(self,teamid):
-        if(teamid == 1):
-            return 2
-        else:
-            return 1
 
 #tirer vers un point       
 class Tirer (SoccerStrategy):
@@ -126,11 +118,7 @@ class TirerVersBut(Tirer):
     def compute_strategy(self,state,player,teamid):
         self.point = state.get_goal_center(self.get(teamid))       
         return Tirer.compute_strategy(self,state,player,teamid) 
-    def get(self,teamid):
-        if(teamid == 1):
-            return 2
-        else:
-            return 1
+    
 
 class TirerVersButBis(SoccerStrategy):
     def __init__(self):
@@ -138,11 +126,7 @@ class TirerVersButBis(SoccerStrategy):
     def compute_strategy(self,state,player,teamid):
         self.strat.point = state.get_goal_center(self.get(teamid))
         return self.strat.compute_strategy(state,player,teamid)
-    def get(self,teamid):
-     if(teamid == 1):
-            return 2
-     else:
-            return 1
+    
             
 class PasBouger(SoccerStrategy):
     def __init__(self):
@@ -236,11 +220,7 @@ class Aleatoire(SoccerStrategy):
         pass        
     def finish_battle(self,won):
         pass  
-    def get(self,teamid):
-        if(teamid == 1):
-            return 2
-        else:
-            return 1 
+
 
             
 class Attaquant(SoccerStrategy):
@@ -259,11 +239,7 @@ class Attaquant(SoccerStrategy):
         pass        
     def finish_battle(self,won):
         pass  
-    def get(self,teamid):
-        if(teamid == 1):
-            return 2
-        else:
-            return 1
+
 
             
 class Mix(SoccerStrategy):
@@ -281,8 +257,7 @@ class Mix(SoccerStrategy):
         #shoot = Vector2D.create_polar(player.angle+random.random(),10)
         shoot = Vector2D(1,1)
         #if b.x==GAME_WIDTH/2.0 and b.y==GAME_HEIGHT/2.0 : 
-            #return SoccerAction(bp,shoot)
-            
+            #return SoccerAction(bp,shoot)    
         if gb.norm <(0.25 * GAME_WIDTH) :
             if gb.norm < (0.8 * GAME_WIDTH ) : 
                 return self.compo.compute_strategy(state,player,teamid)
@@ -291,16 +266,12 @@ class Mix(SoccerStrategy):
               # return SoccerAction(dist,shoot)
             return self.defe.compute_strategy(state,player,teamid)
         else:
-            return self.att.compute_strategy(state,player,teamid)                        
-            
+            return self.att.compute_strategy(state,player,teamid)                                    
     def create_strategy(self):
         return Mix()
-    def get(self,teamid):
-        if(teamid == 1):
-            return 2
-        else:
-            return 1
 
+
+# goal de timothé 
 class Goal(SoccerStrategy):
     def __init__(self):
         self.name="Goal"
