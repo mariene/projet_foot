@@ -7,6 +7,7 @@ Created on Mon Feb  2 16:58:05 2015
 from soccersimulator import Vector2D,SoccerState,SoccerAction,SoccerStrategy,SoccerBattle,SoccerPlayer,SoccerTeam
 from soccersimulator import PLAYER_RADIUS,BALL_RADIUS,GAME_WIDTH,GAME_HEIGHT
 import random
+import need 
 
 #joueur random
 class RandomStrategy(SoccerStrategy):
@@ -37,15 +38,11 @@ class FonceurStrategy(SoccerStrategy):
         pos = b-p
         shoot=Vector2D()
         if ((p.distance(b)<(PLAYER_RADIUS+BALL_RADIUS))):
-            shoot = state.get_goal_center(self.get(teamid)) - p
+            shoot = state.get_goal_center(need.get(teamid)) - p
         return SoccerAction(pos,shoot)
     def create_strategy(self):
         return FonceurStrategy()
-    def get(self,teamid):
-        if(teamid == 1):
-            return 2
-        else:
-            return 1
+    
 
 # Aller vers un point
 class AllerVers (SoccerStrategy):
@@ -86,17 +83,12 @@ class AllerVersBut (SoccerStrategy):
     def __init__(self):
         self.strat= AllerVers()
     def compute_strategy(self,state,player,teamid):
-        self.strat.point= state.get_goal_center(self.get(teamid))
+        self.strat.point= state.get_goal_center(self.need.get(teamid))
         return self.strat.compute_strategy(state,player,teamid)
     def start_battle(self,state):
         pass        
     def finish_battle(self,won):
         pass  
-    def get(self,teamid):
-        if(teamid == 1):
-            return 2
-        else:
-            return 1
 
 #tirer vers un point       
 class Tirer (SoccerStrategy):
@@ -124,25 +116,17 @@ class TirerVersBut(Tirer):
     def __init__(self):
         Tirer.__init__(self)
     def compute_strategy(self,state,player,teamid):
-        self.point = state.get_goal_center(self.get(teamid))       
+        self.point = state.get_goal_center(need.get(teamid))       
         return Tirer.compute_strategy(self,state,player,teamid) 
-    def get(self,teamid):
-        if(teamid == 1):
-            return 2
-        else:
-            return 1
+    
 
 class TirerVersButBis(SoccerStrategy):
     def __init__(self):
         self.strat = Tirer()
     def compute_strategy(self,state,player,teamid):
-        self.strat.point = state.get_goal_center(self.get(teamid))
+        self.strat.point = state.get_goal_center(need.get(teamid))
         return self.strat.compute_strategy(state,player,teamid)
-    def get(self,teamid):
-     if(teamid == 1):
-            return 2
-     else:
-            return 1
+    
             
 class PasBouger(SoccerStrategy):
     def __init__(self):
@@ -196,32 +180,32 @@ class Defenseur(SoccerStrategy):
         #self.shooter=ComposeStrategy(PasBouger(),TirerRd())
         pass
     def compute_strategy(self,state,player,teamid):
-        g = state.get_goal_center(self.get(teamid))
+        g = state.get_goal_center(self.getad(teamid))
         b = state.ball.position
         p = player.position
-        gb = state.get_goal_center(self.get(teamid)) - p
+        gb = state.get_goal_center(self.getad(teamid)) - p
         gp = g-p
         #pm = Vector2D(p.x*2,p.y*2) quand on veut modifier des coordonnées
         #shoot1 = g + b - pm
         #shoot = Vector2D.create_polar(player.angle + 3.25, 100)
         #shoot = Vector2D.create_polar(gb.angle + 2.25, 150)
         dist = b + g
-        d = Vector2D((dist.x)/2,(dist.y)/2)   
+        d = Vector2D((dist.x)/2.0,(dist.y)/2.0)   
         dirt = d - p
-        shoot = Vector2D.create_polar(gp.angle + 2.5, 2.0)
+        shoot = Vector2D.create_polar(gp.angle + 2.505, 10)
         if (gb.norm < 15):
             dirt1 = dist- p - p
             return SoccerAction(dirt1,shoot)
-        elif gb.norm < GAME_WIDTH-(GAME_WIDTH*0.95):
+        elif gb.norm < GAME_WIDTH-(GAME_WIDTH*0.90):
             #return self.shooter.compute_strategy(state,player,teamid)
-            dist1=Vector2D(0,0)
-            shoot1 = Vector2D(10,-10)
-            return SoccerAction(dist1,shoot1)
+            #dist1=Vector2D(0,0)
+            shoot1 = Vector2D(10,10)
+            return SoccerAction(dist,shoot1)
         #shoot = Vector2D.create_polar(gb.angle + 2.5, 150)
         return SoccerAction(dirt,shoot)
     def create_strategy(self):
         return Defenseur()
-    def get(self,teamid):
+    def getad(self,teamid):
         if(teamid == 1):
             return 1
         else:
@@ -232,29 +216,37 @@ class Aleatoire(SoccerStrategy):
     def __init__(self):
         pass
     def compute_strategy(self,state,player,teamid):
-        g = state.get_goal_center(self.get(teamid))
+        g = state.get_goal_center(need.get(teamid))
         b = state.ball.position
         dist= b - player.position
-        gb = state.get_goal_center(self.get(teamid)) - player.position
+        gb = state.get_goal_center(need.get(teamid)) - player.position
         shoot = Vector2D.create_polar(gb.angle + random.uniform(-1,1),15)
         return SoccerAction(dist,shoot)
     def start_battle(self,state):
         pass        
     def finish_battle(self,won):
         pass  
-    def get(self,teamid):
-        if(teamid == 1):
-            return 2
-        else:
-            return 1 
 
+class AleatoireBis(SoccerStrategy):
+    def __init__(self):
+        pass
+    def compute_strategy(self,state,player,teamid):
+        g = state.get_goal_center(need.get(teamid))
+        b = state.ball.position
+        gb = state.get_goal_center(need.get(teamid)) - player.position
+        shoot = Vector2D.create_polar(gb.angle + random.uniform(-1,1),1)
+        return SoccerAction(Vector2D(),shoot)
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass  
             
 class Attaquant(SoccerStrategy):
     def __init__(self):        
         self.bal= ComposeStrategy(AllerVersBalle(),TirerRd())
         self.fonce = FonceurStrategy()
     def compute_strategy(self,state,player,teamid):
-        g = state.get_goal_center(self.get(teamid))
+        g = state.get_goal_center(need.get(teamid))
         b = state.ball.position
         dist= b - player.position
         gb = g - b     
@@ -266,47 +258,47 @@ class Attaquant(SoccerStrategy):
         pass        
     def finish_battle(self,won):
         pass  
-    def get(self,teamid):
-        if(teamid == 1):
-            return 2
-        else:
-            return 1
+
 
            
 class Mix(SoccerStrategy):
     def __init__(self):
         self.att= ComposeStrategy(AllerVersBalle(),FonceurStrategy())
         self.defe=Defenseur()
-        self.compo = Aleatoire()#ComposeStrategy(AllerVersBalle(),TirerRd())
+        self.compo = ComposeStrategy(AllerVersBalle(),TirerRd())
     def compute_strategy(self,state,player,teamid):
         b = state.ball.position
         p = player.position
         bp = b - p
-        g = state.get_goal_center(self.get(teamid))
+        g = state.get_goal_center(self.getad(teamid))
         gb= g - b
         #bpd = Vector2D(bp.x - 1, bp.y)
         #shoot = Vector2D.create_polar(player.angle+random.random(),10)
-        shoot = Vector2D(1,1)
         #if b.x==GAME_WIDTH/2.0 and b.y==GAME_HEIGHT/2.0 : 
             #return SoccerAction(bp,shoot)   
-        if gb.norm <(0.25 * GAME_WIDTH) :
-            if gb.norm < (0.8 * GAME_WIDTH ) : 
-                return self.compo.compute_strategy(state,player,teamid)
+           #return SoccerAction(bp,shoot)    
+        #if gb.norm < (0.5 * GAME_WIDTH) :
+        if gb.norm < (0.50 * GAME_WIDTH ) : 
+            return self.defe.compute_strategy(state,player,teamid)
             #elif((p.distance(b)<(PLAYER_RADIUS+BALL_RADIUS))):
                # dist = Vector2D()
               # return SoccerAction(dist,shoot)
-            return self.defe.compute_strategy(state,player,teamid)
+        elif gb.norm < (0.2 * GAME_WIDTH ):
+            return self.compo.compute_strategy(state,player,teamid)
+            #return self.att.compute_strategy(state,player,teamid)   
         else:
-            return self.att.compute_strategy(state,player,teamid)                        
-            
+            return self.att.compute_strategy(state,player,teamid)                                    
     def create_strategy(self):
         return Mix()
-    def get(self,teamid):
+        
+    def getad(self,teamid):
         if(teamid == 1):
-            return 2
-        else:
             return 1
+        else:
+            return 2
 
+
+# goal de timothé 
 
 class Goal(SoccerStrategy):
     def __init__(self):
