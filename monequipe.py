@@ -11,7 +11,7 @@ team2=SoccerTeam("Patates")
 team2.add_player(SoccerPlayer("t2j1",FonceurStrategy()))
 team2.add_player(SoccerPlayer("t2j2",Defenseur()))
 
-team6=SoccerTeam("Artichauts")
+team6=SoccerTeam("Oignons")
 team6.add_player(SoccerPlayer("t6j1",Mix()))
 team6.add_player(SoccerPlayer("t6j2",FonceurStrategy()))
 
@@ -34,7 +34,7 @@ team5.add_player(SoccerPlayer("t5j1",Mix()))
 team5.add_player(SoccerPlayer("t5j3",Defenseur()))
 team5.add_player(SoccerPlayer("t5j4",Attaquant()))
 
-teams = [team1, team2, team3,team5]
+teams = [team1, team2, team3,team5,team6]
 #if __name__== "__main__":
 #	battle=SoccerBattle(team1,team1.copy())
 	#obs=PygletObserver()
