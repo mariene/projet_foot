@@ -9,6 +9,7 @@ from soccersimulator import PLAYER_RADIUS,BALL_RADIUS,GAME_WIDTH,GAME_HEIGHT
 import random
 import need 
 
+#STRAT' DE BASE
 #joueur random
 class RandomStrategy(SoccerStrategy):
     def __init__(self):
@@ -42,8 +43,9 @@ class FonceurStrategy(SoccerStrategy):
         return SoccerAction(pos,shoot)
     def create_strategy(self):
         return FonceurStrategy()
-    
 
+#==============================================================================    
+#ALLER VERS 
 # Aller vers un point
 class AllerVers (SoccerStrategy):
     def __init__(self):
@@ -90,6 +92,8 @@ class AllerVersBut (SoccerStrategy):
     def finish_battle(self,won):
         pass  
 
+#==============================================================================
+#TIRER VERS
 #tirer vers un point       
 class Tirer (SoccerStrategy):
     def __init__(self):
@@ -127,31 +131,7 @@ class TirerVersButBis(SoccerStrategy):
         self.strat.point = state.get_goal_center(need.get(teamid))
         return self.strat.compute_strategy(state,player,teamid)
     
-            
-class PasBouger(SoccerStrategy):
-    def __init__(self):
-        pass
-    def compute_strategy(self,state,player,teamid):
-        shoot = Vector2D()
-        dist = Vector2D()
-        return SoccerAction(dist,shoot)
-    def start_battle(self,state):
-        pass        
-    def finish_battle(self,won):
-        pass  
     
-# mastrat = ComposeStrategy(PasBouger(),TirVersBut())
-# pour faire composition de strat
-class ComposeStrategy(SoccerStrategy):
-    def __init__(self,dep,tir):
-        self.dep = dep
-        self.tir = tir
-    def compute_strategy(self,state,player,teamid):
-        dep= self.dep.compute_strategy(state,player,teamid)
-        tir=self.tir.compute_strategy(state,player,teamid)
-        return SoccerAction(dep.acceleration,tir.shoot)
- 
-
 #tire n'importe ou
 class TirerRd(SoccerStrategy):
     def __init__(self):
@@ -172,7 +152,60 @@ class TirerRd(SoccerStrategy):
         else:
             return 1 
 
-     
+# a peu près le meme genre que Aleatoire sauf qu'il n'y a pas de direction
+# tirerRd meme plus "orienter"
+class AleatoireBis(SoccerStrategy):
+    def __init__(self):
+        pass
+    def compute_strategy(self,state,player,teamid):
+        g = state.get_goal_center(need.get(teamid))
+        b = state.ball.position
+        gb = state.get_goal_center(need.get(teamid)) - player.position
+        shoot = Vector2D.create_polar(gb.angle + random.uniform(-1,1),1.5)
+        return SoccerAction(Vector2D(),shoot)
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass 
+            
+#==============================================================================            
+class PasBouger(SoccerStrategy):
+    def __init__(self):
+        pass
+    def compute_strategy(self,state,player,teamid):
+        shoot = Vector2D()
+        dist = Vector2D()
+        return SoccerAction(dist,shoot)
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass  
+    
+#==============================================================================    
+#CHOSES UTILES
+# mastrat = ComposeStrategy(PasBouger(),TirVersBut())
+# pour faire composition de strat
+class ComposeStrategy(SoccerStrategy):
+    def __init__(self,dep,tir):
+        self.dep = dep
+        self.tir = tir
+    def compute_strategy(self,state,player,teamid):
+        dep= self.dep.compute_strategy(state,player,teamid)
+        tir=self.tir.compute_strategy(state,player,teamid)
+        return SoccerAction(dep.acceleration,tir.shoot)
+
+#class SelectorStrat(SoccerStrategy):
+     #def __init__(self):
+      #   self.liststrat=[]
+     #def selector(self,state,player,teamid):
+       #  if() return 
+      #    ....
+    #def compute_strategy(self,state,player,teamid):
+      #  idx=selector()
+     #   return self.liststrat[idx].(computestratstate,player,teamid) 
+#==============================================================================     
+#STRAT'
+
 # defenseur a ameliorer car qd distance bg trop proche, plus le temps de choper balle
 # enfin, de le rattrapper         
 class Defenseur(SoccerStrategy):
@@ -226,20 +259,7 @@ class Aleatoire(SoccerStrategy):
         pass        
     def finish_battle(self,won):
         pass  
-
-class AleatoireBis(SoccerStrategy):
-    def __init__(self):
-        pass
-    def compute_strategy(self,state,player,teamid):
-        g = state.get_goal_center(need.get(teamid))
-        b = state.ball.position
-        gb = state.get_goal_center(need.get(teamid)) - player.position
-        shoot = Vector2D.create_polar(gb.angle + random.uniform(-1,1),1)
-        return SoccerAction(Vector2D(),shoot)
-    def start_battle(self,state):
-        pass        
-    def finish_battle(self,won):
-        pass  
+ 
             
 class Attaquant(SoccerStrategy):
     def __init__(self):        
@@ -292,10 +312,10 @@ class Mix(SoccerStrategy):
             #elif((p.distance(b)<(PLAYER_RADIUS+BALL_RADIUS))):
                # dist = Vector2D()
               # return SoccerAction(dist,shoot)
-        elif gb.norm < (0.2 * GAME_WIDTH ):
+        elif gb.norm == (0.25 * GAME_WIDTH ):
             return self.compo.compute_strategy(state,player,teamid)
             #return self.att.compute_strategy(state,player,teamid)   
-        else:
+        else: 
             return self.att.compute_strategy(state,player,teamid)                                    
     def create_strategy(self):
         return Mix()
@@ -338,12 +358,3 @@ class Goal(SoccerStrategy):
                 shoot=Vector2D(-10,-10) 
             return SoccerAction(a,shoot) 
              
-#class SelectorStrat(SoccerStrategy):
-     #def __init__(self):
-      #   self.liststrat=[]
-     #def selector(self,state,player,teamid):
-       #  if() return 
-      #    ....
-    #def compute_strategy(self,state,player,teamid):
-      #  idx=selector()
-     #   return self.liststrat[idx].(computestratstate,player,teamid)
