@@ -8,7 +8,7 @@ team1.add_player(SoccerPlayer("t1j1",Mix()))
 
 
 team2=SoccerTeam("Patates")
-team2.add_player(SoccerPlayer("t2j1",FonceurStrategy()))
+team2.add_player(SoccerPlayer("t2j1",Attaquant()))
 team2.add_player(SoccerPlayer("t2j2",Defenseur()))
 
 team6=SoccerTeam("Oignons")

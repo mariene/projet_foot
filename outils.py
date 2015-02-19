@@ -245,20 +245,29 @@ class Attaquant(SoccerStrategy):
     def __init__(self):        
         self.bal= ComposeStrategy(AllerVersBalle(),TirerRd())
         self.fonce = FonceurStrategy()
+        self.ale = ComposeStrategy(AllerVersBalle(),Aleatoire())
     def compute_strategy(self,state,player,teamid):
-        g = state.get_goal_center(need.get(teamid))
+        g = state.get_goal_center(self.getad(teamid))
+        gadv = state.get_goal_center(need.get(teamid))
         b = state.ball.position
+        gadvb = gadv - b
         dist= b - player.position
         gb = g - b     
-        if (b.x==GAME_WIDTH/2.0 and b.y==GAME_HEIGHT/2.0) or (gb.norm < GAME_WIDTH/6.0) : 
+        if (b.x==GAME_WIDTH/2.0 and b.y==GAME_HEIGHT/2.0) or (gadvb.norm < GAME_WIDTH/6.0) : 
             return self.bal.compute_strategy(state,player,teamid)
+        elif gb.norm < GAME_WIDTH/8:
+            return self.ale.compute_strategy(state,player,teamid)
         else:
             return self.fonce.compute_strategy(state,player,teamid)
     def start_battle(self,state):
         pass        
     def finish_battle(self,won):
         pass  
-
+    def getad(self,teamid):
+        if(teamid == 1):
+            return 1
+        else:
+            return 2
 
            
 class Mix(SoccerStrategy):
@@ -298,8 +307,8 @@ class Mix(SoccerStrategy):
             return 2
 
 
-# goal de timothé 
 
+# goal de timothé 
 class Goal(SoccerStrategy):
     def __init__(self):
         self.name="Goal"

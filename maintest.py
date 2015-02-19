@@ -20,12 +20,12 @@ team1.add_player(SoccerPlayer("t1j2",FonceurStrategy()))
 
 
 comp=ComposeStrategy(Defenseur(),Defenseur())
-compo=ComposeStrategy(AllerVersBalle(),AleatoireBis())
+compo=ComposeStrategy(AllerVersBalle(),Aleatoire())
 
 #team2.add_player(SoccerPlayer("t2j2",compo))
-#team2.add_player(SoccerPlayer("t2j1",Defenseur()))
+team2.add_player(SoccerPlayer("t2j1",Defenseur()))
 team2.add_player(SoccerPlayer("t2j3",Attaquant()))
-team2.add_player(SoccerPlayer("t2j4",Mix()))
+#team2.add_player(SoccerPlayer("t2j4",Mix()))
 battle=SoccerBattle(team1,team2)
 obs=PygletObserver()
 obs.set_soccer_battle(battle)
