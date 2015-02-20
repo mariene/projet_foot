@@ -161,7 +161,7 @@ class AleatoireBis(SoccerStrategy):
         g = state.get_goal_center(need.get(teamid))
         b = state.ball.position
         gb = state.get_goal_center(need.get(teamid)) - player.position
-        shoot = Vector2D.create_polar(gb.angle + random.uniform(-1,1),1.5)
+        shoot = Vector2D.create_polar(gb.angle + random.uniform(-1,1),random.randrange(1,4))
         return SoccerAction(Vector2D(),shoot)
     def start_battle(self,state):
         pass        
@@ -218,22 +218,24 @@ class Defenseur(SoccerStrategy):
         p = player.position
         gb = state.get_goal_center(self.getad(teamid)) - p
         gp = g-p
+        bp = state.ball.position - player.position
         #pm = Vector2D(p.x*2,p.y*2) quand on veut modifier des coordonnées
         #shoot1 = g + b - pm
         #shoot = Vector2D.create_polar(player.angle + 3.25, 100)
         #shoot = Vector2D.create_polar(gb.angle + 2.25, 150)
         dist = b + g
-        d = Vector2D((dist.x)/2.0,(dist.y)/2.0)   
+        d = Vector2D((dist.x)/2.015,(dist.y)/2.00)   
         dirt = d - p
-        shoot = Vector2D.create_polar(gp.angle + 2.505, 10)
-        if (gb.norm < 15):
-            dirt1 = dist- p - p
-            return SoccerAction(dirt1,shoot)
-        elif gb.norm < GAME_WIDTH-(GAME_WIDTH*0.90):
+        shoot = Vector2D.create_polar(gp.angle - 2.505, 10)
+        if (gb.norm <= 30.0) or b.y > 90.0/2.0:
+            #shoot1 = dist - p - p
+            shoot2=Vector2D.create_polar(gp.angle + 2.505, 10)
+            return SoccerAction(dirt,shoot2)
+        elif((p.distance(b)<=(PLAYER_RADIUS+BALL_RADIUS))) or bp.norm <= GAME_WIDTH-(GAME_WIDTH*0.90):# or  b.y < 90.0/2.0:
             #return self.shooter.compute_strategy(state,player,teamid)
-            #dist1=Vector2D(0,0)
-            shoot1 = Vector2D(10,10)
-            return SoccerAction(dist,shoot1)
+            dist1=Vector2D(0,0)
+            shoot1 = Vector2D(10,-10)
+            return SoccerAction(dist1,shoot1)
         #shoot = Vector2D.create_polar(gb.angle + 2.5, 150)
         return SoccerAction(dirt,shoot)
     def create_strategy(self):
@@ -253,7 +255,7 @@ class Aleatoire(SoccerStrategy):
         b = state.ball.position
         dist= b - player.position
         gb = state.get_goal_center(need.get(teamid)) - player.position
-        shoot = Vector2D.create_polar(gb.angle + random.uniform(-1,1),15)
+        shoot = Vector2D.create_polar(gb.angle + random.uniform(-1,1),g.norm)
         return SoccerAction(dist,shoot)
     def start_battle(self,state):
         pass        
@@ -273,9 +275,9 @@ class Attaquant(SoccerStrategy):
         gadvb = gadv - b
         dist= b - player.position
         gb = g - b     
-        if (b.x==GAME_WIDTH/2.0 and b.y==GAME_HEIGHT/2.0) or (gadvb.norm < GAME_WIDTH/6.0) : 
+        if ((b.x==GAME_WIDTH/2.0 and b.y==GAME_HEIGHT/2.0) or (gadvb.norm < GAME_WIDTH/6.0)): 
             return self.bal.compute_strategy(state,player,teamid)
-        elif gb.norm < GAME_WIDTH/8:
+        elif gb.norm < GAME_WIDTH/8.0:
             return self.ale.compute_strategy(state,player,teamid)
         else:
             return self.fonce.compute_strategy(state,player,teamid)
@@ -292,7 +294,7 @@ class Attaquant(SoccerStrategy):
            
 class Mix(SoccerStrategy):
     def __init__(self):
-        self.att= ComposeStrategy(AllerVersBalle(),FonceurStrategy())
+        self.att= Attaquant()#ComposeStrategy(AllerVersBalle(),FonceurStrategy())
         self.defe=Defenseur()
         self.compo = ComposeStrategy(AllerVersBalle(),TirerRd())
     def compute_strategy(self,state,player,teamid):
@@ -357,4 +359,3 @@ class Goal(SoccerStrategy):
             else:
                 shoot=Vector2D(-10,-10) 
             return SoccerAction(a,shoot) 
-             
