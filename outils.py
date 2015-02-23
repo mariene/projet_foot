@@ -224,20 +224,27 @@ class Defenseur(SoccerStrategy):
         #shoot = Vector2D.create_polar(player.angle + 3.25, 100)
         #shoot = Vector2D.create_polar(gb.angle + 2.25, 150)
         dist = b + g
-        d = Vector2D((dist.x)/2.015,(dist.y)/2.00)   
+        d = Vector2D((dist.x)/2.02,(dist.y)/2.00)   
         dirt = d - p
-        shoot = Vector2D.create_polar(gp.angle - 2.505, 10)
-        if (gb.norm <= 30.0) or b.y > 90.0/2.0:
-            #shoot1 = dist - p - p
-            shoot2=Vector2D.create_polar(gp.angle + 2.505, 10)
+        shoot = Vector2D.create_polar(gp.angle + 2.505, 15)
+        dirt.product(10)
+        shoot.product(10)
+        if (b.y < GAME_HEIGHT*0.5) or (gb.norm <= 20.0): #or b.y > GAME_HEIGHT/2.0:
+            #shoot2 = dist - p - p
+            shoot2=Vector2D.create_polar(gp.angle - 2.505, 15)
+            shoot2.product(10)
             return SoccerAction(dirt,shoot2)
-        elif((p.distance(b)<=(PLAYER_RADIUS+BALL_RADIUS))) or bp.norm <= GAME_WIDTH-(GAME_WIDTH*0.90):# or  b.y < 90.0/2.0:
+        elif((p.distance(b)<=(PLAYER_RADIUS+BALL_RADIUS))) or (bp.norm <= GAME_WIDTH-(GAME_WIDTH*0.94)):
+            # or  b.y < 90.0/2.0:
             #return self.shooter.compute_strategy(state,player,teamid)
-            dist1=Vector2D(0,0)
-            shoot1 = Vector2D(10,-10)
-            return SoccerAction(dist1,shoot1)
+            #dist1=Vector2D(0,0)
+            return SoccerAction (dirt,shoot)
+        shoot1 = Vector2D(-10,10)
+        shoot1.product(10)
+        return SoccerAction(dirt,shoot1)
         #shoot = Vector2D.create_polar(gb.angle + 2.5, 150)
-        return SoccerAction(dirt,shoot)
+        #return SoccerAction(dirt,shoot)
+        
     def create_strategy(self):
         return Defenseur()
     def getad(self,teamid):
