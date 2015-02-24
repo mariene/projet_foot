@@ -279,6 +279,32 @@ class Def(SoccerStrategy):
         else:
             return 2
             
+class DefCyclique(SoccerStrategy):
+    def __init__(self):
+        #self.shooter=ComposeStrategy(AllerVersBalle(),TirerRd())
+        pass
+    def compute_strategy(self,state,player,teamid):
+        g = state.get_goal_center(self.getad(teamid))
+        b = state.ball.position
+        p = player.position
+        gb = state.get_goal_center(self.getad(teamid)) - p
+        gp = g-p
+        bp = state.ball.position - player.position
+        dist = b + g
+        d = Vector2D((dist.x/2.00)-(0.25*gb.norm), b.y)
+#        d = Vector2D(0.75*(b.x - GAME_WIDTH)+GAME_WIDTH, 0.75*(b.y-0.5*GAME_HEIGHT)+0.5*GAME_HEIGHT)
+       # if(teamid==1):
+          #  d.x=0.75*b.x
+        dirt = d - p
+        shoot = Vector2D.create_polar(player.angle+2.25,g.norm)
+        return SoccerAction(dirt,shoot)
+    def create_strategy(self):
+        return Defenseur()
+    def getad(self,teamid):
+        if(teamid == 1):
+            return 1
+        else:
+            return 2
             
 class DefenGoal(SoccerStrategy):
     def __init__(self):

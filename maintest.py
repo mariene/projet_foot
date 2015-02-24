@@ -10,9 +10,9 @@ from outils import *
 team1=SoccerTeam("team1")
 team2=SoccerTeam("team2")
 
-team1.add_player(SoccerPlayer("t1j1",Def()))
+#team1.add_player(SoccerPlayer("t1j1",DefCyclique()))
 #team1.add_player(SoccerPlayer("t1j2",FonceurStrategy()))
-#team1.add_player(SoccerPlayer("t1j3",Attaquant()))
+team1.add_player(SoccerPlayer("t1j3",Attaquant()))
 team1.add_player(SoccerPlayer("t1j4",DeGoal()))
 
 
@@ -22,9 +22,9 @@ compo=ComposeStrategy(AllerVersBalle(),AleatoireBis())
 
 
 team2.add_player(SoccerPlayer("t2j2",Defenseur()))
-#team2.add_player(SoccerPlayer("t2j1",Goal()))
+team2.add_player(SoccerPlayer("t2j1",DeGoal()))
 #team2.add_player(SoccerPlayer("t2j3",compo))
-team2.add_player(SoccerPlayer("t2j4",Def()))
+#team2.add_player(SoccerPlayer("t2j4",Def()))
 battle=SoccerBattle(team1,team2)
 obs=PygletObserver()
 obs.set_soccer_battle(battle)
