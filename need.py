@@ -26,20 +26,30 @@ def bp (id, state):
     return state.ball.position - player.position
 
 # a developper, pour savoir quel joueur a le ballon  
-def aBallon(id,state):   
-    if (id==1):
-        for p in state.team1.player:
-             if ((p.distance(need.b)<(PLAYER_RADIUS+BALL_RADIUS))):
-                 return p.position
-             else:
-                  for p in state.team2.player:
-                      if ((p.distance(need.b)<(PLAYER_RADIUS+BALL_RADIUS))):
-                          return p.position
-    else : 
-        for p in state.team2.player:
-             if ((p.distance(need.b)<(PLAYER_RADIUS+BALL_RADIUS))):
-                 return p.position
-             else:
-                 for p in state.team2.player:
-                      if ((p.distance(need.b)<(PLAYER_RADIUS+BALL_RADIUS))):
-                          return p.position
+# un joueur -> si choix 0 cherche si quelqu'un de son équipe a le ballon / 
+#si choix 1 cherche si quelqu'un de l'équipe adverse a le ballon 
+def aBallon(id,state,player,choix):   
+    if (id==1 && choix == 0 ):
+        for p in state.team1.players:
+            if ((p.distance(need.b)<(PLAYER_RADIUS+BALL_RADIUS))):
+                return True + p.position
+            else : 
+                return False
+    elif (id == 1 && choix == 1):
+        for p in state.team2.players:
+            if ((p.distance(need.b)<(PLAYER_RADIUS+BALL_RADIUS))):
+                return p.position
+            else : 
+                return 0
+    if (id ==2 && choix == 0  ):
+        for p in state.team2.players:
+            if ((p.distance(need.b)<(PLAYER_RADIUS+BALL_RADIUS))):
+                return p.position
+            else :
+                return 0
+    else:
+        for p in state.team1.players:
+            if ((p.distance(need.b)<(PLAYER_RADIUS+BALL_RADIUS))):
+                return p.position
+
+#if (p.position.distance(player.position) < (GAME_WIDTH*0.2) ) :
