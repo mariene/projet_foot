@@ -10,9 +10,9 @@ from outils import *
 team1=SoccerTeam("team1")
 team2=SoccerTeam("team2")
 
-team1.add_player(SoccerPlayer("t1j1",Attaquant()))
+#team1.add_player(SoccerPlayer("t1j1",Attaquant()))
 #team1.add_player(SoccerPlayer("t1j2",DefenGoal()))
-#team1.add_player(SoccerPlayer("t1j3",FonceurStrategy()))
+team1.add_player(SoccerPlayer("t1j3",FonceurStrategy()))
 #team1.add_player(SoccerPlayer("t1j4",FonceurStrategy()))
 
 
