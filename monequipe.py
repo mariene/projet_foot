@@ -33,7 +33,7 @@ team3.add_player(SoccerPlayer("t3j4",Attaquant()))
 team5=SoccerTeam("Tomates")
 team5.add_player(SoccerPlayer("t5j2",FonceurStrategy()))
 team5.add_player(SoccerPlayer("t5j1",Mix()))
-team5.add_player(SoccerPlayer("t5j3",Defenseur()))
+team5.add_player(SoccerPlayer("t5j3",DeGoal()))
 team5.add_player(SoccerPlayer("t5j4",Attaquant()))
 
 teams = [team1, team2, team3,team4,team5,team6]
