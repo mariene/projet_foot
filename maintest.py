@@ -10,10 +10,10 @@ from outils import *
 team1=SoccerTeam("team1")
 team2=SoccerTeam("team2")
 
-#team1.add_player(SoccerPlayer("t1j1",DefCyclique()))
-#team1.add_player(SoccerPlayer("t1j2",FonceurStrategy()))
-team1.add_player(SoccerPlayer("t1j3",Attaquant()))
-team1.add_player(SoccerPlayer("t1j4",DeGoal()))
+team1.add_player(SoccerPlayer("t1j1",Attaquant()))
+team1.add_player(SoccerPlayer("t1j2",DefenGoal()))
+#team1.add_player(SoccerPlayer("t1j3",FonceurStrategy()))
+#team1.add_player(SoccerPlayer("t1j4",FonceurStrategy()))
 
 
 comp=ComposeStrategy(AllerVersBalle(),TirerRd())
@@ -21,10 +21,10 @@ compo=ComposeStrategy(AllerVersBalle(),AleatoireBis())
 
 
 
-team2.add_player(SoccerPlayer("t2j2",Defenseur()))
+#team2.add_player(SoccerPlayer("t2j2",Def()))
 team2.add_player(SoccerPlayer("t2j1",DeGoal()))
-#team2.add_player(SoccerPlayer("t2j3",compo))
-#team2.add_player(SoccerPlayer("t2j4",Def()))
+team2.add_player(SoccerPlayer("t2j3",FonceurStrategy()))
+#team2.add_player(SoccerPlayer("t2j4",DefCyclique()))
 battle=SoccerBattle(team1,team2)
 obs=PygletObserver()
 obs.set_soccer_battle(battle)

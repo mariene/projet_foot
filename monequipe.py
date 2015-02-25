@@ -14,15 +14,15 @@ team2.add_player(SoccerPlayer("t2j1",Attaquant()))
 team2.add_player(SoccerPlayer("t2j2",DeGoal()))
 
 team6=SoccerTeam("Oignons")
-team6.add_player(SoccerPlayer("t6j1",Mix()))
+team6.add_player(SoccerPlayer("t6j1",DefenGoal()))
 team6.add_player(SoccerPlayer("t6j2",FonceurStrategy()))
 
  
 team3=SoccerTeam("Aubergines")
-team3.add_player(SoccerPlayer("t3j1",FonceurStrategy()))
-team3.add_player(SoccerPlayer("t3j2",Defenseur()))
+team3.add_player(SoccerPlayer("t3j1",DefCyclique()))
+team3.add_player(SoccerPlayer("t3j2",Def()))
 team3.add_player(SoccerPlayer("t3j3",DeGoal()))
-team3.add_player(SoccerPlayer("t3j4",Mix()))
+team3.add_player(SoccerPlayer("t3j4",Attaquant()))
 
 #team4=SoccerTeam("Carottes")
 #team4.add_player(SoccerPlayer("t4j2",FonceurStrategy()))

@@ -281,7 +281,6 @@ class Def(SoccerStrategy):
             
 class DefCyclique(SoccerStrategy):
     def __init__(self):
-        #self.shooter=ComposeStrategy(AllerVersBalle(),TirerRd())
         pass
     def compute_strategy(self,state,player,teamid):
         g = state.get_goal_center(self.getad(teamid))
@@ -292,12 +291,10 @@ class DefCyclique(SoccerStrategy):
         bp = state.ball.position - player.position
         dist = b + g
         d = Vector2D((dist.x/2.00)-(0.25*gb.norm), b.y)
-#        d = Vector2D(0.75*(b.x - GAME_WIDTH)+GAME_WIDTH, 0.75*(b.y-0.5*GAME_HEIGHT)+0.5*GAME_HEIGHT)
-       # if(teamid==1):
-          #  d.x=0.75*b.x
         dirt = d - p
-        shoot = Vector2D.create_polar(player.angle+2.25,g.norm)
+        shoot = Vector2D.create_polar(player.angle + 2.25,g.norm)
         return SoccerAction(dirt,shoot)
+
     def create_strategy(self):
         return Defenseur()
     def getad(self,teamid):
@@ -420,7 +417,7 @@ class Attaquant(SoccerStrategy):
 class Mix(SoccerStrategy):
     def __init__(self):
         self.att= Attaquant()#ComposeStrategy(AllerVersBalle(),FonceurStrategy())
-        self.defe=Defenseur()
+        self.defe=DefenGoal()
         self.compo = ComposeStrategy(AllerVersBalle(),TirerRd())
     def compute_strategy(self,state,player,teamid):
         b = state.ball.position
