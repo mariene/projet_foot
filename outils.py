@@ -416,8 +416,9 @@ class Attaquant(SoccerStrategy):
 # un mix de defense et d'attaque            
 class Mix(SoccerStrategy):
     def __init__(self):
-        self.att= Attaquant()#ComposeStrategy(AllerVersBalle(),FonceurStrategy())
-        self.defe=DefenGoal()
+        self.att= Attaquant()
+        self.att2 = ComposeStrategy(AllerVersBalle(),FonceurStrategy())
+        self.defe=DeGoal()
         self.compo = ComposeStrategy(AllerVersBalle(),TirerRd())
     def compute_strategy(self,state,player,teamid):
         b = state.ball.position
@@ -433,12 +434,11 @@ class Mix(SoccerStrategy):
         #if gb.norm < (0.5 * GAME_WIDTH) :
         if gb.norm < (0.50 * GAME_WIDTH ) : 
             return self.defe.compute_strategy(state,player,teamid)
-            #elif((p.distance(b)<(PLAYER_RADIUS+BALL_RADIUS))):
-               # dist = Vector2D()
-              # return SoccerAction(dist,shoot)
         elif gb.norm == (0.25 * GAME_WIDTH ):
             return self.compo.compute_strategy(state,player,teamid)
-            #return self.att.compute_strategy(state,player,teamid)   
+            #return self.att.compute_strategy(state,player,teamid) 
+        elif (p.distance(b)<(PLAYER_RADIUS+BALL_RADIUS)):
+            return self.att2.compute_strategy(state,player,teamid)     
         else: 
             return self.att.compute_strategy(state,player,teamid)                                    
     def create_strategy(self):
