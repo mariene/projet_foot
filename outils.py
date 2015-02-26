@@ -355,16 +355,16 @@ class DeGoal(SoccerStrategy):
         g = state.get_goal_center(self.getad(teamid)) 
         b = state.ball.position
         p = player.position
-        gp = g - p
-        bs = state.ball.speed
         gb = g - b   
-        bi= b+bs
+        dist = (b + state.ball.speed ) + g
+        bi = b + state.ball.speed
         dist = bi + g
-        d = Vector2D((dist.x)/2.0, (GAME_HEIGHT*0.5) + 0.4*(bi.y-(GAME_HEIGHT*0.5)))
+        d = Vector2D((dist.x)/2.0, (GAME_HEIGHT*0.5) + 0.75*(bi.y-(GAME_HEIGHT*0.5)))
+        #d = Vector2D((dist.x)/2.0, (dist.y)/2.0)
         dirt = d - p
         gp = g-p
-        #shoot = Vector2D.create_polar(gb.angle + 2.5, 100)
-        bp = state.ball.position - player.position
+        shoot = Vector2D.create_polar(gb.angle + (pi/2.00), 100)
+        #bp = state.ball.position - player.position
         #if bp.norm <= GAME_WIDTH-(GAME_WIDTH*0.90) or (p.distance(b)<=(PLAYER_RADIUS+BALL_RADIUS)) :
         if (b.y > 0.5*GAME_HEIGHT):
             shoot = Vector2D.create_polar(gb.angle - (pi/2.0), 100)
@@ -372,6 +372,7 @@ class DeGoal(SoccerStrategy):
         else :
             shoot = Vector2D.create_polar(gb.angle + (pi/2.0), 100)
             return SoccerAction(dirt,shoot)
+        return SoccerAction(dirt,shoot)
     def create_strategy(self):
         return DeGoal()
     def getad(self,teamid):
@@ -443,12 +444,12 @@ class Degage(SoccerStrategy):
         p = player.position
         b = state.ball.position
         shoot = Vector2D()
-        dir = (state.ball.position + state.ball.speed) - p
-        dir.product(10)
+        direct = (state.ball.position + state.ball.speed) - p
+        direct.product(10)
         if ((p.distance(b)<(PLAYER_RADIUS+BALL_RADIUS))):
             shoot = state.get_goal_center(need.get(teamid)) - p
-            return SoccerAction(dir,shoot)
-        return  SoccerAction(dir,shoot)
+            return SoccerAction(direct,shoot)
+        return  SoccerAction(direct,shoot)
     def start_battle(self,state):
         pass        
     def finish_battle(self,won):
@@ -466,7 +467,7 @@ class Mix(SoccerStrategy):
     def __init__(self):
         self.att= Attaquant()
         self.att2 = ComposeStrategy(AllerVersBalle(),FonceurStrategy())
-        self.defe = Def()
+        self.defe = DefenGoal()
         self.compo = ComposeStrategy(AllerVersBalle(),TirerRd())
     def compute_strategy(self,state,player,teamid):
         b = state.ball.position

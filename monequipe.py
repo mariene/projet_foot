@@ -11,29 +11,23 @@ team4.add_player(SoccerPlayer("t4j2",Degage()))
 
 team2=SoccerTeam("Patates")
 team2.add_player(SoccerPlayer("t2j1",Attaquant()))
-team2.add_player(SoccerPlayer("t2j2",DeGoal()))
+team2.add_player(SoccerPlayer("t2j2",DefenGoal()))
 
 team6=SoccerTeam("Oignons")
 team6.add_player(SoccerPlayer("t6j1",DefenGoal()))
-team6.add_player(SoccerPlayer("t6j2",FonceurStrategy()))
+team6.add_player(SoccerPlayer("t6j2",Degage()))
 
- 
 team3=SoccerTeam("Aubergines")
 team3.add_player(SoccerPlayer("t3j1",DefCyclique()))
 team3.add_player(SoccerPlayer("t3j2",Def()))
 team3.add_player(SoccerPlayer("t3j3",DeGoal()))
 team3.add_player(SoccerPlayer("t3j4",Attaquant()))
 
-#team4=SoccerTeam("Carottes")
-#team4.add_player(SoccerPlayer("t4j2",FonceurStrategy()))
-#team4.add_player(SoccerPlayer("t4j1",Aleatoire()))
-#team4.add_player(SoccerPlayer("t4j3",Defenseur()))
-#team4.add_player(SoccerPlayer("t4j4",FonceurStrategy()))
 
 team5=SoccerTeam("Tomates")
-team5.add_player(SoccerPlayer("t5j2",FonceurStrategy()))
-team5.add_player(SoccerPlayer("t5j1",Mix()))
-team5.add_player(SoccerPlayer("t5j3",DeGoal()))
+team5.add_player(SoccerPlayer("t5j2",Degage()))
+team5.add_player(SoccerPlayer("t5j1",DefenGoal()))
+team5.add_player(SoccerPlayer("t5j3",Def()))
 team5.add_player(SoccerPlayer("t5j4",Attaquant()))
 
 teams = [team1, team2, team3,team4,team5,team6]
