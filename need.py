@@ -47,4 +47,26 @@ def aBallon(id,state,player,choix):
             if ((p.distance(need.b)<(PLAYER_RADIUS+BALL_RADIUS))):
                 return p.position
 
-#if (p.position.distance(player.position) < (GAME_WIDTH*0.2) ) :
+
+def posPlayeradv(id,state,player): 
+    pos = Vector2D()
+    if (id==1):
+        for p in state.team2.players:
+            if (p.position.distance(player.position) < 30) :
+                pos = p.position
+        return pos
+    else :
+        for p in state.team1.players:
+            if (p.position.distance(player.position) < 30 ) :
+                pos = p.position
+        return pos
+
+def Playeradv(id,state,player): 
+    if (id==1):
+        for p in state.team2.players:
+            if (p.position.distance(player.position) < 50) :
+                return True
+    else :
+        for p in state.team1.players:
+            if (p.position.distance(player.position) < 50 ) :
+                return True

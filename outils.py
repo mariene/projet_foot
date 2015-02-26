@@ -45,8 +45,8 @@ class FonceurStrategy(SoccerStrategy):
     def create_strategy(self):
         return FonceurStrategy()
 
-#==============================================================================    
-#ALLER VERS 
+###############################################################################   
+#ALLER VERS / DEPLACEMENT
 # Aller vers un point
 class AllerVers (SoccerStrategy):
     def __init__(self):
@@ -104,7 +104,29 @@ class AllerVersBut (SoccerStrategy):
     def finish_battle(self,won):
         pass  
 
-#==============================================================================
+# a developper 
+# joueur doit eviter le joueur adverse              
+class Eviter(SoccerStrategy):
+    def __init__(self):        
+        pass
+    def compute_strategy(self,state,player,teamid):
+        p = player.position
+        b = state.ball.position
+        shoot = Vector2D()
+        padv = need.posPlayeradv(teamid,state,player)
+        padvp= p - padv
+        direct = Vector2D.create_polar(padvp.angle + 2.25, 1)
+        #if ((p.distance(b)<(PLAYER_RADIUS+BALL_RADIUS))):
+        shoot = state.get_goal_center(need.get(teamid)) - p
+          #  return SoccerAction(direct,shoot)
+        if (need.Playeradv(teamid,state,player)== True):
+            return SoccerAction(direct,shoot)
+        return  SoccerAction(direct,shoot)
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass  
+###############################################################################
 #TIRER VERS
 #tirer vers un point       
 class Tirer (SoccerStrategy):
@@ -180,7 +202,7 @@ class AleatoireBis(SoccerStrategy):
     def finish_battle(self,won):
         pass 
             
-#==============================================================================            
+###############################################################################            
 class PasBouger(SoccerStrategy):
     def __init__(self):
         pass
@@ -193,7 +215,7 @@ class PasBouger(SoccerStrategy):
     def finish_battle(self,won):
         pass  
     
-#==============================================================================    
+###############################################################################    
 #CHOSES UTILES
 # mastrat = ComposeStrategy(PasBouger(),TirVersBut())
 # pour faire composition de strat
@@ -215,7 +237,7 @@ class ComposeStrategy(SoccerStrategy):
     #def compute_strategy(self,state,player,teamid):
       #  idx=selector()
      #   return self.liststrat[idx].(computestratstate,player,teamid) 
-#==============================================================================     
+###############################################################################     
 #STRAT'
 #Defense
 
@@ -381,7 +403,7 @@ class DeGoal(SoccerStrategy):
         else:
             return 2
 
-#==============================================================================
+###############################################################################
 #STRAT 
 #attaque
 
@@ -460,7 +482,9 @@ class Degage(SoccerStrategy):
         else:
             return 2
 
-#==============================================================================
+
+
+###############################################################################
 # un mix de defense et d'attaque  
 # tentative -> a ameliorer !
 class Mix(SoccerStrategy):
@@ -486,6 +510,30 @@ class Mix(SoccerStrategy):
             return self.att.compute_strategy(state,player,teamid)                                    
     def create_strategy(self):
         return Mix()
+    def getad(self,teamid):
+        if(teamid == 1):
+            return 1
+        else:
+            return 2
+
+class MixSimple(SoccerStrategy):
+    def __init__(self):
+        self.att= Degage()
+        self.defe = Def()
+    def compute_strategy(self,state,player,teamid):
+        b = state.ball.position
+        p = player.position
+        g = state.get_goal_center(self.getad(teamid))
+        gb= g - b
+        bp=b-p
+        if gb.norm < (0.50 * GAME_WIDTH ) : 
+            return self.defe.compute_strategy(state,player,teamid)
+            if (p.distance(b)<(PLAYER_RADIUS+BALL_RADIUS)) or bp.norm < 30:
+                return self.att.compute_strategy(state,player,teamid)
+        else :      
+            return self.att.compute_strategy(state,player,teamid)             
+    def create_strategy(self):
+        return MixSimple()
     def getad(self,teamid):
         if(teamid == 1):
             return 1
