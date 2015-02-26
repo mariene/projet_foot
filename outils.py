@@ -463,6 +463,7 @@ class Degage(SoccerStrategy):
     def __init__(self):        
         pass
     def compute_strategy(self,state,player,teamid):
+    if (id==1):
         p = player.position
         b = state.ball.position
         shoot = Vector2D()
@@ -516,6 +517,7 @@ class Mix(SoccerStrategy):
         else:
             return 2
 
+# a finir
 class MixSimple(SoccerStrategy):
     def __init__(self):
         self.att= Degage()

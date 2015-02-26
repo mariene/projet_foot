@@ -60,6 +60,7 @@ def posPlayeradv(id,state,player):
             if (p.position.distance(player.position) < 30 ) :
                 pos = p.position
         return pos
+        
 
 def Playeradv(id,state,player): 
     if (id==1):
