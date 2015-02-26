@@ -10,19 +10,17 @@ from outils import *
 team1=SoccerTeam("team1")
 team2=SoccerTeam("team2")
 
-#team1.add_player(SoccerPlayer("t1j1",Attaquant()))
-#team1.add_player(SoccerPlayer("t1j2",DeGoal()))
+team1.add_player(SoccerPlayer("t1j1",Attaquant()))
+#team1.add_player(SoccerPlayer("t1j2",Def()))
 #team1.add_player(SoccerPlayer("t1j3",FonceurStrategy()))
-team1.add_player(SoccerPlayer("t1j4",Mix()))
+#team1.add_player(SoccerPlayer("t1j4",Mix()))
 
 
 comp=ComposeStrategy(AllerVersBalle(),TirerRd())
-compo=ComposeStrategy(AllerVersBalle(),AleatoireBis())
-
-
+compo=ComposeStrategy(AllerVersBalleFut(),AleatoireBis())
 
 #team2.add_player(SoccerPlayer("t2j2",Def()))
-team2.add_player(SoccerPlayer("t2j1",Mix()))
+team2.add_player(SoccerPlayer("t2j1",Degage()))
 #team2.add_player(SoccerPlayer("t2j3",Attaquant()))
 #team2.add_player(SoccerPlayer("t2j4",DefCyclique()))
 battle=SoccerBattle(team1,team2)

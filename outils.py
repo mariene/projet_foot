@@ -80,7 +80,18 @@ class AllerVersBalleBis (AllerVers):
     def compute_strategy(self,state,player,teamid):
         self.point= state.ball.position        
         return AllerVers.compute_strategy(self,state,player,teamid)
- 
+
+class AllerVersBalleFut (SoccerStrategy):
+    def __init__(self):
+        self.strat= AllerVers()
+    def compute_strategy(self,state,player,teamid):
+        self.strat.point= state.ball.position + state.ball.speed       
+        return self.strat.compute_strategy(state,player,teamid)
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass  
+
 #Aller vers but 
 class AllerVersBut (SoccerStrategy):
     def __init__(self):
@@ -154,7 +165,7 @@ class TirerRd(SoccerStrategy):
             return 1 
 
 # a peu près le meme genre que Aleatoire sauf qu'il n'y a pas de direction
-# tirerRd meme plus "orienter"
+# tirerRd mais plus "orienter"
 class AleatoireBis(SoccerStrategy):
     def __init__(self):
         pass
@@ -162,7 +173,7 @@ class AleatoireBis(SoccerStrategy):
         g = state.get_goal_center(need.get(teamid))
         b = state.ball.position
         gb = state.get_goal_center(need.get(teamid)) - player.position
-        shoot = Vector2D.create_polar(gb.angle + random.uniform(-1,1),random.randrange(1,4))
+        shoot = Vector2D.create_polar(gb.angle + random.uniform(-1,1),5)
         return SoccerAction(Vector2D(),shoot)
     def start_battle(self,state):
         pass        
@@ -415,6 +426,29 @@ class Attaquant(SoccerStrategy):
             return self.ale.compute_strategy(state,player,teamid)
         else:
             return self.fonce.compute_strategy(state,player,teamid)
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass  
+    def getad(self,teamid):
+        if(teamid == 1):
+            return 1
+        else:
+            return 2
+
+class Degage(SoccerStrategy):
+    def __init__(self):        
+        pass
+    def compute_strategy(self,state,player,teamid):
+        p = player.position
+        b = state.ball.position
+        shoot = Vector2D()
+        dir = (state.ball.position + state.ball.speed) - p
+        dir.product(10)
+        if ((p.distance(b)<(PLAYER_RADIUS+BALL_RADIUS))):
+            shoot = state.get_goal_center(need.get(teamid)) - p
+            return SoccerAction(dir,shoot)
+        return  SoccerAction(dir,shoot)
     def start_battle(self,state):
         pass        
     def finish_battle(self,won):
