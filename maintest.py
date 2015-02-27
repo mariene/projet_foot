@@ -27,12 +27,12 @@ compo=ComposeStrategy(AllerVersBalleFut(),AleatoireBis())
 #team2.add_player(SoccerPlayer("t2j4",DefCyclique()))
 
 #team3.add_player(SoccerPlayer("t3j1",DefCyclique()))
-#team3.add_player(SoccerPlayer("t3j2",Def()))
-team3.add_player(SoccerPlayer("t3j3",MixSimple()))
-team3.add_player(SoccerPlayer("t3j4",Defenseur()))
+team3.add_player(SoccerPlayer("t3j2",Defenseur()))
+team3.add_player(SoccerPlayer("t3j3",Degage()))
+#team3.add_player(SoccerPlayer("t3j4",Def()))
 
-team5.add_player(SoccerPlayer("t5j2",DefenGoal()))
-team5.add_player(SoccerPlayer("t5j1",Degage()))
+team5.add_player(SoccerPlayer("t5j2",Def()))
+team5.add_player(SoccerPlayer("t5j1",FonceurStrategy()))
 #team5.add_player(SoccerPlayer("t5j3",comp))
 #team5.add_player(SoccerPlayer("t5j4",Def()))
 

@@ -173,8 +173,8 @@ class TirerRd(SoccerStrategy):
         pass
     def compute_strategy(self,state,player,teamid):
         g = state.get_goal_center(self.get(teamid))
-        b = state.ball.position
-        gb = state.get_goal_center(self.get(teamid)) - player.position
+        #b = state.ball.position
+        ##gb = state.get_goal_center(self.get(teamid)) - player.position
         #de=Vector2D.create_polar(player.angle, g.norm)
         dr= Vector2D.create_polar(player.angle+random.random(),g.norm)
         direc = Vector2D()    
@@ -193,8 +193,6 @@ class AleatoireBis(SoccerStrategy):
     def __init__(self):
         pass
     def compute_strategy(self,state,player,teamid):
-        g = state.get_goal_center(need.get(teamid))
-        b = state.ball.position
         gb = state.get_goal_center(need.get(teamid)) - player.position
         shoot = Vector2D.create_polar(gb.angle + random.uniform(-1,1),5)
         return SoccerAction(Vector2D(),shoot)
@@ -294,10 +292,8 @@ class Def(SoccerStrategy):
         g = state.get_goal_center(self.getad(teamid))
         b = state.ball.position
         p = player.position
-        gb = state.get_goal_center(self.getad(teamid)) - b
-        gp = g-p
-        bp = state.ball.position - player.position
-        dist = b + g
+        #gb = state.get_goal_center(self.getad(teamid)) - b
+        #dist = b + g
 #        d = Vector2D((dist.x/2.00)-(0.25*gb.norm), b.y)
         d = Vector2D(0.75*(b.x - GAME_WIDTH)+GAME_WIDTH, 0.75*(b.y-0.5*GAME_HEIGHT)+0.5*GAME_HEIGHT)
         if(teamid==1):
@@ -322,14 +318,11 @@ class DefCyclique(SoccerStrategy):
         b = state.ball.position
         p = player.position
         gb = state.get_goal_center(self.getad(teamid)) - p
-        gp = g-p
-        bp = state.ball.position - player.position
         dist = b + g
         d = Vector2D((dist.x/2.00)-(0.25*gb.norm), b.y)
         dirt = d - p
         shoot = Vector2D.create_polar(player.angle + 2.25,g.norm)
         return SoccerAction(dirt,shoot)
-
     def create_strategy(self):
         return Defenseur()
     def getad(self,teamid):
@@ -350,7 +343,6 @@ class DefenGoal(SoccerStrategy):
         dist = b + g
         d = Vector2D((dist.x)/2.0, (GAME_HEIGHT*0.5) + 0.70*(b.y-(GAME_HEIGHT*0.5)))
         dirt = d - p
-        gp = g-p
         shoot = Vector2D.create_polar(gb.angle + (pi/2.0), 100)
         bp = state.ball.position - player.position
         if((p.distance(b)<=(PLAYER_RADIUS+BALL_RADIUS))) or (bp.norm <= GAME_WIDTH-(GAME_WIDTH*0.90)):
@@ -385,7 +377,7 @@ class DeGoal(SoccerStrategy):
         d = Vector2D((dist.x)/2.0, (GAME_HEIGHT*0.5) + 0.75*(bi.y-(GAME_HEIGHT*0.5)))
         #d = Vector2D((dist.x)/2.0, (dist.y)/2.0)
         dirt = d - p
-        gp = g-p
+        #gp = g-p
         shoot = Vector2D.create_polar(gb.angle + (pi/2.00), 100)
         #bp = state.ball.position - player.position
         #if bp.norm <= GAME_WIDTH-(GAME_WIDTH*0.90) or (p.distance(b)<=(PLAYER_RADIUS+BALL_RADIUS)) :
@@ -442,7 +434,7 @@ class Attaquant(SoccerStrategy):
         gadv = state.get_goal_center(need.get(teamid))
         b = state.ball.position
         gadvb = gadv - b
-        dist= b - player.position
+        #dist= b - player.position
         gb = g - b   
         if ((b.x==GAME_WIDTH/2.0 and b.y==GAME_HEIGHT/2.0) or (gadvb.norm < GAME_WIDTH/6.0)): 
             return self.bal.compute_strategy(state,player,teamid)
@@ -464,7 +456,6 @@ class Degage(SoccerStrategy):
     def __init__(self):        
         pass
     def compute_strategy(self,state,player,teamid):
-    if (id==1):
         p = player.position
         b = state.ball.position
         shoot = Vector2D()
@@ -485,7 +476,29 @@ class Degage(SoccerStrategy):
             return 2
 
 
-
+class DegageBis(SoccerStrategy):
+    def __init__(self):        
+        pass
+    def compute_strategy(self,state,player,teamid):
+        p = player.position
+        b = state.ball.position
+        shoot = Vector2D()
+        direct = (state.ball.position + state.ball.speed) - p
+        direct.product(10)
+        if ((p.distance(b)<(PLAYER_RADIUS+BALL_RADIUS))):
+            gadvp = state.get_goal_center(need.get(teamid)) - p
+            shoot = Vector2D().create_polar(gadvp.angle + random.uniform(-1,1), 10)
+            return SoccerAction(direct,shoot)
+        return  SoccerAction(direct,shoot)
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass  
+    def getad(self,teamid):
+        if(teamid == 1):
+            return 1
+        else:
+            return 2
 ###############################################################################
 # un mix de defense et d'attaque  
 # tentative -> a ameliorer !
