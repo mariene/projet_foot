@@ -105,7 +105,8 @@ class AllerVersBut (SoccerStrategy):
         pass  
 
 # a developper 
-# joueur doit eviter le joueur adverse              
+# joueur doit eviter le joueur adverse 
+# c'est mieux s il tire vers une direction qui n est pas celle de l adversaire, enfin, vers l adversaire .... -> a voir           
 class Eviter(SoccerStrategy):
     def __init__(self):        
         pass
