@@ -104,25 +104,34 @@ class AllerVersBut (SoccerStrategy):
     def finish_battle(self,won):
         pass  
 
-# a developper 
-# joueur doit eviter le joueur adverse 
-# c'est mieux s il tire vers une direction qui n est pas celle de l adversaire, enfin, vers l adversaire .... -> a voir           
-class Eviter(SoccerStrategy):
+
+# joueur va vers le joueur adverse     
+# a developper -> se positionner a l'endroit où il va etre si possible       
+class AllerVersAdv(SoccerStrategy):
     def __init__(self):        
         pass
     def compute_strategy(self,state,player,teamid):
         p = player.position
-        b = state.ball.position
         shoot = Vector2D()
         padv = need.posPlayeradv(teamid,state,player)
-        padvp= p - padv
-        direct = Vector2D.create_polar(padvp.angle + 2.25, 1)
-        #if ((p.distance(b)<(PLAYER_RADIUS+BALL_RADIUS))):
-        shoot = state.get_goal_center(need.get(teamid)) - p
-          #  return SoccerAction(direct,shoot)
-        if (need.Playeradv(teamid,state,player)== True):
-            return SoccerAction(direct,shoot)
-        return  SoccerAction(direct,shoot)
+        direct= padv - p
+        #direct = Vector2D(padv.x + spadv + p.x, p.y+padv.y)
+        return SoccerAction(direct,shoot)
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass  
+
+class AllerVersJoueur(SoccerStrategy):
+    def __init__(self):        
+        pass
+    def compute_strategy(self,state,player,teamid):
+        p = player.position
+        shoot = Vector2D()
+        pos = need.posPlayerEq(teamid,state,player)
+        direct= pos - p
+        #direct = Vector2D(padv.x + spadv + p.x, p.y+padv.y)
+        return SoccerAction(direct,shoot)
     def start_battle(self,state):
         pass        
     def finish_battle(self,won):
@@ -375,7 +384,6 @@ class DeGoal(SoccerStrategy):
         bi = b + state.ball.speed
         dist = bi + g
         d = Vector2D((dist.x)/2.0, (GAME_HEIGHT*0.5) + 0.75*(bi.y-(GAME_HEIGHT*0.5)))
-        #d = Vector2D((dist.x)/2.0, (dist.y)/2.0)
         dirt = d - p
         #gp = g-p
         shoot = Vector2D.create_polar(gb.angle + (pi/2.00), 100)
@@ -535,19 +543,22 @@ class Mix(SoccerStrategy):
 class MixSimple(SoccerStrategy):
     def __init__(self):
         self.att= Degage()
-        self.defe = Def()
+        #self.defe = Def()
+        self.att2 = Attaquant ()
     def compute_strategy(self,state,player,teamid):
         b = state.ball.position
         p = player.position
         g = state.get_goal_center(self.getad(teamid))
         gb= g - b
-        bp=b-p
-        if gb.norm < (0.50 * GAME_WIDTH ) : 
-            return self.defe.compute_strategy(state,player,teamid)
-            if (p.distance(b)<(PLAYER_RADIUS+BALL_RADIUS)) or bp.norm < 30:
-                return self.att.compute_strategy(state,player,teamid)
-        else :      
-            return self.att.compute_strategy(state,player,teamid)             
+        #bp=b-p
+        if gb.norm > (0.50 * GAME_WIDTH ) : 
+            return self.att2.compute_strategy(state,player,teamid)
+        if need.Playeradv(teamid,state,player) == True :
+            return self.att.compute_strategy(state,player,teamid)
+            #if  bp.norm <20:
+             #   return self.att.compute_strategy(state,player,teamid)
+        #else :      
+         #   return self.att.compute_strategy(state,player,teamid)             
     def create_strategy(self):
         return MixSimple()
     def getad(self,teamid):

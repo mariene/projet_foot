@@ -18,8 +18,8 @@ team3=SoccerTeam("team2")
 #team1.add_player(SoccerPlayer("t1j4",Mix()))
 
 
-comp=ComposeStrategy(Eviter(),TirerRd())
-compo=ComposeStrategy(AllerVersBalleFut(),AleatoireBis())
+comp=ComposeStrategy(AllerVersAdv(),TirerRd())
+compo=ComposeStrategy(AllerVersBalleFut(),TirerVersBut())
 
 #team2.add_player(SoccerPlayer("t2j2",Def()))
 #team2.add_player(SoccerPlayer("t2j1",Degage()))
@@ -27,12 +27,12 @@ compo=ComposeStrategy(AllerVersBalleFut(),AleatoireBis())
 #team2.add_player(SoccerPlayer("t2j4",DefCyclique()))
 
 #team3.add_player(SoccerPlayer("t3j1",DefCyclique()))
-team3.add_player(SoccerPlayer("t3j2",Defenseur()))
-team3.add_player(SoccerPlayer("t3j3",Degage()))
-#team3.add_player(SoccerPlayer("t3j4",Def()))
+#team3.add_player(SoccerPlayer("t3j2",Defenseur()))
+#team3.add_player(SoccerPlayer("t3j3",Attaquant()))
+team3.add_player(SoccerPlayer("t3j4",Degage()))
 
-team5.add_player(SoccerPlayer("t5j2",Def()))
-team5.add_player(SoccerPlayer("t5j1",FonceurStrategy()))
+#team5.add_player(SoccerPlayer("t5j2",Degage()))
+team5.add_player(SoccerPlayer("t5j1",MixSimple()))
 #team5.add_player(SoccerPlayer("t5j3",comp))
 #team5.add_player(SoccerPlayer("t5j4",Def()))
 
