@@ -1,8 +1,8 @@
 from soccersimulator import Vector2D,SoccerState,SoccerAction,SoccerStrategy,SoccerBattle,SoccerPlayer,SoccerTeam
 from soccersimulator import PLAYER_RADIUS, BALL_RADIUS
 
-def get(id):
-        if(id == 1):
+def get(teamid):
+        if(teamid == 1):
             return 2
         else:
             return 1
@@ -47,7 +47,12 @@ def aBallon(id,state,player,choix):
             if ((p.distance(state.ball.position)<(PLAYER_RADIUS+BALL_RADIUS))):
                 return p.position
 
+#def aBallonBool (teamid,state,player,choix):
+  # # if (teamid == 1 ): 
+     #       if ((p.distance(state.ball.position)<(PLAYER_RADIUS+BALL_RADIUS))):
+      #          return p.position
 
+# position des joueurs adverse
 def posPlayeradv(id,state,player): 
     pos = Vector2D()
     if (id==1):
@@ -63,6 +68,7 @@ def posPlayeradv(id,state,player):
                # sp = p.speed
         return pos
         
+# position des joueurs de mon equipe        
 def posPlayerEq(id,state,player): 
     pos = Vector2D()
     if (id==1):
