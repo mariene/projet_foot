@@ -113,9 +113,10 @@ class AllerVersAdv(SoccerStrategy):
     def compute_strategy(self,state,player,teamid):
         p = player.position
         shoot = Vector2D()
-        padv = need.posPlayeradv(teamid,state,player)
-        direct= padv - player.position
-        #direct = Vector2D(padv.x + spadv + p.x, p.y+padv.y)
+        padv,spadv = need.posPlayeradv(teamid,state,player)
+        padv = Vector2D(padv.x + spadv, padv.y+spadv)
+        padvp= padv  - player.position
+        direct = Vector2D((padvp.x/2.0),(padvp.y/2.0))
         return SoccerAction(direct,shoot)
     def start_battle(self,state):
         pass        
@@ -188,6 +189,7 @@ class TirerRd(SoccerStrategy):
         else:
             return 1 
 
+
 #tirer vers un joueur -> a developper
 class TirerVersP(SoccerStrategy):
     def __init__(self):
@@ -217,7 +219,6 @@ class PasTirerVersAdv(SoccerStrategy):
     def __init__(self):
         pass
     def compute_strategy(self,state,player,teamid):
-        #positions
         gp = state.get_goal_center(need.get(teamid)) - player.position
         padv = need.posPlayeradv(teamid,state,player)
         gpadv = state.get_goal_center(need.get(teamid)) - padv

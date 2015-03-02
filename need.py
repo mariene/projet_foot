@@ -53,33 +53,34 @@ def aBallon(id,state,player,choix):
       #          return p.position
 
 # position des joueurs adverse
-def posPlayeradv(id,state,player): 
+def posPlayeradv(teamid,state,player): 
     pos = Vector2D()
-    if (id==1):
+    sp =0.0
+    if (teamid==1):
         for p in state.team2.players:
-            if (p.position.distance(player.position) < 30) :
+            if (p.position.distance(player.position) < 20) :
                 pos = p.position
-                #sp = p.speed
-        return pos
+                sp = p.speed
+        return pos,sp
     else :
         for p in state.team1.players:
-            if (p.position.distance(player.position) < 30 ) :
+            if (p.position.distance(player.position) < 20 ) :
                 pos = p.position
-               # sp = p.speed
-        return pos
+                sp = p.speed
+        return pos,sp
         
 # position des joueurs de mon equipe        
 def posPlayerEq(id,state,player): 
     pos = Vector2D()
     if (id==1):
         for p in state.team1.players:
-            if (p.position.distance(player.position) < 30) :
+            if (p.position.distance(player.position) < 20) :
                 pos = p.position
                 #sp = p.speed
         return pos
     else :
         for p in state.team2.players:
-            if (p.position.distance(player.position) < 30 ) :
+            if (p.position.distance(player.position) < 20 ) :
                 pos = p.position
                # sp = p.speed
         return pos
