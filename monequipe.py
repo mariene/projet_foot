@@ -7,7 +7,7 @@ team1=SoccerTeam("Poireaux")
 team1.add_player(SoccerPlayer("t1j1",Attaquant()))
 
 team4=SoccerTeam("Carottes")
-team4.add_player(SoccerPlayer("t4j2",Degage()))
+team4.add_player(SoccerPlayer("t4j2",MixSimple()))
 
 team2=SoccerTeam("Patates")
 team2.add_player(SoccerPlayer("t2j1",Degage()))

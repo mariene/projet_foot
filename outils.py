@@ -114,7 +114,7 @@ class AllerVersAdv(SoccerStrategy):
         p = player.position
         shoot = Vector2D()
         padv = need.posPlayeradv(teamid,state,player)
-        direct= padv - p
+        direct= padv - player.position
         #direct = Vector2D(padv.x + spadv + p.x, p.y+padv.y)
         return SoccerAction(direct,shoot)
     def start_battle(self,state):
@@ -213,7 +213,7 @@ class AleatoireBis(SoccerStrategy):
     def finish_battle(self,won):
         pass 
 
-def PasTirerVersAdv(Soccerstrategy):
+class PasTirerVersAdv(SoccerStrategy):
     def __init__(self):
         pass
     def compute_strategy(self,state,player,teamid):
@@ -221,13 +221,16 @@ def PasTirerVersAdv(Soccerstrategy):
         gp = state.get_goal_center(need.get(teamid)) - player.position
         padv = need.posPlayeradv(teamid,state,player)
         gpadv = state.get_goal_center(need.get(teamid)) - padv
-        #shoot
-        if (gp.norm < gpadv.norm):
-            shoot = Vector2D.create_polar(gb.angle + 2,5)
-            return SoccerAction(Vector2D(),shoot)
+
+        if need.Playeradv(teamid,state,player) == True :
+            if (gp.norm < gpadv.norm):
+                shoot = Vector2D(3,3)
+                return SoccerAction(Vector2D(),shoot)
+            else :
+                return SoccerAction(Vector2D(),gp)
         else :
-            shoot = state.get_goal_center(need.get(teamid))
-            return SoccerAction(Vector2D(),shoot)
+            #shoot = state.get_goal_center(need.get(teamid))
+            return SoccerAction(Vector2D(),gp)
     def start_battle(self,state):
         pass        
     def finish_battle(self,won):
