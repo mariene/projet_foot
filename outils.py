@@ -607,7 +607,7 @@ class DegageTer(SoccerStrategy):
                     shoot = v1-p
                     return  SoccerAction(direct,shoot)
                 else :
-                    v2 = Vector2D(0,p1)
+                    v2 = Vector2D(0,p2)
                     shoot = v2 - p
                     return SoccerAction(direct,shoot)
             else :
@@ -616,7 +616,7 @@ class DegageTer(SoccerStrategy):
                     shoot = v1-p
                     return  SoccerAction(direct,shoot)
                 else :
-                    v2 = Vector2D(GAME_WIDTH,p1)
+                    v2 = Vector2D(GAME_WIDTH,p2)
                     shoot = v2 - p
                     return SoccerAction(direct,shoot)
         return  SoccerAction(direct,shoot)
@@ -673,25 +673,3 @@ class MixSimple(SoccerStrategy):
         return self.defe.compute_strategy(state,player,teamid)                  
     def create_strategy(self):
         return MixSimple()
-        
-class TirLucarne (SoccerStrategy):
-    def __init__(self):
-        pass
-    def compute_strategy(self,state,player,teamid):	    	
-        b = state.ball.position+state.ball.speed
-        p=player.position
-        bp = b-p
-        bp.x=bp.x*1.2
-        bp.y=bp.y*1.2
-        if(p.y>(GAME_HEIGHT/2)):
-		shoot=Vector2D(GAME_WIDTH,GAME_HEIGHT/2+GAME_GOAL_HEIGHT/2)-p
-        else:
-		shoot=Vector2D(GAME_WIDTH,GAME_HEIGHT/2-GAME_GOAL_HEIGHT/2)-p
-        if (teamid==2):
-            if(p.y>(GAME_HEIGHT/2)):
-                shoot=Vector2D(0,GAME_HEIGHT/2+GAME_GOAL_HEIGHT/2)-p
-            else:
-                shoot=Vector2D(0,GAME_HEIGHT/2-GAME_GOAL_HEIGHT/2)-p
-        return SoccerAction(bp,shoot)
-    def create_strategy(self):
-        return TirLucarne()
