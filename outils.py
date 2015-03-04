@@ -5,12 +5,12 @@ Created on Mon Feb  2 16:58:05 2015
 @author: 3202002
 """
 from soccersimulator import Vector2D,SoccerState,SoccerAction,SoccerStrategy,SoccerBattle,SoccerPlayer,SoccerTeam
-from soccersimulator import PLAYER_RADIUS,BALL_RADIUS,GAME_WIDTH,GAME_HEIGHT
+from soccersimulator import PLAYER_RADIUS,BALL_RADIUS,GAME_WIDTH,GAME_HEIGHT,GAME_GOAL_HEIGHT
 import random
 import need
 from math import pi 
 
-#STRAT' DE BASE
+#STRAT DE BASE
 #joueur random
 class RandomStrategy(SoccerStrategy):
     def __init__(self):
@@ -273,7 +273,7 @@ class ComposeStrategy(SoccerStrategy):
      #   idx=selector()
       #  return self.liststrat[idx].(computestratstate,player,teamid) 
 ###############################################################################     
-#STRAT'
+#STRAT
 #Defense
 
 # defenseur a ameliorer car qd distance bg trop proche, plus le temps de choper balle
@@ -430,7 +430,61 @@ class DeGoal(SoccerStrategy):
             return 1
         else:
             return 2
-
+            
+# def proche test 
+class DefGoalP(SoccerStrategy):
+    def __init__(self):
+        self.defe = Defenseur()
+        self.deg=DeGoal()
+    def compute_strategy(self,state,player,teamid):
+        # variables
+        g = state.get_goal_center(self.getad(teamid)) 
+        b = state.ball.position
+        p = player.position
+        #direct  = (b + state.ball.speed ) + g
+        bi = b + state.ball.speed
+        x = 0.01 * GAME_WIDTH
+        #dist = bi + g
+        #d = Vector2D((dist.x)/2.0, (GAME_HEIGHT*0.5) + 0.75*(bi.y-(GAME_HEIGHT*0.5)))
+        #dirt = d - p
+       
+        # cage 
+        # les coins ou il vise
+        p2 = (GAME_WIDTH,GAME_HEIGHT/2+GAME_GOAL_HEIGHT/2) + BALL_RADIUS
+        p1 = (GAME_WIDTH,GAME_HEIGHT/2-GAME_GOAL_HEIGHT/2) - BALL_RADIUS
+                
+         #distances
+        #gb = g - b   
+        gp = g-p
+        if (b.y <GAME_HEIGHT*0.5):
+            if b.y > p1 :
+                if bi >= p1 :
+                    direct = Vector2D(x,p1)-p
+                    shoot = Vector2D.create_polar(gp.angle + 2.505, 15)
+                    return SoccerAction(direct,shoot)
+                else :
+                    return self.defe.compute_strategy(state,player,teamid)
+            else :
+                return self.deg.compute_strategy(state,player,teamid)
+        else :
+            if b.y < p2:
+                if bi<=p2:
+                    direct = Vector2D(x,p2)-p
+                    shoot = Vector2D.create_polar(gp.angle - 2.505, 15)
+                    return SoccerAction(direct,shoot)
+                else :
+                    return self.defe.compute_strategy(state,player,teamid)
+            else :
+                return self.deg.compute_strategy(state,player,teamid)
+        #return SoccerAction(dirt,shoot)
+    def create_strategy(self):
+        return DefGoalP()
+    def getad(self,teamid):
+        if(teamid == 1):
+            return 1
+        else:
+            return 2 
+            
 ###############################################################################
 #STRAT 
 #attaque
@@ -531,6 +585,46 @@ class DegageBis(SoccerStrategy):
         else:
             return 2
 
+class DegageTer(SoccerStrategy):
+    def __init__(self):        
+        pass
+    def compute_strategy(self,state,player,teamid):
+        p = player.position
+        b = state.ball.position
+        gadv = state.get_goal_center(need.get(teamid))
+        gadvp = gadv - p 
+        shoot = Vector2D().create_polar(gadvp.angle + random.uniform(-1,1), 10)
+        direct = (state.ball.position + state.ball.speed) - p
+        direct.product(10)
+        p2 = (GAME_HEIGHT/2+GAME_GOAL_HEIGHT/2) + BALL_RADIUS
+        p1 = (GAME_HEIGHT/2-GAME_GOAL_HEIGHT/2) - BALL_RADIUS
+        if ((p.distance(b)<(PLAYER_RADIUS+BALL_RADIUS))):
+            return SoccerAction(direct,shoot)
+        if gadvp.norm < 15:
+            if (teamid ==1):
+                if b.y < GAME_HEIGHT*0.5 :
+                    v1 = Vector2D(0,p1)
+                    shoot = v1-p
+                    return  SoccerAction(direct,shoot)
+                else :
+                    v2 = Vector2D(0,p1)
+                    shoot = v2 - p
+                    return SoccerAction(direct,shoot)
+            else :
+                if b.y < GAME_HEIGHT*0.5 :
+                    v1 = Vector2D(GAME_WIDTH,p1)
+                    shoot = v1-p
+                    return  SoccerAction(direct,shoot)
+                else :
+                    v2 = Vector2D(GAME_WIDTH,p1)
+                    shoot = v2 - p
+                    return SoccerAction(direct,shoot)
+        return  SoccerAction(direct,shoot)
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass  
+    
 ###############################################################################
 # un mix de defense et d'attaque  
 # tentative -> a ameliorer !
@@ -579,4 +673,25 @@ class MixSimple(SoccerStrategy):
         return self.defe.compute_strategy(state,player,teamid)                  
     def create_strategy(self):
         return MixSimple()
-
+        
+class TirLucarne (SoccerStrategy):
+    def __init__(self):
+        pass
+    def compute_strategy(self,state,player,teamid):	    	
+        b = state.ball.position+state.ball.speed
+        p=player.position
+        bp = b-p
+        bp.x=bp.x*1.2
+        bp.y=bp.y*1.2
+        if(p.y>(GAME_HEIGHT/2)):
+		shoot=Vector2D(GAME_WIDTH,GAME_HEIGHT/2+GAME_GOAL_HEIGHT/2)-p
+        else:
+		shoot=Vector2D(GAME_WIDTH,GAME_HEIGHT/2-GAME_GOAL_HEIGHT/2)-p
+        if (teamid==2):
+            if(p.y>(GAME_HEIGHT/2)):
+                shoot=Vector2D(0,GAME_HEIGHT/2+GAME_GOAL_HEIGHT/2)-p
+            else:
+                shoot=Vector2D(0,GAME_HEIGHT/2-GAME_GOAL_HEIGHT/2)-p
+        return SoccerAction(bp,shoot)
+    def create_strategy(self):
+        return TirLucarne()
