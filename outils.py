@@ -444,21 +444,27 @@ class DefGoalP(SoccerStrategy):
         #direct  = (b + state.ball.speed ) + g
         bi = b + state.ball.speed
         x = 0.01 * GAME_WIDTH
+        bp=b-p
         #dist = bi + g
         #d = Vector2D((dist.x)/2.0, (GAME_HEIGHT*0.5) + 0.75*(bi.y-(GAME_HEIGHT*0.5)))
         #dirt = d - p
        
         # cage 
         # les coins ou il vise
-        p2 = (GAME_WIDTH,GAME_HEIGHT/2+GAME_GOAL_HEIGHT/2) + BALL_RADIUS
-        p1 = (GAME_WIDTH,GAME_HEIGHT/2-GAME_GOAL_HEIGHT/2) - BALL_RADIUS
+        p2 = (GAME_HEIGHT/2.0+GAME_GOAL_HEIGHT/2.0) + BALL_RADIUS
+        p1 = (GAME_HEIGHT/2.0-GAME_GOAL_HEIGHT/2.0) - BALL_RADIUS
                 
          #distances
         #gb = g - b   
         gp = g-p
-        if (b.y <GAME_HEIGHT*0.5):
+        if bp.norm < 15 and b.x < 20:
+            shoot = Vector2D.create_polar(player.angle+random.random(),g.norm)
+            d = b - p
+            return SoccerAction(d, shoot)
+        
+        if (b.y < GAME_HEIGHT*0.5):
             if b.y > p1 :
-                if bi >= p1 :
+                if bi >= p1:
                     direct = Vector2D(x,p1)-p
                     shoot = Vector2D.create_polar(gp.angle + 2.505, 15)
                     return SoccerAction(direct,shoot)
@@ -468,8 +474,8 @@ class DefGoalP(SoccerStrategy):
                 return self.deg.compute_strategy(state,player,teamid)
         else :
             if b.y < p2:
-                if bi<=p2:
-                    direct = Vector2D(x,p2)-p
+                if bi <= p2:
+                    direct = Vector2D(x,p2)- p
                     shoot = Vector2D.create_polar(gp.angle - 2.505, 15)
                     return SoccerAction(direct,shoot)
                 else :
