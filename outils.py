@@ -111,7 +111,7 @@ class AllerVersAdv(SoccerStrategy):
     def __init__(self):        
         pass
     def compute_strategy(self,state,player,teamid):
-        p = player.position
+        #p = player.position
         shoot = Vector2D()
         padv,spadv = need.posPlayeradv(teamid,state,player)
         padv = Vector2D(padv.x + spadv, padv.y+spadv)
@@ -559,8 +559,6 @@ class Degage(SoccerStrategy):
     def finish_battle(self,won):
         pass  
 
-
-
 class DegageBis(SoccerStrategy):
     def __init__(self):        
         pass
@@ -579,11 +577,7 @@ class DegageBis(SoccerStrategy):
         pass        
     def finish_battle(self,won):
         pass  
-    def getad(self,teamid):
-        if(teamid == 1):
-            return 1
-        else:
-            return 2
+
 
 class DegageTer(SoccerStrategy):
     def __init__(self):        
@@ -593,18 +587,16 @@ class DegageTer(SoccerStrategy):
         b = state.ball.position
         gadv = state.get_goal_center(need.get(teamid))
         gadvp = gadv - p 
-        shoot = Vector2D().create_polar(gadvp.angle + random.uniform(-1,1), 10)
+        shoot = state.get_goal_center(need.get(teamid)) - p
         direct = (state.ball.position + state.ball.speed) - p
         direct.product(10)
-        p2 = (GAME_HEIGHT/2+GAME_GOAL_HEIGHT/2) + BALL_RADIUS
-        p1 = (GAME_HEIGHT/2-GAME_GOAL_HEIGHT/2) - BALL_RADIUS
-        if ((p.distance(b)<(PLAYER_RADIUS+BALL_RADIUS))):
-            return SoccerAction(direct,shoot)
-        if gadvp.norm < 15:
-            if (teamid ==1):
+        p2 = (GAME_HEIGHT/2+GAME_GOAL_HEIGHT/2) - 0.25
+        p1 = (GAME_HEIGHT/2-GAME_GOAL_HEIGHT/2) + 0.25
+        if gadvp.norm < 30:
+            if (teamid == 2):
                 if b.y < GAME_HEIGHT*0.5 :
                     v1 = Vector2D(0,p1)
-                    shoot = v1-p
+                    shoot = v1 - p
                     return  SoccerAction(direct,shoot)
                 else :
                     v2 = Vector2D(0,p2)
@@ -613,7 +605,7 @@ class DegageTer(SoccerStrategy):
             else :
                 if b.y < GAME_HEIGHT*0.5 :
                     v1 = Vector2D(GAME_WIDTH,p1)
-                    shoot = v1-p
+                    shoot = v1 - p
                     return  SoccerAction(direct,shoot)
                 else :
                     v2 = Vector2D(GAME_WIDTH,p2)

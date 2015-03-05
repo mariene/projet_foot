@@ -4,17 +4,17 @@ from soccersimulator import pyglet
 from outils import *
 
 team1=SoccerTeam("Poireaux")
-team1.add_player(SoccerPlayer("t1j1",Attaquant()))
+team1.add_player(SoccerPlayer("t1j1",DegageTer()))
 
 team4=SoccerTeam("Carottes")
 team4.add_player(SoccerPlayer("t4j2",MixSimple()))
 
 team2=SoccerTeam("Patates")
-team2.add_player(SoccerPlayer("t2j1",Degage()))
+team2.add_player(SoccerPlayer("t2j1",DegageTer()))
 team2.add_player(SoccerPlayer("t2j2",Defenseur()))
 
 team6=SoccerTeam("Oignons")
-team6.add_player(SoccerPlayer("t6j1",DefenGoal()))
+team6.add_player(SoccerPlayer("t6j1",Defenseur()))
 team6.add_player(SoccerPlayer("t6j2",Degage()))
 
 team3=SoccerTeam("Aubergines")
