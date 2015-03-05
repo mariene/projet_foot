@@ -28,7 +28,7 @@ compo=ComposeStrategy(AllerVersBalle(),PasTirerVersAdv())
 #team2.add_player(SoccerPlayer("def",Defenseur()))
 
 team3.add_player(SoccerPlayer("DefC",DefGoalP()))
-#team3.add_player(SoccerPlayer("Def1",Defenseur()))
+#team3.add_player(SoccerPlayer("Def1",DegageTer()))
 #team3.add_player(SoccerPlayer("MixS",MixSimple()))
 #team3.add_player(SoccerPlayer("Deg",DeGoal()))
 
