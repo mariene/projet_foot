@@ -10,7 +10,7 @@ team4=SoccerTeam("Carottes")
 team4.add_player(SoccerPlayer("t4j2",MixSimple()))
 
 team2=SoccerTeam("Patates")
-team2.add_player(SoccerPlayer("t2j1",DegageTer()))
+team2.add_player(SoccerPlayer("t2j1",MixSimple()))
 team2.add_player(SoccerPlayer("t2j2",Defenseur()))
 
 team6=SoccerTeam("Oignons")
@@ -21,7 +21,7 @@ team3=SoccerTeam("Aubergines")
 team3.add_player(SoccerPlayer("t3j1",DefCyclique()))
 team3.add_player(SoccerPlayer("t3j2",Def()))
 team3.add_player(SoccerPlayer("t3j3",DeGoal()))
-team3.add_player(SoccerPlayer("t3j4",Attaquant()))
+team3.add_player(SoccerPlayer("t3j4",Degage()))
 
 
 team5=SoccerTeam("Tomates")

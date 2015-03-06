@@ -18,7 +18,7 @@ team5=SoccerTeam("team2")
 #team1.add_player(SoccerPlayer("t1j4",PasBouger()))
 
 
-comp=ComposeStrategy(AllerVersAdv(),TirerRd())
+comp=ComposeStrategy(AllerVersAdvBis(),TirerRd())
 compo=ComposeStrategy(AllerVersBalle(),PasTirerVersAdv())
 
 # bonne equipe voir si je la change avec tomate ou aubergine 
@@ -28,19 +28,18 @@ compo=ComposeStrategy(AllerVersBalle(),PasTirerVersAdv())
 #team2.add_player(SoccerPlayer("def",Defenseur()))
 
 
-#team3.add_player(SoccerPlayer("DefC",DefGoalP()))
-team3.add_player(SoccerPlayer("Def1",Defenseur()))
-
-#team3.add_player(SoccerPlayer("DefC",DefGoalP()))
-#team3.add_player(SoccerPlayer("Def1",DegageTer()))
+#team3.add_player(SoccerPlayer("DefC",Defenseur()))
+#team3.add_player(SoccerPlayer("Def",Defenseur()))
+#team3.add_player(SoccerPlayer("DefC",Attaquant()))
+team3.add_player(SoccerPlayer("Def",DegageTer()))
 
 #team3.add_player(SoccerPlayer("MixS",MixSimple()))
 #team3.add_player(SoccerPlayer("Deg",DeGoal()))
 
-#team5.add_player(SoccerPlayer("DeG",PasBouger()))
-team5.add_player(SoccerPlayer(";)",DegageTer()))
-#team5.add_player(SoccerPlayer("fonc",Def()))
-#team5.add_player(SoccerPlayer("comp",DefGoalP()))
+#team5.add_player(SoccerPlayer("DeG",FonceurStrategy()))
+#team5.add_player(SoccerPlayer("Dt",DegageTer()))
+team5.add_player(SoccerPlayer("fonc",Def()))
+#team5.add_player(SoccerPlayer("comp",DeGoal()))
 
 battle=SoccerBattle(team3,team5)
 obs=PygletObserver()

@@ -123,6 +123,27 @@ class AllerVersAdv(SoccerStrategy):
     def finish_battle(self,won):
         pass  
 
+class AllerVersAdvBis(SoccerStrategy):
+    def __init__(self):        
+        pass
+    def compute_strategy(self,state,player,teamid):
+        #p = player.position
+        shoot = Vector2D()
+        padv,spadv = need.posPlayeradv(teamid,state,player)
+        padv = Vector2D(padv.x + spadv, padv.y + spadv)
+        padvp= padv  - player.position
+        direct = Vector2D((padvp.x/2.0),(padvp.y/2.0))
+        if padv == Vector2D() :
+            direct = Vector2D()
+            return SoccerAction(direct,shoot)
+        else :
+            
+            return SoccerAction(direct,shoot)
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass
+
 class AllerVersJoueur(SoccerStrategy):
     def __init__(self):        
         pass
@@ -591,14 +612,12 @@ class DegageTer(SoccerStrategy):
     def compute_strategy(self,state,player,teamid):
         p = player.position
         b = state.ball.position
-        gadv = state.get_goal_center(need.get(teamid))
-        gadvp = gadv - p 
         shoot = state.get_goal_center(need.get(teamid)) - p
         direct = (state.ball.position + state.ball.speed) - p
-        direct.product(10)
-        p2 = (GAME_HEIGHT/2+GAME_GOAL_HEIGHT/2) - 0.25
-        p1 = (GAME_HEIGHT/2-GAME_GOAL_HEIGHT/2) + 0.25
-        if gadvp.norm < 30:
+        #direct.product(10)
+        p2 = (GAME_HEIGHT/2+GAME_GOAL_HEIGHT/2) - 0.5
+        p1 = (GAME_HEIGHT/2-GAME_GOAL_HEIGHT/2) + 0.5
+        if shoot.norm < 30:
             if (teamid == 2):
                 if b.y < GAME_HEIGHT*0.5 :
                     v1 = Vector2D(0,p1)
