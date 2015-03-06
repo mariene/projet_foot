@@ -614,7 +614,7 @@ class DegageTer(SoccerStrategy):
         b = state.ball.position
         shoot = state.get_goal_center(need.get(teamid)) - p
         direct = (state.ball.position + state.ball.speed) - p
-        #direct.product(10)
+        direct.product(10)
         p2 = (GAME_HEIGHT/2+GAME_GOAL_HEIGHT/2) - 0.5
         p1 = (GAME_HEIGHT/2-GAME_GOAL_HEIGHT/2) + 0.5
         if shoot.norm < 30:
