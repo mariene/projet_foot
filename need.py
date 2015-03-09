@@ -94,3 +94,4 @@ def Playeradv(id,state,player):
         for p in state.team1.players:
             if (p.position.distance(player.position) < 50 ) :
                 return True
+                            

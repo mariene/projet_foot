@@ -28,18 +28,18 @@ compo=ComposeStrategy(AllerVersBalle(),PasTirerVersAdv())
 #team2.add_player(SoccerPlayer("def",Defenseur()))
 
 
-#team3.add_player(SoccerPlayer("DefC",Defenseur()))
-#team3.add_player(SoccerPlayer("Def",Defenseur()))
-#team3.add_player(SoccerPlayer("DefC",Attaquant()))
-team3.add_player(SoccerPlayer("Def",DegageTer()))
+team3.add_player(SoccerPlayer("Def2",Defenseur()))
+team3.add_player(SoccerPlayer("Def",Defenseur()))
+team3.add_player(SoccerPlayer("Att",Attaquant()))
+team3.add_player(SoccerPlayer("DegT",DegageTer()))
 
 #team3.add_player(SoccerPlayer("MixS",MixSimple()))
 #team3.add_player(SoccerPlayer("Deg",DeGoal()))
 
-#team5.add_player(SoccerPlayer("DeG",FonceurStrategy()))
-#team5.add_player(SoccerPlayer("Dt",DegageTer()))
-team5.add_player(SoccerPlayer("fonc",Def()))
-#team5.add_player(SoccerPlayer("comp",DeGoal()))
+team5.add_player(SoccerPlayer("FS",Defenseur()))
+team5.add_player(SoccerPlayer("DT",DegageTer()))
+team5.add_player(SoccerPlayer("Deg",Degage()))
+team5.add_player(SoccerPlayer("DG",DeGoal()))
 
 battle=SoccerBattle(team3,team5)
 obs=PygletObserver()

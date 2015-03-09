@@ -550,8 +550,9 @@ class Attaquant(SoccerStrategy):
         gadv = state.get_goal_center(need.get(teamid))
         b = state.ball.position
         gadvb = gadv - b
+        p = player.position
         #dist= b - player.position
-        gb = g - b   
+        gb = g - b 
         if ((b.x==GAME_WIDTH/2.0 and b.y==GAME_HEIGHT/2.0) or (gadvb.norm < GAME_WIDTH/6.0)): 
             return self.bal.compute_strategy(state,player,teamid)
         elif gb.norm < GAME_WIDTH/8.0:
@@ -613,10 +614,13 @@ class DegageTer(SoccerStrategy):
         p = player.position
         b = state.ball.position
         shoot = state.get_goal_center(need.get(teamid)) - p
+        
         direct = (state.ball.position + state.ball.speed) - p
         direct.product(10)
         p2 = (GAME_HEIGHT/2+GAME_GOAL_HEIGHT/2) - 0.5
         p1 = (GAME_HEIGHT/2-GAME_GOAL_HEIGHT/2) + 0.5
+        if p.distance(state.ball.position)>=PLAYER_RADIUS+BALL_RADIUS:
+            return SoccerAction(direct,Vector2D())
         if shoot.norm < 30:
             if (teamid == 2):
                 if b.y < GAME_HEIGHT*0.5 :
