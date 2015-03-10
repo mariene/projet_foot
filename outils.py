@@ -244,7 +244,7 @@ class PasTirerVersAdv(SoccerStrategy):
         padv = need.posPlayeradv(teamid,state,player)
         gpadv = state.get_goal_center(need.get(teamid)) - padv
 
-        if need.Playeradv(teamid,state,player) == True :
+        if need.Playeradv(teamid,state,player):
             if (gp.norm < gpadv.norm):
                 shoot = Vector2D(3,3)
                 return SoccerAction(Vector2D(),shoot)
@@ -257,7 +257,39 @@ class PasTirerVersAdv(SoccerStrategy):
         pass        
     def finish_battle(self,won):
         pass 
-   
+
+class PasVersToi(SoccerStrategy):
+    def __init__(self):
+        pass
+    def compute_strategy(self,state,player,teamid):
+        b = state.ball.position 
+        gp = state.get_goal_center(need.get(teamid)) - player.position
+        #gb = state.get_goal_center(need.get(teamid)) - b
+        padv,spadv = need.posPlayeradv(teamid,state,player)
+        gpadv = state.get_goal_center(need.get(teamid)) - padv
+        direct = Vector2D(0,0)
+        b = state.ball.position 
+        padvp = padv - player.position 
+       # if need.Playeradv(teamid,state,player) == True :
+        #if need.posp(teamid,state,player) == True : #and padvp.norm < 15  :  #padvp.norm 20  :#
+         #   print(need.posp(teamid,state,player))
+        if padvp.norm < 20 and need.posp(teamid,state,player) :      
+            if b.y < GAME_HEIGHT*0.5:
+                shoot = Vector2D.create_polar(padvp.angle - pi/4.0, 15)
+                return SoccerAction(direct,shoot)
+            else :
+                shoot = Vector2D.create_polar(padvp.angle + pi/4.0, 15)
+                return SoccerAction(direct,shoot)
+        elif gp.norm < 0.20*GAME_WIDTH and not need.posp(teamid,state,player):
+            return SoccerAction(direct,gp)
+        #else :
+            #shoot = state.get_goal_center(need.get(teamid))
+        return SoccerAction(Vector2D(),gp)
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass 
+
 ###############################################################################            
 class PasBouger(SoccerStrategy):
     def __init__(self):
@@ -357,6 +389,9 @@ class Def(SoccerStrategy):
             d.x=0.75*b.x
         dirt = d - p
         shoot = Vector2D.create_polar(player.angle+2.25,g.norm)
+        
+        if not need.CanIshoot(state,player):
+            shoot=Vector2D(0,0)
         return SoccerAction(dirt,shoot)
     def create_strategy(self):
         return Def()
@@ -379,6 +414,12 @@ class DefCyclique(SoccerStrategy):
         d = Vector2D((dist.x/2.00)-(0.25*gb.norm), b.y)
         dirt = d - p
         shoot = Vector2D.create_polar(player.angle + 2.25,g.norm)
+        #if need.CanIshoot(state,player) == False:
+         #   return SoccerAction(dirt,Vector2D())
+        #else:
+        if teamid == 1 :
+            d =  Vector2D((dist.x/2.00)+(0.25*gb.norm), b.y)
+            dirt = d - p
         return SoccerAction(dirt,shoot)
     def create_strategy(self):
         return Defenseur()
@@ -437,6 +478,8 @@ class DeGoal(SoccerStrategy):
         shoot = Vector2D.create_polar(gb.angle + (pi/2.00), 100)
         #bp = state.ball.position - player.position
         #if bp.norm <= GAME_WIDTH-(GAME_WIDTH*0.90) or (p.distance(b)<=(PLAYER_RADIUS+BALL_RADIUS)) :
+        if not need.CanIshoot(state,player):
+            return SoccerAction(dirt,Vector2D())
         if (b.y > 0.5*GAME_HEIGHT):
             shoot = Vector2D.create_polar(gb.angle - (pi/2.0), 100)
             return SoccerAction(dirt,shoot)
@@ -457,6 +500,7 @@ class DefGoalP(SoccerStrategy):
     def __init__(self):
         self.defe = Defenseur()
         self.deg=DeGoal()
+        self.defe1 = Def()
     def compute_strategy(self,state,player,teamid):
         # variables
         g = state.get_goal_center(self.getad(teamid)) 
@@ -478,14 +522,19 @@ class DefGoalP(SoccerStrategy):
          #distances
         #gb = g - b   
         gp = g-p
-        if bp.norm < 15 and b.x < 20:
-            shoot = Vector2D.create_polar(player.angle+random.random(),g.norm)
+        
+        # ballon proche des cages
+        if bp.norm < 15 and b.x < 20 and need.CanIshoot (state,player):
+            shoot = Vector2D.create_polar(player.angle+2.0,g.norm)
             d = b - p
             return SoccerAction(d, shoot)
-        
-        if (b.y < GAME_HEIGHT*0.5):
+        # ballon au milieu, à peu pres
+        if (bi.y > ((GAME_HEIGHT*0.5) - 2) and bi.y < ((GAME_HEIGHT*0.5) + 2) ):
+            return self.defe1.compute_strategy(state,player,teamid)
+        # ballon au dessus de la moitie de la largeur du terrain
+        if (b.y <= (GAME_HEIGHT*0.5)+2):
             if b.y > p1 :
-                if bi >= p1:
+                if bi.y >= p1:
                     direct = Vector2D(x,p1)-p
                     shoot = Vector2D.create_polar(gp.angle + 2.505, 15)
                     return SoccerAction(direct,shoot)
@@ -493,9 +542,10 @@ class DefGoalP(SoccerStrategy):
                     return self.defe.compute_strategy(state,player,teamid)
             else :
                 return self.deg.compute_strategy(state,player,teamid)
+        # ballon en dessous de la moitie de la largeur du terrain
         else :
-            if b.y < p2:
-                if bi <= p2:
+            if b.y < p2 and b.y >= (GAME_HEIGHT*0.5)-2:
+                if bi.y <= p2:
                     direct = Vector2D(x,p2)- p
                     shoot = Vector2D.create_polar(gp.angle - 2.505, 15)
                     return SoccerAction(direct,shoot)
@@ -503,7 +553,12 @@ class DefGoalP(SoccerStrategy):
                     return self.defe.compute_strategy(state,player,teamid)
             else :
                 return self.deg.compute_strategy(state,player,teamid)
-        #return SoccerAction(dirt,shoot)
+        
+        if not need.CanIshoot (state,player):
+            dirt = b - p
+            dirt.x = x
+            return SoccerAction(dirt,Vector2D())
+            
     def create_strategy(self):
         return DefGoalP()
     def getad(self,teamid):
@@ -524,6 +579,8 @@ class Aleatoire(SoccerStrategy):
         g = state.get_goal_center(need.get(teamid))
         b = state.ball.position
         dist= b - player.position
+        if not need.CanIshoot(state,player):
+            return SoccerAction(dist,Vector2D())
         gb = state.get_goal_center(need.get(teamid)) - player.position
         shoot = Vector2D.create_polar(gb.angle + random.uniform(-1,1),g.norm)
         return SoccerAction(dist,shoot)
@@ -617,9 +674,10 @@ class DegageTer(SoccerStrategy):
         
         direct = (state.ball.position + state.ball.speed) - p
         direct.product(10)
-        p2 = (GAME_HEIGHT/2+GAME_GOAL_HEIGHT/2) - 0.5
-        p1 = (GAME_HEIGHT/2-GAME_GOAL_HEIGHT/2) + 0.5
-        if p.distance(state.ball.position)>=PLAYER_RADIUS+BALL_RADIUS:
+        p2 = (GAME_HEIGHT/2+GAME_GOAL_HEIGHT/2) - 0.25
+        p1 = (GAME_HEIGHT/2-GAME_GOAL_HEIGHT/2) + 0.25
+       # if p.distance(state.ball.position)>=PLAYER_RADIUS+BALL_RADIUS:
+        if not need.CanIshoot(state,player):
             return SoccerAction(direct,Vector2D())
         if shoot.norm < 30:
             if (teamid == 2):

@@ -25,6 +25,19 @@ def gb(teamid, state):
 def bp (teamid, state,player):
     return state.ball.position - player.position
 
+
+def posp (teamid,state,player):
+    p = player.position
+    padv,spadv = posPlayeradv(teamid,state,player)
+    g = state.get_goal_center(get(teamid)) - padv
+    gp = g - p
+    gpad = g - padv    
+    
+    if (gpad.norm > gp.norm ):
+        return True
+    else :
+        return False
+        
 # a developper, pour savoir quel joueur a le ballon  
 # un joueur -> si choix 0 cherche si quelqu'un de son equipe a le ballon / 
 #si choix 1 cherche si quelqu'un de l'equipe adverse a le ballon 
@@ -47,10 +60,6 @@ def aBallon(id,state,player,choix):
             if ((p.distance(state.ball.position)<(PLAYER_RADIUS+BALL_RADIUS))):
                 return p.position
 
-#def aBallonBool (teamid,state,player,choix):
-  # # if (teamid == 1 ): 
-     #       if ((p.distance(state.ball.position)<(PLAYER_RADIUS+BALL_RADIUS))):
-      #          return p.position
 
 # position des joueurs adverse
 def posPlayeradv(teamid,state,player): 
@@ -94,4 +103,11 @@ def Playeradv(id,state,player):
         for p in state.team1.players:
             if (p.position.distance(player.position) < 50 ) :
                 return True
-                            
+
+def CanIshoot (state,player):
+    p = player.position
+    if (p.distance(state.ball.position)<(PLAYER_RADIUS+BALL_RADIUS)):
+        return True
+    else :
+        return False
+    
