@@ -38,7 +38,7 @@ team3.add_player(SoccerPlayer("Deg",DegageTer()))
 
 #team5.add_player(SoccerPlayer("FS",PasBouger()))
 #team5.add_player(SoccerPlayer("DT",Def()))
-team5.add_player(SoccerPlayer("Def",Degage()))
+team5.add_player(SoccerPlayer("A",Defenseur()))
 #team5.add_player(SoccerPlayer("DG",FonceurStrategy()))
 
 battle=SoccerBattle(team3,team5)
