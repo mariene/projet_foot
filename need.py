@@ -106,7 +106,7 @@ def Playeradv(id,state,player):
 
 def CanIshoot (state,player):
     p = player.position
-    if (p.distance(state.ball.position)<(PLAYER_RADIUS+BALL_RADIUS)):
+    if (p.distance(state.ball.position)<=(PLAYER_RADIUS+BALL_RADIUS)):
         return True
     else :
         return False

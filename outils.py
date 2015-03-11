@@ -370,7 +370,40 @@ class Defenseur(SoccerStrategy):
             return 1
         else:
             return 2
-            
+        
+# Defenseur pour nouvelle configuration, meme chose que le defenseur du haut 
+class DefenseurBis(SoccerStrategy):
+    def __init__(self):
+        pass
+    def compute_strategy(self,state,player,teamid):
+        g = state.get_goal_center(self.getad(teamid))
+        b = state.ball.position
+        p = player.position
+        gb = state.get_goal_center(self.getad(teamid)) - p
+        gp = g-p
+        bp = state.ball.position - player.position
+
+        dist = b + g
+        d = Vector2D((dist.x)/2.00,(dist.y)/2.00)   
+        dirt = d - p
+        dirt.product(10)
+        
+        if need.CanIshoot(state,player) : 
+            if b.y < GAME_HEIGHT/2.0:
+                shoot2=Vector2D.create_polar(gp.angle + 2.505, 15)
+                return SoccerAction(dirt,shoot2)
+            else :
+                shoot = Vector2D.create_polar(gp.angle - 2.505, 15)
+                return SoccerAction (dirt,shoot)
+        return SoccerAction(dirt,Vector2D())
+    def create_strategy(self):
+        return DefenseurBis()
+    def getad(self,teamid):
+        if(teamid == 1):
+            return 1
+        else:
+            return 2    
+
 # defenseur, situe a un peu près 3/4 de la distance but-ballon, cad plus proche du ballon 
 #marche pour attaquant mais moins pr Fonceur
 class Def(SoccerStrategy):
@@ -389,10 +422,50 @@ class Def(SoccerStrategy):
             d.x=0.75*b.x
         dirt = d - p
         shoot = Vector2D.create_polar(player.angle+2.25,g.norm)
-        
-        if not need.CanIshoot(state,player):
-            shoot=Vector2D(0,0)
         return SoccerAction(dirt,shoot)
+    def create_strategy(self):
+        return Def()
+    def getad(self,teamid):
+        if(teamid == 1):
+            return 1
+        else:
+            return 2
+
+class DefBis(SoccerStrategy):
+    def __init__(self):
+        pass
+    def compute_strategy(self,state,player,teamid):
+        g = state.get_goal_center(self.getad(teamid))
+        b = state.ball.position
+        p = player.position
+        gp= g-p
+        d = Vector2D(0.75*(b.x - GAME_WIDTH)+GAME_WIDTH, 0.75*(b.y-0.5*GAME_HEIGHT)+0.5*GAME_HEIGHT)
+        shoot = Vector2D.create_polar(player.angle+2.25,g.norm)
+        dirt = d - p    
+        
+        if(teamid==1):
+            d.x = 0.75*b.x
+            dirt = d - p
+            if need.CanIshoot(state,player):  
+                if b.y < GAME_HEIGHT/2.0:
+                    shoot2=Vector2D.create_polar(gp.angle + 2.505, 15)
+                    return SoccerAction(dirt,shoot2)
+                else :
+                    shoot = Vector2D.create_polar(gp.angle - 2.505, 15)
+                    return SoccerAction (dirt,shoot)
+            else:
+                return SoccerAction(dirt,Vector2D())
+        else :
+            if need.CanIshoot(state,player):  
+                if b.y < GAME_HEIGHT/2.0:
+                    shoot2=Vector2D.create_polar(gp.angle + 2.505, 15)
+                    return SoccerAction(dirt,shoot2)
+                else :
+                    shoot = Vector2D.create_polar(gp.angle - 2.505, 15)
+                    return SoccerAction (dirt,shoot)
+            else:
+                return SoccerAction(dirt,Vector2D())     
+        
     def create_strategy(self):
         return Def()
     def getad(self,teamid):
@@ -429,6 +502,41 @@ class DefCyclique(SoccerStrategy):
         else:
             return 2
 
+
+class DefCycliqueBis(SoccerStrategy):
+    def __init__(self):
+        pass
+    def compute_strategy(self,state,player,teamid):
+        g = state.get_goal_center(self.getad(teamid))
+        b = state.ball.position
+        p = player.position
+        gb = state.get_goal_center(self.getad(teamid)) - p
+        dist = b + g
+        d = Vector2D((dist.x/2.00)-(0.25*gb.norm), b.y)
+        dirt = d - p
+        shoot = Vector2D.create_polar(player.angle + 2.25,g.norm)
+        #if need.CanIshoot(state,player) == False:
+         #   return SoccerAction(dirt,Vector2D())
+        #else:
+        if teamid == 1 :
+            d =  Vector2D((dist.x/2.00)+(0.25*gb.norm), b.y)
+            dirt = d - p
+            if need.CanIshoot(state,player):  
+                return SoccerAction(dirt,shoot)
+            else :
+                return SoccerAction(dirt,Vecteur2D())
+        else:
+            if need.CanIshoot(state,player):  
+                return SoccerAction(dirt,shoot)
+            else :
+                return SoccerAction(dirt,Vecteur2D())     
+    def create_strategy(self):
+        return Defenseur()
+    def getad(self,teamid):
+        if(teamid == 1):
+            return 1
+        else:
+            return 2
 #permet de renvoyer le ballon a l'oppose de l'endroit où c'est envoye
 class DefenGoal(SoccerStrategy):
     def __init__(self):

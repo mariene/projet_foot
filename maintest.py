@@ -5,7 +5,9 @@ Created on Mon Feb  2 17:04:17 2015
 """
 from soccersimulator import Vector2D,SoccerState,SoccerAction,SoccerStrategy,SoccerBattle,SoccerPlayer,SoccerTeam
 from soccersimulator import PygletObserver,ConsoleListener,LogListener, pyglet
-from outils import *
+from stratatt import *
+from stratdef import *
+from stratmix import *
 
 team3=SoccerTeam("team1")
 #team3=SoccerTeam("team2")
@@ -28,20 +30,20 @@ compo=ComposeStrategy(AllerVersBalle(),PasVersToi())
 #team2.add_player(SoccerPlayer("def",Defenseur()))
 
 
-#team3.add_player(SoccerPlayer("Def2",Def()))
-#team3.add_player(SoccerPlayer("Def",Defenseur()))
-#team3.add_player(SoccerPlayer("Att",FonceurStrategy()))
-team3.add_player(SoccerPlayer("Deg",DegageTer()))
+team3.add_player(SoccerPlayer("Def2",DegageTer()))
+team3.add_player(SoccerPlayer("Def",DefenseurBis()))
+team3.add_player(SoccerPlayer("Att",Attaquant()))
+team3.add_player(SoccerPlayer("Deg",DefBis()))
 
 #team3.add_player(SoccerPlayer("MixS",MixSimple()))
 #team3.add_player(SoccerPlayer("Deg",DeGoal()))
 
-#team5.add_player(SoccerPlayer("FS",PasBouger()))
-#team5.add_player(SoccerPlayer("DT",Def()))
-team5.add_player(SoccerPlayer("A",Defenseur()))
-#team5.add_player(SoccerPlayer("DG",FonceurStrategy()))
+team5.add_player(SoccerPlayer("FS",DegageTer()))
+team5.add_player(SoccerPlayer("DT",DefenseurBis()))
+team5.add_player(SoccerPlayer("DC",DeGoalBis()))
+team5.add_player(SoccerPlayer("DG",DefBis()))
 
-battle=SoccerBattle(team3,team5)
+battle=SoccerBattle(team5,team3)
 obs=PygletObserver()
 obs.set_soccer_battle(battle)
 pyglet.app.run() 
