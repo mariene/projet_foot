@@ -9,7 +9,7 @@ from soccersimulator import PLAYER_RADIUS,BALL_RADIUS,GAME_WIDTH,GAME_HEIGHT,GAM
 import random
 import need
 from math import pi 
-
+from outils import *
 ###############################################################################     
 #STRAT
 #Defense

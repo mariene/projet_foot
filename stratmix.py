@@ -11,7 +11,7 @@ import need
 from math import pi 
 from stratatt import *
 from stratdef import *
-
+from outils import *
 ###############################################################################
 # un mix de defense et d'attaque  
 # tentative -> a ameliorer !
