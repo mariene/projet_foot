@@ -55,7 +55,7 @@ class MixSimple(SoccerStrategy):
         b = state.ball.position
         p = player.position
         bp= b - p
-        if bp.norm < 25 :
+        if bp.norm < 30:
             return self.att.compute_strategy(state,player,teamid)
         return self.defe.compute_strategy(state,player,teamid)                  
     def create_strategy(self):

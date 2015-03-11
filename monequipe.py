@@ -28,7 +28,7 @@ team3.add_player(SoccerPlayer("t3j4",DegageTer()))
 
 team5=SoccerTeam("Tomates")
 team5.add_player(SoccerPlayer("t5j2",DegageTer()))
-team5.add_player(SoccerPlayer("t5j1",DefenGoalBis()))
+team5.add_player(SoccerPlayer("t5j1",DefenseurBis()))
 team5.add_player(SoccerPlayer("t5j3",DefBis()))
 team5.add_player(SoccerPlayer("t5j4",Attaquant()))
 
