@@ -1,113 +1,137 @@
 from soccersimulator import Vector2D,SoccerState,SoccerAction,SoccerStrategy,SoccerBattle,SoccerPlayer,SoccerTeam
 from soccersimulator import PLAYER_RADIUS, BALL_RADIUS
 
-def get(teamid):
-        if(teamid == 1):
+class Need(SoccerState):   
+    def __init__(self,state,teamid,player):
+        self.teamid=teamid
+        self.state=state
+        self.player=player
+        
+    def get(self):
+        if(self.teamid == 1):
             return 2
         else:
+            return 1    
+    def getad(self):
+        if(self.teamid == 1):
             return 1
-
-def g(teamid, state):
-    return state.get_goal_center(get(teamid))
-
-def b(state):
-    return state.ball.position
-
-def p (player, state):
-    return player.position
-
-def gp (teamid,state,player):
-    return state.get_goal_center(get(teamid)) - player.position
-  
-def gb(teamid, state):  
-    return state.get_goal_center(get(teamid)) - state.ball.position
-
-def bp (teamid, state,player):
-    return state.ball.position - player.position
-
-
-def posp (teamid,state,player):
-    p = player.position
-    padv,spadv = posPlayeradv(teamid,state,player)
-    g = state.get_goal_center(get(teamid)) - padv
-    gp = g - p
-    gpad = g - padv    
-    
-    if (gpad.norm > gp.norm ):
-        return True
-    else :
-        return False
+        else:
+            return 2
+    def g(self):
+        return self.state.get_goal_center(get())
+    def b(self):
+        return self.state.ball.position
+    def p(self):
+        return self.player.position
+     #but adverse-joueur   
+    def gadvp(self):
+        return self.state.get_goal_center(get()) - self.player.position     
+    def gadvp_norm(self):
+        return (self.state.get_goal_center(get()) - self.player.position).norm
+    #but adverse - ballon    
+    def gadvb(self):  
+        return self.state.get_goal_center(get()) - self.state.ball.position
+    def gadvb_norm(self):  
+        return (self.state.get_goal_center(get()) - self.state.ball.position).norm
+    #cage-joueur
+    def gp(self):
+        return self.state.get_goal_center(getad()) - self.player.position        
+    def gp_norm(self):
+        return (self.state.get_goal_center(getad()) - self.player.position).norm
+#cage-ballon
+    def gb(self):  
+        return self.state.get_goal_center(getad()) - self.state.ball.position   
+    def gb_norm(self):  
+        return (self.state.get_goal_center(getad()) - self.state.ball.position).norm
+#ballon-joueur
+    def bp(self):
+        return self.state.ball.position - self.player.position   
+    def bp_norm(self):
+        return (self.state.ball.position - self.player.position).norm        
+#ballon-adversaire
+    def bpadv(self):
+        return self.state.ball.position - posPlayeradv()    
+    def bpadv_norm(self):
+        return (self.state.ball.position - posPlayeradv()).norm        
+#but adverse - adversaire
+    def gpadv_norm(self):
+        return (self.state.get_goal_center(get()) - posPlayeradv()).norm    
+    def posp (self): 
+        if (gpad_norm() > gp_norm() ):
+            return True
+        else :
+            return False
         
 # a developper, pour savoir quel joueur a le ballon  
 # un joueur -> si choix 0 cherche si quelqu'un de son equipe a le ballon / 
 #si choix 1 cherche si quelqu'un de l'equipe adverse a le ballon 
 
-def aBallon(id,state,player,choix):   
-    if (id==1 and choix == 0 ):
-        for p in state.team1.players:
-            if ((p.distance(state.ball.position)<(PLAYER_RADIUS+BALL_RADIUS))):
-                return p.position
-    if (id == 1 and choix == 1):
-        for p in state.team2.players:
-            if ((p.distance(state.ball.position)<(PLAYER_RADIUS+BALL_RADIUS))):
-                return p.position
-    if (id ==2 and choix == 0  ):
-        for p in state.team2.players:
-            if ((p.distance(state.ball.position)<(PLAYER_RADIUS+BALL_RADIUS))):
-                return p.position
-    else:
-        for p in state.team1.players:
-            if ((p.distance(state.ball.position)<(PLAYER_RADIUS+BALL_RADIUS))):
-                return p.position
+    def aBallon(self,choix):   
+        if (self.teamid==1 and choix == 0 ):
+            for p in self.state.team1.players:
+                if ((p.distance(self.state.ball.position)<(PLAYER_RADIUS+BALL_RADIUS))):
+                    return p.position
+        if (self.teamid == 1 and choix == 1):
+            for p in self.state.team2.players:
+                if ((p.distance(self.state.ball.position)<(PLAYER_RADIUS+BALL_RADIUS))):
+                    return p.position
+        if (self.teamid ==2 and choix == 0  ):
+            for p in self.state.team2.players:
+                if ((p.distance(self.state.ball.position)<(PLAYER_RADIUS+BALL_RADIUS))):
+                    return p.position
+        else:
+            for p in self.state.team1.players:
+                if ((p.distance(self.state.ball.position)<(PLAYER_RADIUS+BALL_RADIUS))):
+                    return p.position
 
 
 # position des joueurs adverse
-def posPlayeradv(teamid,state,player): 
-    pos = Vector2D()
-    sp =0.0
-    if (teamid==1):
-        for p in state.team2.players:
-            if (p.position.distance(player.position) < 20) :
-                pos = p.position
-                sp = p.speed
-        return pos,sp
-    else :
-        for p in state.team1.players:
-            if (p.position.distance(player.position) < 20 ) :
-                pos = p.position
-                sp = p.speed
-        return pos,sp
+    def posPlayeradv(self): 
+        pos = Vector2D()
+        #sp =0.0
+        if (teamid==1):
+            for p in self.state.team2.players:
+                if (p.position.distance(self.player.position) < 20) :
+                    pos = p.position
+                    #sp = p.speed
+            return pos#,sp
+        else :
+            for p in self.state.team1.players:
+                if (p.position.distance(self.player.position) < 20 ) :
+                    pos = p.position
+                    #sp = p.speed
+            return pos #,sp
         
 # position des joueurs de mon equipe        
-def posPlayerEq(id,state,player): 
-    pos = Vector2D()
-    if (id==1):
-        for p in state.team1.players:
-            if (p.position.distance(player.position) < 20) :
-                pos = p.position
+    def posPlayerEq(self): 
+        pos = Vector2D()
+        if (self.teamid==1):
+            for p in self.state.team1.players:
+                if (p.position.distance(self.player.position) < 20) :
+                    pos = p.position
                 #sp = p.speed
-        return pos
-    else :
-        for p in state.team2.players:
-            if (p.position.distance(player.position) < 20 ) :
-                pos = p.position
+            return pos
+        else :
+            for p in self.state.team2.players:
+                if (p.position.distance(self.player.position) < 20 ) :
+                    pos = p.position
                # sp = p.speed
-        return pos
+            return pos
 
-def Playeradv(id,state,player): 
-    if (id==1):
-        for p in state.team2.players:
-            if (p.position.distance(player.position) < 50) :
-                return True
-    else :
-        for p in state.team1.players:
-            if (p.position.distance(player.position) < 50 ) :
-                return True
+    def Playeradv(self): 
+        if (self.teamid==1):
+            for p in self.state.team2.players:
+                if (p.position.distance(self.player.position) < 50) :
+                    return True
+        else :
+            for p in self.state.team1.players:
+                if (p.position.distance(self.player.position) < 50 ) :
+                    return True
 
-def CanIshoot (state,player):
-    p = player.position
-    if (p.distance(state.ball.position)<=(PLAYER_RADIUS+BALL_RADIUS)):
-        return True
-    else :
-        return False
+    def CanIshoot (self):
+        p = self.player.position
+        if (p.distance(self.state.ball.position)<=(PLAYER_RADIUS+BALL_RADIUS)):
+            return True
+        else :
+            return False
     
