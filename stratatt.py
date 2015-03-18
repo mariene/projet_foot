@@ -37,12 +37,13 @@ class FonceurStrategy(SoccerStrategy):
     def finish_battle(self,won):
         pass
     def compute_strategy(self,state,player,teamid):
+        need = Need(state, teamid, player)
         b = state.ball.position
         p = player.position
         pos = b-p
         shoot=Vector2D()
         if ((p.distance(b)<(PLAYER_RADIUS+BALL_RADIUS))):
-            shoot = state.get_goal_center(need.get(teamid)) - p
+            shoot = state.get_goal_center(need.get()) - p
         return SoccerAction(pos,shoot)
     def create_strategy(self):
         return FonceurStrategy()
@@ -59,7 +60,7 @@ class Aleatoire(SoccerStrategy):
         g = state.get_goal_center(need.get())
         b = state.ball.position
         dist= b - player.position
-        if not need.CanIshoot(state,player):
+        if not need.CanIshoot():
             return SoccerAction(dist,Vector2D())
         gb = state.get_goal_center(need.get()) - player.position
         shoot = Vector2D.create_polar(gb.angle + random.uniform(-1,1),g.norm)
