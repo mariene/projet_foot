@@ -165,6 +165,26 @@ class AllerVersJoueur(SoccerStrategy):
     def start_battle(self,state):
         pass        
     def finish_battle(self,won):
+        pass 
+    
+class AllerVersJoueurBis(SoccerStrategy):
+    def __init__(self):        
+        pass
+    def compute_strategy(self,state,player,teamid):
+        need = Need(state, teamid, player)
+        p = player.position
+        shoot = Vector2D()
+        pos = need.aBallon(0)
+        direct= pos - p
+        #direct = Vector2D(padv.x + spadv + p.x, p.y+padv.y)
+        if pos == Vector2D() :
+            direct = state.ball.position - player.position
+            return SoccerAction(direct,shoot)
+        else :       
+            return SoccerAction(direct,shoot)
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
         pass  
 ###############################################################################
 #TIRER VERS

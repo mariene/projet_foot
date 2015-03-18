@@ -79,13 +79,13 @@ class Need(SoccerState):
                 return pos
             else :
                 for p in self.state.team2.players :
-                    if p.distance(self.state.ball.position)<=(PLAYER_RADIUS+BALL_RADIUS):
+                    if (self.state.ball.position - p.position).norm <=(PLAYER_RADIUS+BALL_RADIUS):
                         pos = p.position
                 return pos
         else : 
             if choix == 0:
                 for p in self.state.team2.players:
-                    if p.distance(self.state.ball.position)<=(PLAYER_RADIUS+BALL_RADIUS):
+                    if (self.state.ball.position - p.position).norm<=(PLAYER_RADIUS+BALL_RADIUS):
                         pos = p.position
                 return pos
             else:

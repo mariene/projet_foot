@@ -21,7 +21,7 @@ team5=SoccerTeam("team2")
 #team1.add_player(SoccerPlayer("t1j4",PasBouger()))
 
 
-comp=ComposeStrategy(AllerVersAdvBis(),TirerRd())
+comp=ComposeStrategy(AllerVersJoueurBis(),TirerRd())
 compo=ComposeStrategy(AllerVersBalle(),PasVersToi())
 
 # bonne equipe voir si je la change avec tomate ou aubergine 
@@ -32,21 +32,20 @@ compo=ComposeStrategy(AllerVersBalle(),PasVersToi())
 
 
 #team3.add_player(SoccerPlayer("Def2",DegageTer()))
-team3.add_player(SoccerPlayer("Def",DefenseurBis()))
+#team3.add_player(SoccerPlayer("Def",DefenseurBis()))
 team3.add_player(SoccerPlayer("Att",comp))
 #team3.add_player(SoccerPlayer("Def1",DefBis()))
 #team3.add_player(SoccerPlayer("MixS",MixSimple()))
-#team3.add_player(SoccerPlayer("Deg",Attaquant()))
+team3.add_player(SoccerPlayer("Deg",FonceurStrategy()))
 
 #team5.add_player(SoccerPlayer("FS",comp))
-team5.add_player(SoccerPlayer("DT",comp))
+#team5.add_player(SoccerPlayer("DT",comp))
 team5.add_player(SoccerPlayer("DC",DefenseurBis()))
-#team5.add_player(SoccerPlayer("MS",MixSimple()))
-
+team5.add_player(SoccerPlayer("MS",Attaquant()))
 
 #list_key_player1=['a','z']
 #list_key_player2=['q','s']
-#list_strat_player1=[RandomStrategy(),FonceurStrategy()]
+#list_strat_player1=[DefenseurBis(),FonceurStrategy(),DegageTer(),]
 #list_strat_player2=[RandomStrategy(),FonceurStrategy()]
 
 # arguemnts :  liste des touches, liste des strategies, nom du fichier, tout sauvegarder ou non, concatener dans un meme fichier a la suite ou non
