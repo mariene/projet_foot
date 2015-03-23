@@ -186,6 +186,38 @@ class AllerVersJoueurBis(SoccerStrategy):
         pass        
     def finish_battle(self,won):
         pass  
+        
+        
+class AllerVersCoinBas(SoccerStrategy):
+    def __init__(self):        
+        pass
+    def compute_strategy(self,state,player,teamid):
+        p = (GAME_HEIGHT/2-GAME_GOAL_HEIGHT/2) + 0.5 
+        if teamid == 1:
+            direct = Vector2D(1.0,p)-player.position
+        else :
+            direct = Vector2D(GAME_WIDTH-1.0,p)-player.position
+        return SoccerAction(direct,Vector2D())
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass 
+
+class AllerVersCoinHaut(SoccerStrategy):
+    def __init__(self):        
+        pass
+    def compute_strategy(self,state,player,teamid):
+        p = (GAME_HEIGHT/2+GAME_GOAL_HEIGHT/2) - 0.5
+        if teamid == 1:
+            direct = Vector2D(1.0,p)-player.position
+        else :
+            direct = Vector2D(GAME_WIDTH-1.0,p)-player.position
+        return SoccerAction(direct,Vector2D())
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass 
+
 ###############################################################################
 #TIRER VERS
 #tirer vers un point       
@@ -271,7 +303,7 @@ class AleatoireBis(SoccerStrategy):
     def compute_strategy(self,state,player,teamid):
         need = Need(state, teamid, player)
         gb = state.get_goal_center(need.get()) - player.position
-        shoot = Vector2D.create_polar(gb.angle + random.uniform(-1,1),5)
+        shoot = Vector2D.create_polar(gb.angle + random.uniform(-1,1),3)
         if need.CanIshoot():
             return SoccerAction(Vector2D(),shoot)
         else :
@@ -289,15 +321,17 @@ class PasTirerVersAdv(SoccerStrategy):
         gp = state.get_goal_center(need.get()) - player.position
         padv = need.posPlayeradv()
         gpadv = state.get_goal_center(need.get()) - padv
-        if need.Playeradv():
-            if (gp.norm < gpadv.norm):
-                shoot = Vector2D(3,3)
-                return SoccerAction(Vector2D(),shoot)
+        if need.CanIshoot():
+            if need.Playeradv():
+                if (gp.norm < gpadv.norm):
+                    shoot = Vector2D(3,3)
+                    return SoccerAction(Vector2D(),shoot)
+                else :
+                    return SoccerAction(Vector2D(),gp)
             else :
-                return SoccerAction(Vector2D(),gp)
-        else :
             #shoot = state.get_goal_center(need.get(teamid))
-            return SoccerAction(Vector2D(),gp)
+                return SoccerAction(Vector2D(),gp)
+        return SoccerAction(Vector2D(),Vector2D())
     def start_battle(self,state):
         pass        
     def finish_battle(self,won):
@@ -318,16 +352,16 @@ class PasVersToi(SoccerStrategy):
         padvp = padv - player.position 
         if need.CanIshoot():
             if need.posp():      
-                shoot = Vector2D.create_polar(gp.angle - pi/4.0, 4.0)
+                shoot = Vector2D.create_polar(gp.angle - pi/4.0, 40.0)
                 return SoccerAction(direct,shoot)
             else :
-                shoot = Vector2D.create_polar(gp.angle + pi/4.0, 4.0)
+                shoot = Vector2D.create_polar(gp.angle + pi/4.0, 40.0)
                 return SoccerAction(direct,shoot)
         else:
             return SoccerAction(direct,direct)
         #else :
             #shoot = state.get_goal_center(need.get(teamid))
-        return SoccerAction(Vector2D(),gp)
+        #return SoccerAction(Vector2D(),gp)
     def start_battle(self,state):
         pass        
     def finish_battle(self,won):
@@ -339,7 +373,7 @@ class TirerVersLeBas(SoccerStrategy):
     def compute_strategy(self,state,player,teamid):
         need = Need(state, teamid, player)
         gb = state.get_goal_center(need.get()) - player.position
-        shoot = Vector2D.create_polar(gb.angle -pi/2.0,10)
+        shoot = Vector2D.create_polar(gb.angle -pi/4.0,5)
         if need.CanIshoot():
             return SoccerAction(Vector2D(),shoot)
         else :
@@ -355,7 +389,7 @@ class TirerVersLeHaut(SoccerStrategy):
     def compute_strategy(self,state,player,teamid):
         need = Need(state, teamid, player)
         gb = state.get_goal_center(need.get()) - player.position
-        shoot = Vector2D.create_polar(gb.angle + pi/2.0,10)
+        shoot = Vector2D.create_polar(gb.angle + pi/4.0,5)
         if need.CanIshoot():
             return SoccerAction(Vector2D(),shoot)
         else :
@@ -402,25 +436,3 @@ class ComposeStrategy(SoccerStrategy):
 ###############################################################################     
 
 ###############################################################################
-# Classe generique d'une strategie arbre, fn_tree : nom  de fichier de l'arbre
-class TreeStrategy(SoccerStrategy):
-    def __init__(self,name,gen_feat,fn_tree,dic_strat):
-        self.name=name
-        fn=os.path.join(os.path.dirname(os.path.realpath(__file__)),fn_tree)
-        self.tree=pickle.load(open(fn,"rb"))
-        self.gen_feat=gen_feat
-        self.dic_strat=dic_strat
-    def compute_strategy(self,state,player,teamid):
-        strat = self.tree.predict(self.gen_feat(state,teamid,player.id))[0]
-        return self.dic_strat[strat].compute_strategy(state,player,teamid)
-
-#Classe instanciee d'un arbre
-class FirstTreeStrategy(TreeStrategy):
-    def __init__(self):
-        dic_strat_first=dict({"Random":RandomStrategy(),"Fonceur":FonceurStrategy})
-        super(FirstTreeStrategy,self).__init__("My First Tree",gen_feature_simple,"first_tree.pkl",dic_strat_first)
-
-
-if __name__=="__main__":
-    states=load_interact("test_interact.pkl")
-    learn_tree(states,"first_tree.pkl")

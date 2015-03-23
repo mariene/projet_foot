@@ -94,6 +94,7 @@ class Need(SoccerState):
                         pos= p.position
                 return pos
 
+#si adversaire a le ballon
     def posPlayeradvBall(self): 
         pos = Vector2D()
         if (self.teamid==1):

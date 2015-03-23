@@ -54,7 +54,7 @@ class FonceurStrategy(SoccerStrategy):
 #tire aleatoirement mais plus genre dribble mais plus loin (shoot loin)
 class Aleatoire(SoccerStrategy):
     def __init__(self):
-        pass
+        self.name="Aleatoire"
     def compute_strategy(self,state,player,teamid):
         need = Need(state, teamid, player)
         g = state.get_goal_center(need.get())
@@ -79,7 +79,8 @@ class Aleatoire(SoccerStrategy):
 # g.norm peut etre trop gde -> a voir !
 
 class Attaquant(SoccerStrategy):
-    def __init__(self):        
+    def __init__(self):
+        self.name="Attaquant"        
         self.bal= DegageTer()
         self.fonce = FonceurStrategy()
         self.ale = ComposeStrategy(AllerVersBalle(),Aleatoire())
@@ -106,7 +107,7 @@ class Attaquant(SoccerStrategy):
 
 class Degage(SoccerStrategy):
     def __init__(self):        
-        pass
+        self.name="Degage"
     def compute_strategy(self,state,player,teamid):
         need = Need(state, teamid, player)
         p = player.position
@@ -125,7 +126,7 @@ class Degage(SoccerStrategy):
 
 class DegageBis(SoccerStrategy):
     def __init__(self):        
-        pass
+        self.name="DegageBis"
     def compute_strategy(self,state,player,teamid):
         p = player.position
         b = state.ball.position
@@ -145,7 +146,7 @@ class DegageBis(SoccerStrategy):
 
 class DegageTer(SoccerStrategy):
     def __init__(self):        
-        pass
+        self.name="DegageTer"
     def compute_strategy(self,state,player,teamid):
         need = Need(state, teamid, player)
         p = player.position
@@ -177,6 +178,40 @@ class DegageTer(SoccerStrategy):
                     shoot = v2 - p
                     return SoccerAction(direct,shoot)
         return  SoccerAction(direct,shoot)
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass 
+    
+# compose Strat
+class Rd(SoccerStrategy):
+    def __init__(self):        
+        self.name="Rd"
+        self.strat=ComposeStrategy(AllerVersBalle(),AleatoireBis())
+    def compute_strategy(self,state,player,teamid):
+        return self.strat.compute_strategy(state,player,teamid)
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass 
+    
+class Haut(SoccerStrategy):
+    def __init__(self):        
+        self.name="Haut"
+        self.strat=ComposeStrategy(AllerVersBalle(),TirerVersLeHaut())
+    def compute_strategy(self,state,player,teamid):
+        return self.strat.compute_strategy(state,player,teamid)
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass 
+
+class Bas(SoccerStrategy):
+    def __init__(self):        
+        self.name="Bas"
+        self.strat=ComposeStrategy(AllerVersBalle(),TirerVersLeBas())
+    def compute_strategy(self,state,player,teamid):
+        return self.strat.compute_strategy(state,player,teamid)
     def start_battle(self,state):
         pass        
     def finish_battle(self,won):

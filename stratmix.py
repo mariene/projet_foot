@@ -17,6 +17,7 @@ from outils import *
 # tentative -> a ameliorer !
 class Mix(SoccerStrategy):
     def __init__(self):
+        self.name="Mix"
         self.att= Attaquant()
         self.att2 = ComposeStrategy(AllerVersBalle(),FonceurStrategy())
         self.defe = DefenGoal()
@@ -45,6 +46,7 @@ class Mix(SoccerStrategy):
 # si oui attaque sinon defenseur et qd a le ballon va vers camp adverse 
 class MixSimple(SoccerStrategy):
     def __init__(self):
+        self.name="MixSimple"
         self.att= Attaquant()
         self.defe = DefenseurBis()
     def compute_strategy(self,state,player,teamid):

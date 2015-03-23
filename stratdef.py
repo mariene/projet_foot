@@ -18,7 +18,7 @@ from outils import *
 # enfin, de le rattrapper         
 class Defenseur(SoccerStrategy):
     def __init__(self):
-        pass
+        self.name="Defenseur"
     def compute_strategy(self,state,player,teamid):
         need = Need(state, teamid, player)
         g = state.get_goal_center(self.getad(teamid))
@@ -46,7 +46,7 @@ class Defenseur(SoccerStrategy):
 # Defenseur pour nouvelle configuration, meme chose que le defenseur du haut 
 class DefenseurBis(SoccerStrategy):
     def __init__(self):
-        pass
+        self.name="DefenseurBis"
     def compute_strategy(self,state,player,teamid):
         need = Need(state, teamid, player)
         g = state.get_goal_center(need.getad())
@@ -74,7 +74,7 @@ class DefenseurBis(SoccerStrategy):
 #marche pour attaquant mais moins pr Fonceur
 class Def(SoccerStrategy):
     def __init__(self):
-        pass
+        self.name="Def"
     def compute_strategy(self,state,player,teamid):
         need = Need(state, teamid, player)
         g = state.get_goal_center(need.getad())
@@ -92,7 +92,7 @@ class Def(SoccerStrategy):
 
 class DefBis(SoccerStrategy):
     def __init__(self):
-        pass
+        self.name="DefBis"
     def compute_strategy(self,state,player,teamid):
         need = Need(state, teamid, player)
         g = state.get_goal_center(need.getad())
@@ -131,7 +131,7 @@ class DefBis(SoccerStrategy):
 # defenseur qui defend et qui "tourne" avec le ballon
 class DefCyclique(SoccerStrategy):
     def __init__(self):
-        pass
+        self.name="DefCyclique"
     def compute_strategy(self,state,player,teamid):
         need = Need(state, teamid, player)
         g = state.get_goal_center(need.getad())
@@ -153,7 +153,7 @@ class DefCyclique(SoccerStrategy):
 
 class DefCycliqueBis(SoccerStrategy):
     def __init__(self):
-        pass
+        self.name="DefCycliqueBis"
     def compute_strategy(self,state,player,teamid):
         need = Need(state, teamid, player)
         g = state.get_goal_center(need.getad())
@@ -182,7 +182,7 @@ class DefCycliqueBis(SoccerStrategy):
 #permet de renvoyer le ballon a l'oppose de l'endroit où c'est envoye
 class DefenGoal(SoccerStrategy):
     def __init__(self):
-        pass
+        self.name="DefenGoal"
     def compute_strategy(self,state,player,teamid):
         need = Need(state, teamid, player)
         g = state.get_goal_center(need.getad()) 
@@ -206,7 +206,7 @@ class DefenGoal(SoccerStrategy):
 
 class DefenGoalBis(SoccerStrategy):
     def __init__(self):
-        pass
+        self.name="DefenGoalBis"
     def compute_strategy(self,state,player,teamid):
         need = Need(state, teamid, player)
         g = state.get_goal_center(need.getad()) 
@@ -233,7 +233,7 @@ class DefenGoalBis(SoccerStrategy):
 # derive de DefenGoal
 class DeGoal(SoccerStrategy):
     def __init__(self):
-        pass
+        self.name="DeGoal"
     def compute_strategy(self,state,player,teamid):
         need = Need(state, teamid, player)
         g = state.get_goal_center(need.getad()) 
@@ -260,7 +260,7 @@ class DeGoal(SoccerStrategy):
 
 class DeGoalBis(SoccerStrategy):
     def __init__(self):
-        pass
+        self.name="DeGoalBis"
     def compute_strategy(self,state,player,teamid):
         need = Need(state, teamid, player)
         gad = state.get_goal_center(need.getad()) 
@@ -285,4 +285,29 @@ class DeGoalBis(SoccerStrategy):
         return DeGoalBis()
            
             
+
+# compose Strat
+class CoinHaut(SoccerStrategy):
+    def __init__(self):        
+        self.name="CoinHaut"
+        self.strat=ComposeStrategy(AllerVersCoinHaut(),TirerVersLeBas())
+    def compute_strategy(self,state,player,teamid):
+        return self.strat.compute_strategy(state,player,teamid)
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass 
+    
+class CoinBas(SoccerStrategy):
+    def __init__(self):        
+        self.name="CoinBas"
+        self.strat=ComposeStrategy(AllerVersCoinBas(),TirerVersLeHaut())
+    def compute_strategy(self,state,player,teamid):
+        return self.strat.compute_strategy(state,player,teamid)
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass 
+    
+
 
