@@ -1,5 +1,6 @@
 from soccersimulator import SoccerBattle, SoccerPlayer, SoccerTeam
 from soccersimulator import PygletObserver,ConsoleListener,LogListener
+from soccersimulator import TreeIA, TreeStrategy
 from soccersimulator import pyglet
 from stratatt import *
 from stratdef import *
