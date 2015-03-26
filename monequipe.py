@@ -1,6 +1,6 @@
 from soccersimulator import SoccerBattle, SoccerPlayer, SoccerTeam
 from soccersimulator import PygletObserver,ConsoleListener,LogListener
-from soccersimulator import TreeIA, TreeStrategy
+from soccersimulator import TreeIA,TreeStrategy
 from soccersimulator import pyglet
 from stratatt import *
 from stratdef import *
@@ -25,13 +25,13 @@ team2.add_player(SoccerPlayer("t2j1",Degage()))
 team2.add_player(SoccerPlayer("t2j2",DefenseurBis()))
 
 team6=SoccerTeam("Oignons")
-team6.add_player(SoccerPlayer("t6j1",TreeST()))
+team6.add_player(SoccerPlayer("t6j1",TreeST))
 team6.add_player(SoccerPlayer("t6j2",DegageTer()))
 
 team3=SoccerTeam("Aubergines")
 team3.add_player(SoccerPlayer("t3j1",DefenseurBis()))
 team3.add_player(SoccerPlayer("t3j2",DefBis()))
-team3.add_player(SoccerPlayer("t3j3",TreeST()))
+team3.add_player(SoccerPlayer("t3j3",TreeST))
 team3.add_player(SoccerPlayer("t3j4",DegageTer()))
 
 
