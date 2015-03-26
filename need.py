@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from soccersimulator import Vector2D,SoccerState,SoccerAction,SoccerStrategy,SoccerBattle,SoccerPlayer,SoccerTeam
 from soccersimulator import PLAYER_RADIUS, BALL_RADIUS
 

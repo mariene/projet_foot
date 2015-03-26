@@ -31,8 +31,8 @@ compo=ComposeStrategy(AllerVersBalle(),Rd())
 #team2.add_player(SoccerPlayer("def",Defenseur()))
 
 
-#team3.add_player(SoccerPlayer("Def2",DegageTer()))
-team3.add_player(SoccerPlayer("Def",DefenseurBis()))
+team3.add_player(SoccerPlayer("Def2",DegageTer()))
+#team3.add_player(SoccerPlayer("Def",FonceurStrategy()))
 #team3.add_player(SoccerPlayer("Rd",Rd()))
 #team3.add_player(SoccerPlayer("Def1",DefBis()))
 #team3.add_player(SoccerPlayer("MixS",MixSimple()))
@@ -40,7 +40,7 @@ team3.add_player(SoccerPlayer("Def",DefenseurBis()))
 
 #team5.add_player(SoccerPlayer("FS",comp))
 #team5.add_player(SoccerPlayer("DT",comp))
-team5.add_player(SoccerPlayer("DC",DefenseurBis()))
+team5.add_player(SoccerPlayer("DC",MixSimple()))
 #team5.add_player(SoccerPlayer("MS",Attaquant()))
 
 

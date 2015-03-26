@@ -194,7 +194,7 @@ class AllerVersCoinBas(SoccerStrategy):
     def compute_strategy(self,state,player,teamid):
         p = (GAME_HEIGHT/2-GAME_GOAL_HEIGHT/2) + 0.5 
         if teamid == 1:
-            direct = Vector2D(1.0,p)-player.position
+            direct = Vector2D(0.75,p)-player.position
         else :
             direct = Vector2D(GAME_WIDTH-1.0,p)-player.position
         return SoccerAction(direct,Vector2D())
@@ -209,7 +209,7 @@ class AllerVersCoinHaut(SoccerStrategy):
     def compute_strategy(self,state,player,teamid):
         p = (GAME_HEIGHT/2+GAME_GOAL_HEIGHT/2) - 0.5
         if teamid == 1:
-            direct = Vector2D(1.0,p)-player.position
+            direct = Vector2D(0.75,p)-player.position
         else :
             direct = Vector2D(GAME_WIDTH-1.0,p)-player.position
         return SoccerAction(direct,Vector2D())

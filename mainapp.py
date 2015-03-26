@@ -25,9 +25,9 @@ team5=SoccerTeam("team2")
 ###############################################################################
 # apprentissage
 team_tree = SoccerTeam("Team Tree")
-treeia=TreeIA(gen_feature_simple,dict({"DefenseurBis":DefenseurBis(),"CoinHaut":CoinHaut(),"CoinBas":CoinBas(),"Haut":Haut(),"Bas":Bas(),"Rd":Rd()}))
+treeia=TreeIA(gen_feature_simple,dict({"DefenseurBis":DefenseurBis(),"CoinHaut":CoinHaut(),"CoinBas":CoinBas(),"Haut":Haut(),"Bas":Bas()}))
 
-fn=os.path.join(os.path.dirname(os.path.realpath(__file__)),"defenseur1v1.pkl")
+fn=os.path.join(os.path.dirname(os.path.realpath(__file__)),"defenseurcoin1.pkl")
 treeia.load(fn)
 TreeST=TreeStrategy("tree1",treeia)
 
@@ -35,7 +35,7 @@ team5.add_player(SoccerPlayer("DC",TreeST))
 team5.add_player(SoccerPlayer("MS",Attaquant()))
 
 team_tree.add_player(SoccerPlayer("Tree 1",TreeST))
-team_tree.add_player(SoccerPlayer("Tree 2",DegageTer()))
+team_tree.add_player(SoccerPlayer("Tree 2",FonceurStrategy()))
 
 
 battle=SoccerBattle(team5,team_tree)

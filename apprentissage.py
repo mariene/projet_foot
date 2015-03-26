@@ -17,6 +17,6 @@ def gen_feature_simple(state,teamid,playerid):
 #    return np.array([f(state,teamid,playerid) for f in list_fun_features])
 if __name__=="__main__":
     treeia=TreeIA(gen_feature_simple)
-    treeia.learn(fn="Def2")
-    treeia.save("defenseur1v1.pkl")
-    treeia.to_dot("defenseur1v1.dot")
+    treeia.learn(fn="Def_DegTer1")
+    treeia.save("defenseurcoin1.pkl")
+    treeia.to_dot("defenseurcoin1.dot")
