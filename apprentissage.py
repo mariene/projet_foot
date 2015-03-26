@@ -12,7 +12,7 @@ from strats import *
 
 def gen_feature_simple(state,teamid,playerid):
     n = Need(state,teamid,state.get_player(teamid,playerid))
-    l = [n.gadvp_norm(),n.gadvb_norm(),n.gp_norm(),n.bp_norm(),n.gpadv_norm(),n.gb_norm()]
+    l = [n.gadvp_norm(),n.gadvb_norm(),n.gp_norm(),n.bp_norm(),n.gpadv_norm(),n.gb_norm(),posPlayeradvBall()]
     return np.array(l)
 #    return np.array([f(state,teamid,playerid) for f in list_fun_features])
 if __name__=="__main__":
