@@ -5,6 +5,7 @@ from soccersimulator import pyglet
 from stratatt import *
 from stratdef import *
 from stratmix import *
+from apprentissage import *
 
 treeia=TreeIA(gen_feature_simple,dict({"DefenseurBis":DefenseurBis(),"CoinHaut":CoinHaut(),"CoinBas":CoinBas(),"Haut":Haut(),"Bas":Bas()}))
 
