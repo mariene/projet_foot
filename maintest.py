@@ -9,6 +9,7 @@ from stratatt import *
 from stratdef import *
 from stratmix import *
 from outils import *
+from apprentissage import *
 
 team3=SoccerTeam("team1")
 #team3=SoccerTeam("team2")
