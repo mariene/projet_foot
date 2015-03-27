@@ -218,6 +218,23 @@ class AllerVersCoinHaut(SoccerStrategy):
     def finish_battle(self,won):
         pass 
 
+class AllerVersMoiTerrain(SoccerStrategy):
+    def __init__(self):        
+        pass
+    def compute_strategy(self,state,player,teamid):
+        b = state.ball.position 
+        l = (GAME_WIDTH*0.25)+GAME_WIDTH*0.5
+        pos = Vector2D(l,b.y)-player.position
+        if teamid == 1:
+            l = GAME_WIDTH*0.25
+            pos = Vector2D(l,b.y)-player.position
+            return SoccerAction(pos,Vector2D())
+        else :
+            return SoccerAction(pos,Vector2D())
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass 
 ###############################################################################
 #TIRER VERS
 #tirer vers un point       

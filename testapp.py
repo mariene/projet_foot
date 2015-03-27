@@ -27,7 +27,7 @@ TreeST=TreeStrategy("tree1",treeia)
 #team5.add_player(SoccerPlayer("DC",TreeST))
 #team5.add_player(SoccerPlayer("FS",comp))
 #team5.add_player(SoccerPlayer("DT",comp))
-#team5.add_player(SoccerPlayer("Def",DefenseurBis()))
+#team5.add_player(SoccerPlayer("Def",MixSimple()))
 team5.add_player(SoccerPlayer("MS",DegageTer()))
 
 ###############################################################################
@@ -38,10 +38,10 @@ inter_strat_player1=InteractStrategy(list_key_player1,list_strat_player1,"Def_De
 
 team3 = SoccerTeam("Interactive")
 team3.add_player(SoccerPlayer("Inter 1",inter_strat_player1))
-#team3.add_player(SoccerPlayer("DT",RandomStrategy()))
+#team3.add_player(SoccerPlayer("DT",Degage()))
 
 
-battle=SoccerBattle(team5,team3)
+battle=SoccerBattle(team3,team5)
 obs=PygletObserver()
 obs.set_soccer_battle(battle)
 pyglet.app.run() 

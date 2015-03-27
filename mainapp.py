@@ -34,8 +34,9 @@ TreeST=TreeStrategy("tree1",treeia)
 team5.add_player(SoccerPlayer("DC",TreeST))
 team5.add_player(SoccerPlayer("MS",Attaquant()))
 
+compo=ComposeStrategy(AllerVersMoiTerrain(),Rd())
 team_tree.add_player(SoccerPlayer("Tree 1",TreeST))
-team_tree.add_player(SoccerPlayer("Tree 2",FonceurStrategy()))
+team_tree.add_player(SoccerPlayer("Tree 2",compo))
 
 
 battle=SoccerBattle(team5,team_tree)
