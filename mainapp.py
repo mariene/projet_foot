@@ -27,19 +27,19 @@ team5=SoccerTeam("team2")
 team_tree = SoccerTeam("Team Tree")
 treeia=TreeIA(gen_feature_simple,dict({"DefenseurBis":DefenseurBis(),"CoinHaut":CoinHaut(),"CoinBas":CoinBas(),"Haut":Haut(),"Bas":Bas()}))
 
-fn=os.path.join(os.path.dirname(os.path.realpath(__file__)),"defenseurcoin1.pkl")
+fn=os.path.join(os.path.dirname(os.path.realpath(__file__)),"defenseurcoin2.pkl")
 treeia.load(fn)
 TreeST=TreeStrategy("tree1",treeia)
 
 team5.add_player(SoccerPlayer("DC",TreeST))
 team5.add_player(SoccerPlayer("MS",Attaquant()))
 
-compo=ComposeStrategy(AllerVersMoiTerrain(),Rd())
+compo=ComposeStrategy(SurMemeLigneBis(),Rd())
 team_tree.add_player(SoccerPlayer("Tree 1",TreeST))
 team_tree.add_player(SoccerPlayer("Tree 2",compo))
 
 
-battle=SoccerBattle(team5,team_tree)
+battle=SoccerBattle(team_tree,team5)
 obs=PygletObserver()
 obs.set_soccer_battle(battle)
 pyglet.app.run() 

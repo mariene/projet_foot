@@ -23,7 +23,7 @@ team5=SoccerTeam("team2")
 
 
 comp=ComposeStrategy(AllerVersJoueurBis(),PasTirerVersAdv())
-compo=ComposeStrategy(AllerVersMoiTerrain(),Rd())
+compo=ComposeStrategy(SurMemeLigneBis(),Rd())
 
 # bonne equipe voir si je la change avec tomate ou aubergine 
 #team2.add_player(SoccerPlayer(";)",DegageTer()))

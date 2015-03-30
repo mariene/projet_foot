@@ -8,7 +8,6 @@ from stratmix import *
 from apprentissage import *
 
 treeia=TreeIA(gen_feature_simple,dict({"DefenseurBis":DefenseurBis(),"CoinHaut":CoinHaut(),"CoinBas":CoinBas(),"Haut":Haut(),"Bas":Bas()}))
-
 fn=os.path.join(os.path.dirname(os.path.realpath(__file__)),"defenseurcoin1.pkl")
 treeia.load(fn)
 TreeST=TreeStrategy("tree1",treeia)
