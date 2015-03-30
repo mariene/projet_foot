@@ -32,12 +32,15 @@ treeia.load(fn)
 TreeST=TreeStrategy("tree1",treeia)
 
 team5.add_player(SoccerPlayer("DC",TreeST))
-team5.add_player(SoccerPlayer("MS",Attaquant()))
+team5.add_player(SoccerPlayer("Att2",Attaquant()))
+team5.add_player(SoccerPlayer("Att",Attaquant()))
+team5.add_player(SoccerPlayer("Tree 2",Def()))
 
 compo=ComposeStrategy(SurMemeLigneBis(),Rd())
 team_tree.add_player(SoccerPlayer("Tree 1",TreeST))
-team_tree.add_player(SoccerPlayer("Tree 2",compo))
-
+team_tree.add_player(SoccerPlayer("G",compo))
+team_tree.add_player(SoccerPlayer("DT",DegageTer()))
+team_tree.add_player(SoccerPlayer("Def",Def()))
 
 battle=SoccerBattle(team_tree,team5)
 obs=PygletObserver()

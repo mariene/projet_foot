@@ -241,10 +241,10 @@ class SurMemeLigneBis(SoccerStrategy):
         pass
     def compute_strategy(self,state,player,teamid):
         b = state.ball.position + state.ball.speed
-        l = -(GAME_WIDTH*0.024)+GAME_WIDTH
+        l = -(GAME_WIDTH*0.022)+GAME_WIDTH
         pos = Vector2D(l,b.y)-player.position
         if teamid == 1:
-            l = GAME_WIDTH*0.024
+            l = GAME_WIDTH*0.022
             pos = Vector2D(l,b.y)-player.position
             return SoccerAction(pos,Vector2D())
         else :
@@ -253,6 +253,56 @@ class SurMemeLigneBis(SoccerStrategy):
         pass        
     def finish_battle(self,won):
         pass 
+    
+class SurMemeLigneHorizHaut(SoccerStrategy):
+    def __init__(self):        
+        pass
+    def compute_strategy(self,state,player,teamid):
+        b = state.ball.position + state.ball.speed
+        l = GAME_HEIGHT/2.0 - 5
+        pos = Vector2D(b.x,l)-player.position
+        return SoccerAction(pos,Vector2D())
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass 
+    
+class SurMemeLigneHorizBas(SoccerStrategy):
+    def __init__(self):        
+        pass
+    def compute_strategy(self,state,player,teamid):
+        b = state.ball.position + state.ball.speed
+        l = GAME_HEIGHT/2.0 + 5
+        pos = Vector2D(b.x,l)-player.position
+        return SoccerAction(pos,Vector2D())
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass
+
+class Avancer(SoccerStrategy):
+    def __init__(self):        
+        pass
+    def compute_strategy(self,state,player,teamid):
+        p = player.position
+        pos = Vector2D(p.x+5.0,p.y)-p
+        return SoccerAction(pos,Vector2D())
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass      
+
+class Reculer(SoccerStrategy):
+    def __init__(self):        
+        pass
+    def compute_strategy(self,state,player,teamid):
+        p = player.position
+        pos = Vector2D(p.x-5.0,p.y)-p
+        return SoccerAction(pos,Vector2D())
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass    
 ###############################################################################
 #TIRER VERS
 #tirer vers un point       

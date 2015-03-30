@@ -12,13 +12,13 @@ from strats import *
 
 def gen_feature_simple(state,teamid,playerid):
     n = Need(state,teamid,state.get_player(teamid,playerid))
-    l = [n.gadvp_norm(),n.gadvb_norm(),n.gp_norm(),n.bp_norm(),n.gpadv_norm(),n.gb_norm()]#,posPlayeradvBall()]
+    l = [n.gadvp_norm(),n.gadvb_norm(),n.gp_norm(),n.bp_norm(),n.gpadv_norm(),n.gb_norm(),n.posPlayeradvBall(),n.posPlayerEq(),n.posPlayeradv()]
     return np.array(l)
 #    return np.array([f(state,teamid,playerid) for f in list_fun_features])
 def app():
     treeia=TreeIA(gen_feature_simple)
-    treeia.learn(fn="Def_DegTer2")
-    treeia.save("defenseurcoin2.pkl")
-    treeia.to_dot("defenseurcoin2.dot")
+    treeia.learn(fn="AttHaut")
+    treeia.save("atthaut.pkl")
+    treeia.to_dot("atthaut.dot")
     
-app()
+#app()

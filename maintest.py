@@ -9,7 +9,7 @@ from stratatt import *
 from stratdef import *
 from stratmix import *
 from outils import *
-from apprentissage import *
+
 
 team3=SoccerTeam("team1")
 #team3=SoccerTeam("team2")
@@ -22,9 +22,9 @@ team5=SoccerTeam("team2")
 #team1.add_player(SoccerPlayer("t1j4",PasBouger()))
 
 
-comp=ComposeStrategy(AllerVersJoueurBis(),PasTirerVersAdv())
+comp=ComposeStrategy(SurMemeLigneHorizHaut(),TirerVersP())
 compo=ComposeStrategy(SurMemeLigneBis(),Rd())
-
+comp1=ComposeStrategy(SurMemeLigneHorizBas(),TirerVersP())
 # bonne equipe voir si je la change avec tomate ou aubergine 
 #team2.add_player(SoccerPlayer(";)",DegageTer()))
 #team2.add_player(SoccerPlayer("t2j1",DeGoal()))
@@ -32,17 +32,17 @@ compo=ComposeStrategy(SurMemeLigneBis(),Rd())
 #team2.add_player(SoccerPlayer("def",Defenseur()))
 
 
-team3.add_player(SoccerPlayer("Def2",compo))
-#team3.add_player(SoccerPlayer("Def",FonceurStrategy()))
+team3.add_player(SoccerPlayer("Def2",comp))
+team3.add_player(SoccerPlayer("Def",comp1))
 #team3.add_player(SoccerPlayer("Rd",Rd()))
-#team3.add_player(SoccerPlayer("Def1",DefBis()))
+#team3.add_player(SoccerPlayer("Def1",RandomStrategy()))
 #team3.add_player(SoccerPlayer("MixS",MixSimple()))
 #team3.add_player(SoccerPlayer("Deg",FonceurStrategy()))
 
-#team5.add_player(SoccerPlayer("FS",comp))
-#team5.add_player(SoccerPlayer("DT",comp))
-#team5.add_player(SoccerPlayer("DC",MixSimple()))
-team5.add_player(SoccerPlayer("MS",Attaquant()))
+#team5.add_player(SoccerPlayer("FS",PasBouger()))
+#team5.add_player(SoccerPlayer("DT",PasBouger()))
+team5.add_player(SoccerPlayer("DC",PasBouger()))
+team5.add_player(SoccerPlayer("MS",PasBouger()))
 
 
 battle=SoccerBattle(team3,team5)

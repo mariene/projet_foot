@@ -216,3 +216,14 @@ class Bas(SoccerStrategy):
         pass        
     def finish_battle(self,won):
         pass 
+    
+class VersToi(SoccerStrategy):
+    def __init__(self):        
+        self.name="Bas"
+        self.strat=ComposeStrategy(AllerVersBalle(),TirerVersP())
+    def compute_strategy(self,state,player,teamid):
+        return self.strat.compute_strategy(state,player,teamid)
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass 
