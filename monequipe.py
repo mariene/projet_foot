@@ -30,7 +30,7 @@ team6.add_player(SoccerPlayer("t6j2",DegageTer()))
 team3=SoccerTeam("Aubergines")
 team3.add_player(SoccerPlayer("t3j1",DefenseurBis()))
 team3.add_player(SoccerPlayer("t3j2",DefBis()))
-team3.add_player(SoccerPlayer("t3j3",TreeST))
+team3.add_player(SoccerPlayer("t3j3",Goal()))
 team3.add_player(SoccerPlayer("t3j4",DegageTer()))
 
 

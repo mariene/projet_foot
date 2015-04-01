@@ -17,8 +17,7 @@ def gen_feature_simple(state,teamid,playerid):
 #    return np.array([f(state,teamid,playerid) for f in list_fun_features])
 def app():
     treeia=TreeIA(gen_feature_simple)
-    treeia.learn(fn="AttHaut")
-    treeia.save("atthaut.pkl")
-    treeia.to_dot("atthaut.dot")
-    
+    treeia.learn(fn="Defense")
+    treeia.save("defense.pkl")
+    treeia.to_dot("defense.dot")
 #app()

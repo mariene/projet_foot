@@ -284,7 +284,20 @@ class DeGoalBis(SoccerStrategy):
     def create_strategy(self):
         return DeGoalBis()
            
-            
+class Goal(SoccerStrategy):
+    def __init__(self):
+        self.name="Goal"
+        self.stratbas = ComposeStrategy(SurMemeLigneBis(),TirerVersLeBas())
+        self.strathaut = ComposeStrategy(SurMemeLigneBis(),TirerVersLeHaut())
+    def compute_strategy(self,state,player,teamid):
+        need = Need(state, teamid, player)
+        b = state.ball.position
+        if (b.y > 0.5*GAME_HEIGHT):
+            return self.strathaut.compute_strategy(state,player,teamid)
+        else :
+            return self.stratbas.compute_strategy(state,player,teamid)
+    def create_strategy(self):
+        return Goal()            
 
 # compose Strat
 class CoinHaut(SoccerStrategy):

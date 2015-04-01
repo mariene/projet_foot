@@ -219,7 +219,7 @@ class Bas(SoccerStrategy):
     
 class VersToi(SoccerStrategy):
     def __init__(self):        
-        self.name="Bas"
+        self.name="VersToi"
         self.strat=ComposeStrategy(AllerVersBalle(),TirerVersP())
     def compute_strategy(self,state,player,teamid):
         return self.strat.compute_strategy(state,player,teamid)
@@ -227,3 +227,20 @@ class VersToi(SoccerStrategy):
         pass        
     def finish_battle(self,won):
         pass 
+
+class Parallele(SoccerStrategy):
+    def __init__(self):
+        self.name = "Parallele"
+        self.strat1= VersToi()
+        self.strat2=ComposeStrategy(SurMemeLigneHorizHaut(),TirerVersP())
+    def compute_strategy(self,state,player,teamid):
+        b = state.ball.position 
+        
+        if b.x == GAME_WIDTH/2.0 and b.y == GAME_HEIGHT/2.0:
+            return self.strat1.compute_strategy(state,player,teamid)
+        else : 
+            return self.strat2.compute_strategy(state,player,teamid)
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass     

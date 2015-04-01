@@ -241,10 +241,10 @@ class SurMemeLigneBis(SoccerStrategy):
         pass
     def compute_strategy(self,state,player,teamid):
         b = state.ball.position + state.ball.speed
-        l = -(GAME_WIDTH*0.022)+GAME_WIDTH
+        l = -(GAME_WIDTH*0.015)+GAME_WIDTH
         pos = Vector2D(l,b.y)-player.position
         if teamid == 1:
-            l = GAME_WIDTH*0.022
+            l = GAME_WIDTH*0.015
             pos = Vector2D(l,b.y)-player.position
             return SoccerAction(pos,Vector2D())
         else :
@@ -303,6 +303,7 @@ class Reculer(SoccerStrategy):
         pass        
     def finish_battle(self,won):
         pass    
+
 ###############################################################################
 #TIRER VERS
 #tirer vers un point       
@@ -374,10 +375,12 @@ class TirerVersP(SoccerStrategy):
         #self.point= state.get_player(self.teamid) 
         need = Need(state, teamid, player)
         pos = need.posPlayerEq()
+        #pos = Vector2D(pos.x,pos.y)
         shoot = pos - player.position 
         if need.CanIshoot():
             return SoccerAction(Vector2D(),shoot)
         return SoccerAction(Vector2D(),Vector2D())
+
         
         
 # a peu près le meme genre que Aleatoire sauf qu'il n'y a pas de direction
@@ -389,6 +392,22 @@ class AleatoireBis(SoccerStrategy):
         need = Need(state, teamid, player)
         gb = state.get_goal_center(need.get()) - player.position
         shoot = Vector2D.create_polar(gb.angle + random.uniform(-1,1),3)
+        if need.CanIshoot():
+            return SoccerAction(Vector2D(),shoot)
+        else :
+            return SoccerAction(Vector2D(),Vector2D())
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass 
+
+class Dribbler(SoccerStrategy):
+    def __init__(self):
+        pass
+    def compute_strategy(self,state,player,teamid):
+        need = Need(state, teamid, player)
+        gb = state.get_goal_center(need.get()) - state.ball.position
+        shoot = Vector2D.create_polar(gb.angle + random.random()*2-1,1.25)
         if need.CanIshoot():
             return SoccerAction(Vector2D(),shoot)
         else :
@@ -519,5 +538,6 @@ class ComposeStrategy(SoccerStrategy):
      #   idx=selector()
       #  return self.liststrat[idx].(computestratstate,player,teamid) 
 ###############################################################################     
+
 
 ###############################################################################
