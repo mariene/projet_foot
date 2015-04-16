@@ -234,8 +234,7 @@ class Parallele(SoccerStrategy):
         self.strat1= VersToi()
         self.strat2=ComposeStrategy(SurMemeLigneHorizHaut(),TirerVersP())
     def compute_strategy(self,state,player,teamid):
-        b = state.ball.position 
-        
+        b = state.ball.position         
         if b.x == GAME_WIDTH/2.0 and b.y == GAME_HEIGHT/2.0:
             return self.strat1.compute_strategy(state,player,teamid)
         else : 
@@ -243,4 +242,27 @@ class Parallele(SoccerStrategy):
     def start_battle(self,state):
         pass        
     def finish_battle(self,won):
-        pass     
+        pass  
+    
+    
+class TirerCoinHaut(SoccerStrategy):
+    def __init__(self):        
+        self.name="TirerCoinHaut"
+        self.strat=ComposeStrategy(AllerVersBalle(),TirerSurCH())
+    def compute_strategy(self,state,player,teamid):
+        return self.strat.compute_strategy(state,player,teamid)
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass 
+    
+class TirerCoinBas(SoccerStrategy):
+    def __init__(self):        
+        self.name="TirerCoinBas"
+        self.strat=ComposeStrategy(AllerVersBalle(),TirerSurCB())
+    def compute_strategy(self,state,player,teamid):
+        return self.strat.compute_strategy(state,player,teamid)
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass 

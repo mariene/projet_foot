@@ -27,8 +27,8 @@ TreeST=TreeStrategy("tree1",treeia)
 #team5.add_player(SoccerPlayer("DC",TreeST))
 #team5.add_player(SoccerPlayer("FS",comp))
 #team5.add_player(SoccerPlayer("DT",comp))
-team5.add_player(SoccerPlayer("Def",PasBouger()))
-team5.add_player(SoccerPlayer("MS",Degage()))
+team5.add_player(SoccerPlayer("Def",DefenseurBis()))
+team5.add_player(SoccerPlayer("MS",FonceurStrategy()))
 
 ###############################################################################
 # apprentissage
@@ -36,9 +36,9 @@ team5.add_player(SoccerPlayer("MS",Degage()))
 #list_strat_player1=[DefenseurBis(),CoinHaut(),CoinBas(),Haut(),Bas()]
 #list_strat_player1=[Defen,Haut(),Bas()]
 
-list_key_player1=['s','d','q']
-list_strat_player1=[DefBis(),Haut(),Bas()]
-inter_strat_player1=InteractStrategy(list_key_player1,list_strat_player1,"Def")
+list_key_player1=['q','s','z','x','a','w']
+list_strat_player1=[DefBis(),Degage(),TirerCoinHaut(),TirerCoinBas(),Haut(),Bas()]
+inter_strat_player1=InteractStrategy(list_key_player1,list_strat_player1,"Att2")
 
 #list_key_player1=['z','e','a','s','r']
 #list_strat_player1=[SurMemeLigneHorizHaut(),Avancer(),Reculer(),PasBouger(),VersToi()]

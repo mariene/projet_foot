@@ -502,6 +502,59 @@ class TirerVersLeHaut(SoccerStrategy):
         pass        
     def finish_battle(self,won):
         pass 
+
+
+class TirerSurCH(SoccerStrategy):
+    def __init__(self):
+        pass
+    def compute_strategy(self,state,player,teamid):
+        need = Need(state, teamid, player)
+        p = player.position
+        b = state.ball.position
+        shoot = Vector2D()
+        direct = Vector2D()
+        p1 = (GAME_HEIGHT/2-GAME_GOAL_HEIGHT/2) + 0.25
+        if need.CanIshoot():
+            if (teamid == 2):
+                v1 = Vector2D(0,p1)
+                shoot = v1 - p
+                return  SoccerAction(direct,shoot)                
+            else :
+                v1 = Vector2D(GAME_WIDTH,p1)
+                shoot = v1 - p
+                return  SoccerAction(direct,shoot)
+        return  SoccerAction(direct,shoot)
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass     
+    
+    
+    
+class TirerSurCB(SoccerStrategy):
+    def __init__(self):
+        pass
+    def compute_strategy(self,state,player,teamid):
+        need = Need(state, teamid, player)
+        p = player.position
+        b = state.ball.position
+        shoot = Vector2D()
+        direct = Vector2D()
+        p2 = (GAME_HEIGHT/2+GAME_GOAL_HEIGHT/2) - 0.25
+        if need.CanIshoot():
+            if (teamid == 2):
+                    v2 = Vector2D(0,p2)
+                    shoot = v2 - p
+                    return SoccerAction(direct,shoot)
+            else :
+                    v2 = Vector2D(GAME_WIDTH,p2)
+                    shoot = v2 - p
+                    return SoccerAction(direct,shoot)
+        return  SoccerAction(direct,shoot)
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass 
 ###############################################################################            
 class PasBouger(SoccerStrategy):
     def __init__(self):
