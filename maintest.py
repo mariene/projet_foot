@@ -30,23 +30,23 @@ compo=ComposeStrategy(AllerVersBalle(),Dribbler())
 comp1=ComposeStrategy(SurMemeLigneHorizBas(),TirerVersP())
 comp2=ComposeStrategy(AllerVersBalle(),AleatoireBis())
 # bonne equipe voir si je la change avec tomate ou aubergine 
-#team2.add_player(SoccerPlayer(";)",DegageTer()))
+#team2.add_player(SoccerPlayer(";)",DpegageTer()))
 #team2.add_player(SoccerPlayer("t2j1",DeGoal()))
 #team2.add_player(SoccerPlayer("attaq",Def()))
 #team2.add_player(SoccerPlayer("def",Defenseur()))
 
 #goal = ComposeStrategy(SurMemeLigneBis(),Rd())
 
-#team3.add_player(SoccerPlayer("Def2",DegageTer()))
+team3.add_player(SoccerPlayer("Def2",MixSimple()))
 #team3.add_player(SoccerPlayer("pDef",comp1))
 #team3.add_player(SoccerPlayer("Rd",Rd()))
-team3.add_player(SoccerPlayer("Def1",NDef("FS")))
+#team3.add_player(SoccerPlayer("Def1",NDef("FS")))
 #team3.add_player(SoccerPlayer("MixS",MixSimple()))
-team3.add_player(SoccerPlayer("Deg",PasBouger()))
+team3.add_player(SoccerPlayer("Deg",Bord()))
 
 team5.add_player(SoccerPlayer("FS",Degage()))
 team5.add_player(SoccerPlayer("DT",Goal()))
-#team5.add_player(SoccerPlayer("DC",DefBis()))
+#team5.add_player(SoccerPlayer("DC",DefBis()))  zone = state.danger_zones
 #team5.add_player(SoccerPlayer("MS",DefenseurBis()))
 
 

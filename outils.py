@@ -280,6 +280,7 @@ class SurMemeLigneHorizBas(SoccerStrategy):
     def finish_battle(self,won):
         pass
 
+
 class Avancer(SoccerStrategy):
     def __init__(self):        
         pass
@@ -592,5 +593,27 @@ class ComposeStrategy(SoccerStrategy):
       #  return self.liststrat[idx].(computestratstate,player,teamid) 
 ###############################################################################     
 
+class SurMemeLigneBas(SoccerStrategy):
+    def __init__(self):        
+        pass
+    def compute_strategy(self,state,player,teamid):
+        b = state.ball.position + state.ball.speed
+        l = GAME_HEIGHT - 2
+        pos =  state.ball.position - Vector2D(b.x,l)
+        return SoccerAction(Vector2D(),pos)
+
+
+class SurMemeLigneHaut(SoccerStrategy):
+    def __init__(self):        
+        pass
+    def compute_strategy(self,state,player,teamid):
+        b = state.ball.position + state.ball.speed
+        l = 2
+        pos = state.ball.position - Vector2D(b.x,l)
+        return SoccerAction(Vector2D(),pos)
+    def start_battle(self,state):
+        pass        
+    def finish_battle(self,won):
+        pass
 
 ###############################################################################
