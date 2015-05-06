@@ -10,6 +10,7 @@ from stratatt import *
 from stratdef import *
 from stratmix import *
 from outils import *
+from tme_solo import *
 
 
 
@@ -39,9 +40,9 @@ comp2=ComposeStrategy(AllerVersBalle(),AleatoireBis())
 #team3.add_player(SoccerPlayer("Def2",DegageTer()))
 #team3.add_player(SoccerPlayer("pDef",comp1))
 #team3.add_player(SoccerPlayer("Rd",Rd()))
-team3.add_player(SoccerPlayer("Def1",DefenseurBis()))
+team3.add_player(SoccerPlayer("Def1",NDef("FS")))
 #team3.add_player(SoccerPlayer("MixS",MixSimple()))
-team3.add_player(SoccerPlayer("Deg",FonceurStrategy()))
+team3.add_player(SoccerPlayer("Deg",PasBouger()))
 
 team5.add_player(SoccerPlayer("FS",Degage()))
 team5.add_player(SoccerPlayer("DT",Goal()))

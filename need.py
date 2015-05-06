@@ -125,6 +125,8 @@ class Need(SoccerState):
                     pos = p.position
                     #sp = p.speed
             return pos #,sp
+            
+           
         
 # position des joueurs de mon equipe        
     def posPlayerEq(self): 
@@ -154,6 +156,13 @@ class Need(SoccerState):
 
     def CanIshoot (self):
         p = self.player.position
+        if (p.distance(self.state.ball.position)<=(PLAYER_RADIUS+BALL_RADIUS)):
+            return True
+        else :
+            return False
+            
+    def CanHeshoot (self,player):
+        p = player.position
         if (p.distance(self.state.ball.position)<=(PLAYER_RADIUS+BALL_RADIUS)):
             return True
         else :
