@@ -24,7 +24,6 @@ class Defenseur(SoccerStrategy):
         g = state.get_goal_center(self.getad(teamid))
         b = state.ball.position
         p = player.position
-        gb = state.get_goal_center(need.getad()) - p
         gp = g-p
         bp = state.ball.position - player.position
         dist = b + g
@@ -32,7 +31,7 @@ class Defenseur(SoccerStrategy):
         dirt = d - p
         shoot = Vector2D.create_polar(gp.angle + 2.505, 15)
         dirt.product(10)
-        if (b.y < GAME_HEIGHT*0.5) or (gb.norm <= 20.0): 
+        if (b.y < GAME_HEIGHT*0.5) or (gp.norm <= 20.0): 
             shoot2=Vector2D.create_polar(gp.angle - 2.505, 15)
             return SoccerAction(dirt,shoot2)
         elif((p.distance(b)<=(PLAYER_RADIUS+BALL_RADIUS)))or(bp.norm <= GAME_WIDTH-(GAME_WIDTH*0.90)):
@@ -52,7 +51,6 @@ class DefenseurBis(SoccerStrategy):
         g = state.get_goal_center(need.getad())
         b = state.ball.position
         p = player.position
-        gb = state.get_goal_center(need.getad()) - p
         gp = g-p
         bp = state.ball.position - player.position
         dist = b + g
