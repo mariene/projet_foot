@@ -8,6 +8,7 @@ from soccersimulator import SoccerStrategy
 from strats import *
 
 
+
 #list_fun_features=[distance_ball,distance_mon_but,distance_autre_but,distance_ball_mon_but,distance_ball_autre_but]
 
 def gen_feature_simple(state,teamid,playerid):
