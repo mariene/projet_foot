@@ -1,0 +1,35 @@
+digraph Tree {
+0 [label="X[0] <= 67.9451\nerror = 0.797521\nsamples = 22\nvalue = [ 6.  4.  5.  2.  4.  1.]", shape="box"] ;
+1 [label="error = 0.0000\nsamples = 4\nvalue = [ 0.  0.  0.  0.  4.  0.]", shape="box"] ;
+0 -> 1 ;
+2 [label="X[5] <= 79.1674\nerror = 0.746914\nsamples = 18\nvalue = [ 6.  4.  5.  2.  0.  1.]", shape="box"] ;
+0 -> 2 ;
+3 [label="X[1] <= 110.5900\nerror = 0.742188\nsamples = 16\nvalue = [ 6.  4.  3.  2.  0.  1.]", shape="box"] ;
+2 -> 3 ;
+4 [label="X[0] <= 115.4805\nerror = 0.408163\nsamples = 7\nvalue = [ 5.  2.  0.  0.  0.  0.]", shape="box"] ;
+3 -> 4 ;
+5 [label="X[0] <= 88.0443\nerror = 0.277778\nsamples = 6\nvalue = [ 5.  1.  0.  0.  0.  0.]", shape="box"] ;
+4 -> 5 ;
+6 [label="error = 0.5000\nsamples = 2\nvalue = [ 1.  1.  0.  0.  0.  0.]", shape="box"] ;
+5 -> 6 ;
+7 [label="error = 0.0000\nsamples = 4\nvalue = [ 4.  0.  0.  0.  0.  0.]", shape="box"] ;
+5 -> 7 ;
+8 [label="error = 0.0000\nsamples = 1\nvalue = [ 0.  1.  0.  0.  0.  0.]", shape="box"] ;
+4 -> 8 ;
+9 [label="X[3] <= 5.8790\nerror = 0.765432\nsamples = 9\nvalue = [ 1.  2.  3.  2.  0.  1.]", shape="box"] ;
+3 -> 9 ;
+10 [label="X[0] <= 124.1676\nerror = 0.666667\nsamples = 3\nvalue = [ 1.  1.  0.  0.  0.  1.]", shape="box"] ;
+9 -> 10 ;
+11 [label="error = 0.0000\nsamples = 1\nvalue = [ 1.  0.  0.  0.  0.  0.]", shape="box"] ;
+10 -> 11 ;
+12 [label="error = 0.5000\nsamples = 2\nvalue = [ 0.  1.  0.  0.  0.  1.]", shape="box"] ;
+10 -> 12 ;
+13 [label="X[3] <= 12.1277\nerror = 0.611111\nsamples = 6\nvalue = [ 0.  1.  3.  2.  0.  0.]", shape="box"] ;
+9 -> 13 ;
+14 [label="error = 0.3750\nsamples = 4\nvalue = [ 0.  0.  3.  1.  0.  0.]", shape="box"] ;
+13 -> 14 ;
+15 [label="error = 0.5000\nsamples = 2\nvalue = [ 0.  1.  0.  1.  0.  0.]", shape="box"] ;
+13 -> 15 ;
+16 [label="error = 0.0000\nsamples = 2\nvalue = [ 0.  0.  2.  0.  0.  0.]", shape="box"] ;
+2 -> 16 ;
+}
