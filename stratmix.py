@@ -58,3 +58,16 @@ class MixSimple(SoccerStrategy):
         return self.defe.compute_strategy(state,player,teamid)                  
     def create_strategy(self):
         return MixSimple()
+
+class SelectorStrat(SoccerStrategy):
+    def __init__(self):
+        self.liststrat=[Attaquant(),DefenseurBis()]
+    def selector(self,state,player,teamid):
+        bp = state.ball.position - player.position
+        if(bp.norm < 30):
+            return 0
+        else:
+            return 1
+    def compute_strategy(self,state,player,teamid):
+        idx = selector()
+        return self.liststrat[idx].compute_strategy(state,player,teamid)
